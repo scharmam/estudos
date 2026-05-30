@@ -1,0 +1,1372 @@
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 1 de 31
+Público
+Questionário Resolvido e Comentado para Prova N1
+Questões do Material Didático
+U1S1
+Questão 01
+Um professor desenvolveu um aplicativo para celular que permite que o usuário registre ocorrências de buracos nas
+ruas da cidade. O usuário tira uma foto do buraco e o aplicativo registra a geolocalização do buraco fotografado. O
+aplicativo envia a foto para um servidor, gerando uma ordem de serviço para a prefeitura local. Para evitar que imagens
+quaisquer sejam submetidas ao servidor, foi desenvolvido um módulo que classifica a imagem como uma imagem que
+contém ou não um buraco na rua.
+Assinale a alternativa que diz o tipo de processamento usado pelo aplicativo para auxiliar a classificação da imagem
+como uma imagem que contém ou não um buraco na rua.
+a) Compressão.
+b) Captura.
+c) Extração de características.
+d) Reconstrução.
+e) Modelagem tridimensional
+Gabarito: c) Extração de características.
+Para que um módulo de software consiga classificar ou identificar objetos em uma imagem (neste caso, diferenciar um
+buraco de outros elementos), ele precisa primeiro realizar a extração de características (feature extraction).
+Este processo consiste em isolar informações relevantes da imagem original — como bordas, texturas, formas, cores
+e padrões geométricos — e transformá-las em dados matemáticos que o algoritmo de classificação (geralmente
+baseado em Inteligência Artificial ou Visão Computacional) possa interpretar.
+Por que as outras estão incorretas?
+• a) Compressão: Refere-se à redução do tamanho do arquivo (como converter para JPEG), o que não auxilia
+na identificação do conteúdo.
+• b) Captura: É apenas o ato de registrar a imagem através do sensor da câmera.
+• d) Reconstrução: Envolve recuperar uma imagem a partir de dados incompletos ou ruidosos, ou criar uma
+imagem 3D a partir de várias 2D.
+• e) Modelagem tridimensional: Trata da criação de modelos matemáticos de objetos em 3D, o que foge do
+escopo de um classificador de fotos 2D simples.
+
+-- 1 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 2 de 31
+Público
+Questão 02
+Um neurocirurgião utiliza imagens de ressonância magnética da cabeça de pacientes epilépticos para planejar a
+cirurgia. Para isso, ele usa uma ferramenta interativa de visualização tridimensional do cérebro a ser operado e marca
+a região de interesse. Com base na região do cérebro delineada, a própria ferramenta já desenha, sobre o crânio, na
+imagem do paciente, a posição menos invasiva para se realizar a incisão. A imagem de ressonância magnética é uma
+imagem digital, representando um volume.
+Assinale a alternativa que cita as duas subáreas da computação gráfica a que esta ferramenta melhor se enquadra.
+a) Processamento de imagens e visão computacional.
+b) Visão computacional e modelagem tridimensional.
+c) Visão computacional e síntese de imagens.
+d) Processamento de imagens e síntese de imagens.
+e) Modelagem tridimensional e processamento de imagens.
+Gabarito: d) Processamento de imagens e síntese de imagens.
+A ferramenta descrita atua em duas frentes principais da Computação Gráfica que se complementam no contexto
+médico:
+1. Processamento de Imagens: A ressonância magnética gera dados brutos que precisam ser processados
+para melhorar a visualização, segmentar tecidos (como separar o cérebro do crânio) e manipular o volume
+digital. O processamento de imagens tem como entrada uma imagem e como saída uma imagem modificada
+ou informações sobre ela.
+2. Síntese de Imagens: Esta subárea (também chamada de Computação Gráfica propriamente dita) é
+responsável por criar representações visuais a partir de modelos matemáticos ou dados. Quando a ferramenta
+gera a "visualização tridimensional" e "desenha sobre o crânio" a posição da incisão, ela está sintetizando
+novos elementos gráficos e projetando-os para o cirurgião.
+Por que as outras estão incorretas?
+• Visão Computacional (presente em a, b e c): O foco da Visão Computacional é fazer com que o computador
+"entenda" o mundo real ou imagens (reconhecimento de padrões, detecção de objetos). Embora haja
+intersecção, o enunciado enfatiza a visualização e o desenho de informações para o médico, o que caracteriza
+mais fortemente a síntese.
+• Modelagem Tridimensional (presente em b e e): Embora o volume seja 3D, a modelagem geralmente refere-
+se à criação geométrica de objetos. No caso médico, os dados já existem (vêm do exame), sendo mais uma
+questão de processar esse volume e sintetizar sua exibição do que "modelar" do zero.
+
+-- 2 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 3 de 31
+Público
+Questão 03
+A realidade aumentada é a sobreposição de objetos virtuais sobre imagens digitais capturadas do mundo real. A
+realidade aumentada usa diversos tipos de processamento gráfico, de diferentes subáreas. Um exemplo de realidade
+aumentada seria um aplicativo de celular que mostre na imagem capturada pela câmera, personagens virtuais de um
+jogo digital, com base na geolocalização da câmera.
+Assinale a alternativa correta com relação aos processamentos gráficos utilizados para a realidade aumentada
+implementada por esse aplicativo.
+a) São usadas captura e transformações da imagem digital para transportar a imagem do mundo real para o ambiente
+de imersão virtual.
+b) É usada a reconstrução 3D, para construir um modelo tridimensional do objeto virtual a partir de imagens do objeto
+real capturadas a partir de diferentes ângulos.
+c) São usadas a descompressão e transformações da imagem digital capturada do mundo real, que será sobreposta
+ao modelo do objeto virtual.
+d) São usadas filtragem e segmentação da imagem digital da câmera para extrair informações sobre como posicionar
+o objeto virtual sobre a imagem real.
+e) Será usada a digitalização de modelos para gerar uma imagem bidimensional do objeto virtual que será sobreposta
+à imagem capturada pela câmera.
+Gabarito: d) São usadas filtragem e segmentação da imagem digital da câmera para extrair informações sobre
+como posicionar o objeto virtual sobre a imagem real.
+Para que a Realidade Aumentada (RA) funcione de forma convincente, o sistema precisa "entender" a cena real
+capturada pela câmera para saber exatamente onde e como inserir o objeto virtual (o personagem do jogo).
+• Filtragem: É utilizada para remover ruídos da imagem da câmera, facilitando a identificação de bordas e pontos
+de interesse.
+• Segmentação: É o processo de separar a imagem em partes ou objetos. No contexto de RA, isso é essencial
+para identificar superfícies (como o chão ou uma mesa) ou marcadores específicos, garantindo que o
+personagem virtual pareça estar "pisando" no mundo real e não apenas flutuando aleatoriamente na tela.
+Por que as outras estão incorretas?
+• a) Ambiente de imersão virtual: Isso descreve a Realidade Virtual (onde o usuário entra no mundo digital), e
+não a Realidade Aumentada (onde o digital vem para o mundo real).
+• b) Reconstrução 3D: Embora possa ser usada em sistemas complexos, o enunciado foca em um aplicativo
+de celular baseado em geolocalização. A reconstrução 3D a partir de múltiplos ângulos não é o processo
+padrão para a exibição do personagem sobre a câmera.
+• c) Descompressão: É um processo de sistema de arquivos/transmissão de dados, não um processo gráfico
+de alinhamento de objetos virtuais em RA.
+• e) Digitalização de modelos: Este termo não define o processo de renderização (síntese) necessário para
+sobrepor o objeto à imagem da câmera de forma dinâmica.
+
+-- 3 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 4 de 31
+Público
+U1S2
+Questão 04
+A representação de cores em imagens é feita com base nos modelos de cor. O modelo RGB é o mais conhecido,
+seguido pelo modelo CMY (ou CMYK), mas existe um outro grupo de modelos de cor, ao qual pertencem os modelos
+HSL, Lab e YCbCr. O HSL é um modelo bastante utilizado para o processamento de imagens.
+Assinale a alternativa que apresenta a principal diferença entre o modelo RGB e o modelo HSL. a) O RGB é um modelo
+aditivo, assim como o modelo CMY, enquanto o HSL é um modelo subtrativo, assim como seus similares Lab e YCbCr.
+b) O RGB é um modelo de composição de cores primárias, enquanto o HSL é a composição de um componente de
+luminância e dois de cromaticidade.
+c) O RGB é um modelo que representa as cores como uma composição das cores primárias do espectro visível,
+enquanto o HSL faz a composição de cores secundárias.
+d) O RGB é um modelo com um componente de luminância e dois de cromaticidade, enquanto o HSL é um modelo de
+composição de cores primárias.
+e) O RGB é um modelo subtrativo, assim como o modelo CMY, enquanto o HSL é um modelo aditivo, assim como seus
+similares Lab e YCbCr.
+Gabarito: b) O RGB é um modelo de composição de cores primárias, enquanto o HSL é a composição de um
+componente de luminância e dois de cromaticidade.
+Esta questão aborda a fundamentação teórica dos modelos de cor, que é essencial para o processamento de imagens
+e computação gráfica.
+• Modelo RGB (Red, Green, Blue): É baseado na teoria da síntese aditiva. Ele define uma cor pela combinação
+de intensidades de três cores primárias de luz. É o modelo padrão para dispositivos que emitem luz, como
+monitores e telas de celular.
+• Modelo HSL (Hue, Saturation, Lightness): Diferente do RGB, que é focado no hardware, o HSL é um modelo
+perceptual. Ele separa a informação de "brilho" ou "clareza" (Lightness - luminância) das informações que
+definem a cor propriamente dita e sua pureza (Hue e Saturation - cromaticidade).
+Essa separação é extremamente útil no processamento de imagens, pois permite alterar a iluminação de uma cena
+sem distorcer as cores originais, algo muito mais complexo de se fazer manipulando os canais R, G e B
+simultaneamente.
+Por que as outras estão incorretas?
+• a) e e): O modelo CMY/CMYK é subtrativo (usado em pigmentos/impressão), mas o RGB é aditivo. O HSL
+não é classificado como subtrativo; ele é apenas uma representação matemática diferente do espaço de cor.
+• c): O HSL não faz composição de "cores secundárias", ele utiliza coordenadas polares (matiz, saturação e
+luminosidade).
+• d): Esta alternativa inverte as definições. O RGB usa primárias e o HSL usa luminância/cromaticidade.
+
+-- 4 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 5 de 31
+Público
+Questão 05
+Uma imagem vetorial é um conjunto de equações matemáticas de formas geométricas. As equações matemáticas são
+definidas no espaço euclidiano contínuo. Já as imagens digitais são um conjunto de pontos em um espaço discreto.
+Você deseja manter um conteúdo gráfico produzido por designers para a propaganda dos produtos de sua empresa e
+pode optar por imagens vetoriais ou bitmap. Cada elemento gráfico pode ser aplicado sobre itens pequenos, como um
+chaveiro, assim como sobre itens grandes, como um outdoor.
+Assinale a alternativa que apresenta a melhor escolha com a devida justificativa.
+a) Deve-se optar por imagens vetoriais. Como a imagem matricial é um conjunto de equações, não pode ser visualizada
+e tampouco impressa sem antes ser vetorizada. É preferível, portanto, já armazenar o conteúdo em formato vetorial.
+b) Deve-se optar por imagens vetoriais. Como a imagem vetorial é resultante da captura de cenas do mundo real, os
+resultados de aplicações de imagens vetoriais produzem impressões mais realísticas das imagens.
+c) Deve-se optar por imagens matriciais. Como a imagem vetorial é um conjunto de equações, não pode ser visualizada
+e tampouco impressa sem antes ser digitalizada. É preferível, portanto, já o conteúdo em formato digital.
+d) Deve-se optar por imagens vetoriais. Como a imagem vetorial está no espaço contínuo, pode ser desenhada em
+qualquer resolução de pixels, podendo ser desenhada em baixa resolução ou ampliada para um outdoor sem
+distorções.
+e) Deve-se optar por imagens matriciais. Como a imagem matricial está no espaço discreto, pode ser desenhada em
+qualquer resolução de pixels, podendo ser ampliada para um outdoor sem distorções.
+Gabarito: d) Deve-se optar por imagens vetoriais. Como a imagem vetorial está no espaço contínuo, pode ser
+desenhada em qualquer resolução de pixels, podendo ser desenhada em baixa resolução ou ampliada para um
+outdoor sem distorções.
+Esta é uma questão clássica e fundamental sobre a diferença entre Raster (Bitmap) e Vetor, focando na propriedade
+de escalabilidade.
+• Imagens Vetoriais: São definidas por fórmulas matemáticas (pontos, linhas, curvas e polígonos). Como essas
+fórmulas são calculadas em um espaço geométrico contínuo, elas podem ser redimensionadas para qualquer
+tamanho (do selo de um chaveiro ao tamanho de um outdoor) sem perder a nitidez. O computador
+simplesmente "refaz as contas" para a nova escala.
+• Imagens Matriciais (Bitmap/Raster): São compostas por uma grade fixa de pixels. Ao ampliar uma imagem
+dessas para um outdoor, os pixels originais são "esticados", gerando o efeito de serrilhado ou perda de
+definição (pixelização).
+Por que as outras estão incorretas?
+• a) e c): Confundem os termos. O vetor pode ser visualizado (é rasterizado pela placa de vídeo em tempo real
+para exibição), e dizer que "não pode ser impresso sem ser vetorizado/digitalizado" de forma excludente está
+tecnicamente confuso.
+• b): Incorreto. Imagens que capturam o mundo real (fotos) são tipicamente matriciais (bitmaps). Vetores são
+geralmente usados para logos, ícones e ilustrações técnicas.
+• e): Incorreto. Afirma que a imagem matricial pode ser ampliada sem distorções, o que é justamente o ponto
+fraco desse formato.
+
+-- 5 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 6 de 31
+Público
+U1S3
+Questão 06
+A computação gráfica e o processamento de imagens utilizam dois tipos básicos de imagens: as imagens vetoriais e
+as imagens matriciais. O primeiro descreve formas geométricas no espaço contínuo, o segundo representa a imagem
+como uma matriz de pontos no espaço discreto. Cada um desses tipos é mais adequado para cada uma das subáreas
+da computação gráfica.
+Qual tipo de imagem é utilizado pelos profissionais da subárea de visão computacional e por quê?
+a) Imagem vetorial, pois a visão computacional busca extrair informações das imagens, o que é mais fácil de ser obtido
+dos descritores contínuos de imagens vetoriais.
+b) Imagem matricial, pois a visão computacional busca extrair informações das imagens capturadas do mundo real,
+que são imagens matriciais.
+c) Ambos, pois a visão computacional busca extrair informações das imagens, sejam elas capturadas do mundo real
+ou sintetizadas.
+d) Imagem vetorial, pois a visão computacional busca extrair informações de imagens sintéticas, que são imagens
+vetoriais.
+e) Imagem matricial, pois a visão computacional busca simplesmente transformar as imagens por meio da aplicação
+de filtros.
+Gabarito: b) Imagem matricial, pois a visão computacional busca extrair informações das imagens capturadas
+do mundo real, que são imagens matriciais.
+Para entender por que a imagem matricial (ou bitmap) é a base da Visão Computacional, precisamos olhar para a
+origem dos dados:
+• A Origem do Dado: A Visão Computacional busca emular a visão humana, ou seja, "interpretar" o que está
+em uma foto ou vídeo. Câmeras digitais possuem sensores (CCD ou CMOS) que capturam a luz e a
+transformam em uma grade de valores numéricos (pixels). Portanto, o dado bruto que entra em um sistema de
+visão é inerentemente uma matriz.
+• O Processamento: Algoritmos de visão (como detecção de bordas, reconhecimento facial ou filtros) operam
+diretamente sobre os pixels dessa matriz para encontrar padrões. Uma imagem vetorial, por ser uma abstração
+matemática (equações), já é uma forma de dado "interpretado" e estruturado, o que não reflete o desafio da
+Visão Computacional, que é justamente converter o "caos" dos pixels em conceitos estruturados.
+Por que as outras estão incorretas?
+• a) e d): Imagens vetoriais são construções sintéticas (feitas no computador). Embora existam pesquisas em
+visão sobre vetores, o fluxo padrão e a definição da área baseiam-se na análise de imagens digitais (matrizes).
+• c): Embora a visão possa analisar imagens sintetizadas, o termo "ambos" dilui a característica fundamental da
+área, que é o processamento de sinais discretos (pixels).
+• e): Esta alternativa descreve o Processamento de Imagens. A Visão Computacional vai além da filtragem;
+ela busca o entendimento e a extração de informações (saber que um conjunto de pixels representa um "rosto",
+por exemplo).
+
+-- 6 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 7 de 31
+Público
+Questão 07
+Uma reta no espaço contínuo pode ser descrita simplesmente como dois pontos no plano. A visualização de uma reta,
+no entanto, é feita em um monitor ou tela que é uma matriz de pontos. Para a visualização de uma reta descrita em
+uma imagem vetorial é necessário desenhá-la sobre uma imagem matricial. Para o desenho de retas existe o algoritmo
+de Bresenham.
+Sobre o algoritmo de Bresenham, assinale a alternativa verdadeira.
+a) O algoritmo de Bresenham é capaz de desenhar apenas retas verticais e horizontais que passam exatamente sobre
+os pontos de coordenadas inteiras.
+b) O algoritmo de Bresenham trabalha necessariamente com variáveis reais, pois exige que sejam feitas aproximações
+dos pontos da reta contínua para a reta discreta.
+c) O algoritmo de Bresenham visa não somente a baixa complexidade assintótica, mas prioriza, também, o uso de
+variáveis inteiras para reduzir o custo computacional.
+d) O algoritmo de Bresenham é capaz de desenhar apenas retas verticais, horizontais, e diagonais, que passam
+exatamente sobre os pontos de coordenadas inteiras.
+e) O algoritmo de Bresenham trabalha exclusivamente com variáveis inteiras, visando reduzir a complexidade
+assintótica do algoritmo.
+Gabarito Comentado:
+O algoritmo de Bresenham é um dos pilares da computação gráfica para a rasterização de primitivas (transformar
+vetores em pixels).
+• O Grande Trunfo: A principal inovação de Bresenham foi eliminar a necessidade de operações com números
+de ponto flutuante (decimais) e divisões no loop principal do desenho da reta. Ele utiliza apenas aritmética de
+inteiros (adição, subtração e deslocamento de bits).
+• Custo Computacional: Na época em que foi criado (e ainda hoje em sistemas embarcados ou hardware
+dedicado), operações com inteiros são muito mais rápidas do que com números reais (float). O algoritmo
+decide qual é o próximo pixel a ser acendido baseando-se em um "erro acumulado" que é mantido apenas com
+números inteiros.
+Por que as outras estão incorretas?
+• a) e d): Incorretas. O algoritmo é famoso justamente por conseguir desenhar retas em qualquer inclinação,
+aproximando a reta contínua da grade de pixels da melhor forma possível.
+• b): Incorreta. É o oposto: o algoritmo foi desenhado especificamente para evitar variáveis reais.
+• e): Incorreta por um detalhe técnico sutil. Embora ele use variáveis inteiras para otimizar o custo de execução
+(tempo de processamento por ciclo de clock), isso não altera a complexidade assintótica (O(n) onde n é o
+número de pixels), que seria a mesma de um algoritmo que usasse floats (como o DDA). A melhora é na
+performance real/eficiência, não na classe de complexidade.
+
+-- 7 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 8 de 31
+Público
+Questão 08
+Um círculo no espaço contínuo pode ser descrito simplesmente como a coordenada do seu centro e seu raio. A
+visualização de um círculo, no entanto, é feita em um monitor ou tela que é uma matriz de pontos. Para a visualização
+de um círculo descrito em uma imagem vetorial, é necessário desenhá-lo sobre uma imagem matricial. Para isso, existe
+o algoritmo de Bresenham.
+Sobre o algoritmo de Bresenham para o desenho de círculos em duas dimensões, assinale a alternativa verdadeira.
+a) O algoritmo de Bresenham itera sobre metade dos valores possíveis de uma coordenada e um quarto dos valores
+possíveis da outra coordenada, explorando a simetria vertical.
+b) O algoritmo de Bresenham itera sobre todos os valores possíveis de cada uma das coordenadas dos dois eixos,
+visto que o círculo discreto não apresenta simetrias como o círculo contínuo.
+c) O algoritmo de Bresenham itera sobre todos os valores possíveis da coordenada de um dos eixos, sendo que a cada
+iteração, dois pontos são desenhados com base na simetria horizontal.
+d) O algoritmo de Bresenham só itera sobre um quarto dos valores possíveis da coordenada de um dos eixos, pois os
+outros pontos são calculados pelas simetrias horizontal, vertical e diagonais.
+e) O algoritmo de Bresenham só itera sobre metade dos valores possíveis da coordenada de um dos eixos, pois os
+outros pontos são calculados pelas simetrias horizontal e vertical.
+Gabarito: d) O algoritmo de Bresenham só itera sobre um quarto dos valores possíveis da coordenada de um
+dos eixos, pois os outros pontos são calculados pelas simetrias horizontal, vertical e diagonais.
+Esta questão explora a eficiência matemática do Algoritmo de Bresenham para Círculos (também conhecido como
+Algoritmo do Ponto Médio).
+O grande diferencial de performance aqui, além do uso de aritmética inteira, é o aproveitamento da simetria de oito
+ordens (ou octantes) do círculo:
+• Eficiência por Simetria: Um círculo possui simetria em relação ao eixo X (horizontal), ao eixo Y (vertical) e às
+diagonais (y = x e y = -x).
+• O Cálculo: Isso significa que o algoritmo só precisa calcular os pontos de um octante (1/8 do círculo). Ao
+descobrir a coordenada de um único ponto (x, y), o algoritmo consegue "espelhar" esse ponto para as outras
+7 posições correspondentes nos outros octantes: (±x, ±y) e (±y, ±x).
+• A Lógica da Alternativa: Como um quarto de um eixo (de $0$ até $45^\circ$ em relação ao centro) define um
+octante, ao calcular esse pequeno arco, todos os outros pontos são preenchidos por simples inversão de sinais
+ou troca de eixos, reduzindo drasticamente o número de iterações e cálculos complexos.
+Por que as outras estão incorretas?
+• a), c) e e): Estas alternativas subestimam o poder de simetria do círculo, mencionando apenas simetrias
+parciais (metade ou apenas horizontal/vertical), o que exigiria mais processamento do que o necessário.
+• b): Está incorreta ao afirmar que o círculo discreto não apresenta simetrias. Na verdade, a rasterização de
+círculos depende inteiramente do fato de que as propriedades geométricas do círculo contínuo podem ser
+mapeadas para a grade discreta de pixels de forma simétrica.
+
+-- 8 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 9 de 31
+Público
+U2S2
+Questão 09
+Polilinhas são linhas formadas por sequências de segmentos de reta. As polilinhas são usadas para aproximar curvas
+contínuas e também para descrever outras formas geométricas. Um polígono pode ser descrito por uma polilinha cujo
+ponto final é igual ao ponto inicial. A polilinha não está restrita a duas dimensões, podendo ser também utilizada em
+três dimensões para representar poliedros. Faça valer a pena Sobre as polilinhas, polígonos e poliedros, assinale a
+alternativa correta.
+a) Com polilinhas só é possível desenhar polígonos convexos simples. Os polígonos não simples ou não convexos não
+podem ser desenhados.
+b) A estrutura de dados para armazenar uma polilinha é bastante complexa, pois precisa armazenar as inclinações de
+todos os segmentos de reta que a compõem.
+c) Em 3D o número máximo de vértices que garante que o polígono por eles formado seja simples, convexo e planar
+é três.
+d) A estrutura de dados que descreve uma polilinha é mais simples do que aquela que descreve uma B-Spline, pois a
+B-Spline precisa armazenar um número enorme de pontos.
+e) Os poliedros são sólidos cujas faces são polígonos necessariamente convexos e não necessariamente planares.
+Gabarito: c) Em 3D o número máximo de vértices que garante que o polígono por eles formado seja simples,
+convexo e planar é três.
+Esta questão aborda as propriedades geométricas fundamentais de formas compostas e a transição do espaço 2D
+para o 3D.
+• A Geometria do Triângulo: Na geometria euclidiana, três pontos não colineares sempre definem um único
+plano. Portanto, um polígono de três vértices (triângulo) será obrigatoriamente planar. Além disso, por
+definição, qualquer triângulo é um polígono simples (suas arestas não se cruzam, exceto nos vértices) e
+convexo (qualquer segmento de reta entre dois pontos internos está totalmente contido nele).
+• O Problema com 4 ou mais vértices: A partir de quatro vértices em um espaço 3D, não há garantia de
+planaridade (um vértice pode estar "fora" do plano dos outros três, criando um polígono não planar ou "torto").
+Por que as outras estão incorretas?
+• a): Incorreta. Polilinhas podem descrever qualquer sequência de segmentos, permitindo desenhar polígonos
+côncavos ou complexos (onde as arestas se cruzam).
+• b): Incorreta. A estrutura de dados de uma polilinha é simples: geralmente apenas uma lista ordenada de
+vértices $(P_1, P_2, ..., P_n)$. As inclinações são calculadas apenas no momento da renderização.
+• d): Incorreta. Embora a estrutura da polilinha seja de fato mais simples que a de uma B-Spline, o motivo não
+é o "número enorme de pontos" da B-Spline. Na verdade, as B-Splines usam pontos de controle (muitas
+vezes em menor quantidade que os pontos de uma polilinha detalhada) e funções de base matemática para
+gerar curvas suaves.
+• e): Incorreta. Por definição, as faces de um poliedro devem ser planares. Se uma face não fosse planar, ela
+não seria um polígono, mas sim uma superfície curva ou composta.
+
+-- 9 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 10 de 31
+Público
+Questão 10
+Uma spline é qualquer curva composta formada por secções polinomiais satisfazendo algum critério de continuidade
+nas junções das secções. São curvas paramétricas, ou seja, curvas contínuas definidas por poucos parâmetros. As
+splines mais utilizadas são as Curvas de Bézier e as B-Splines.
+Sobre as curvas de Bézier e as B-Splines, assinale a alternativa correta.
+a) Curvas de Bézier e B-Splines são splines com características idênticas, mas com restrições geométricas diferentes.
+b) O número de pontos de controle de uma Curva de Bézier define a ordem do seu polinômio, o que não acontece com
+a B-Spline.
+c) Curvas de Bézier e B-Splines são definidas exclusivamente para o desenho no plano e não são extensíveis para 3D.
+d) As B-Splines são mais utilizadas do que as Curvas de Bézier porque suas equações são mais simples.
+e) B-Splines e curvas de Bézier são sequências de segmentos de reta, utilizadas para a criação de polígonos convexos
+simples.
+Gabarito: c) Em 3D o número máximo de vértices que garante que o polígono por eles formado seja simples,
+convexo e planar é três.
+Esta questão aborda as propriedades geométricas fundamentais de formas compostas e a transição do espaço 2D
+para o 3D.
+• A Geometria do Triângulo: Na geometria euclidiana, três pontos não colineares sempre definem um único
+plano. Portanto, um polígono de três vértices (triângulo) será obrigatoriamente planar. Além disso, por
+definição, qualquer triângulo é um polígono simples (suas arestas não se cruzam, exceto nos vértices) e
+convexo (qualquer segmento de reta entre dois pontos internos está totalmente contido nele).
+• O Problema com 4 ou mais vértices: A partir de quatro vértices em um espaço 3D, não há garantia de
+planaridade (um vértice pode estar "fora" do plano dos outros três, criando um polígono não planar ou "torto").
+Por que as outras estão incorretas?
+• a): Incorreta. Polilinhas podem descrever qualquer sequência de segmentos, permitindo desenhar polígonos
+côncavos ou complexos (onde as arestas se cruzam).
+• b): Incorreta. A estrutura de dados de uma polilinha é simples: geralmente apenas uma lista ordenada de
+vértices $(P_1, P_2, ..., P_n)$. As inclinações são calculadas apenas no momento da renderização.
+• d): Incorreta. Embora a estrutura da polilinha seja de fato mais simples que a de uma B-Spline, o motivo não
+é o "número enorme de pontos" da B-Spline. Na verdade, as B-Splines usam pontos de controle (muitas
+vezes em menor quantidade que os pontos de uma polilinha detalhada) e funções de base matemática para
+gerar curvas suaves.
+• e): Incorreta. Por definição, as faces de um poliedro devem ser planares. Se uma face não fosse planar, ela
+não seria um polígono, mas sim uma superfície curva ou composta.
+
+-- 10 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 11 de 31
+Público
+QUESTÕES INÉDITAS
+Questão 11
+Uma empresa de logística está desenvolvendo um sistema automatizado para a leitura de códigos de barras e etiquetas
+de endereçamento em esteiras de alta velocidade. O sistema captura uma imagem digital de cada caixa que passa.
+Para que o software consiga ler o texto do endereço, ele precisa primeiro isolar a região da etiqueta do restante da
+caixa (que pode conter fitas adesivas, sombras ou rasgos).
+Assinale a alternativa que descreve corretamente a sequência de etapas de Visão Computacional necessária para
+que o sistema identifique e isole a etiqueta antes da leitura dos caracteres.
+a) Compressão da imagem para reduzir o tempo de transmissão, seguida de Reconstrução 3D para entender o volume
+da caixa.
+b) Filtragem para redução de ruído, seguida de Segmentação para isolar a etiqueta do fundo e Extração de
+Características para identificar o padrão da etiqueta.
+c) Digitalização da imagem em formato vetorial, permitindo que as equações matemáticas identifiquem a posição exata
+da etiqueta no espaço contínuo.
+d) Aplicação do Modelo de Cor HSL para converter a imagem em preto e branco, seguida de uma Transformação de
+Escala para aumentar o tamanho da etiqueta.
+e) Captura da imagem seguida de Síntese de Imagem, para criar uma etiqueta virtual que será sobreposta à etiqueta
+real facilitando a leitura.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Para resolver problemas de identificação em imagens do mundo real (como etiquetas em caixas), a Visão
+Computacional segue um fluxo lógico de processamento:
+1. Filtragem (Pré-processamento): A imagem capturada em esteiras de alta velocidade pode conter "ruído"
+(granulação) ou desfoque. Filtros são aplicados para suavizar a imagem ou realçar bordas.
+2. Segmentação: Esta é a etapa crucial para "isolar" a região de interesse. O algoritmo separa os pixels que
+pertencem à etiqueta dos pixels que pertencem à caixa ou ao fundo da esteira.
+3. Extração de Características: Uma vez isolada a região, o sistema busca características específicas (como o
+formato retangular da etiqueta ou o padrão de listras do código de barras) para confirmar que aquela região é,
+de fato, o que se deseja ler.
+Por que as outras estão incorretas?
+• a): A reconstrução 3D é desnecessária para ler uma etiqueta 2D e a compressão pode até destruir detalhes
+importantes para a leitura.
+• c): Como vimos na Questão 06, a Visão Computacional trabalha com imagens matriciais (pixels) e não
+vetoriais.
+• d): O modelo HSL não converte imagens para preto e branco sozinho (isso é binarização) e o modelo de cor
+não isola a etiqueta por si só.
+• e): A Síntese de Imagem cria imagens do zero; aqui o objetivo é analisar uma imagem existente (Visão
+Computacional).
+
+-- 11 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 12 de 31
+Público
+Questão 12
+No processamento de imagens voltado à Visão Computacional, uma das técnicas mais comuns para separar um objeto
+de interesse do fundo da imagem é a Limiarização (Thresholding). Imagine um sistema de inspeção de qualidade
+que precisa identificar peças metálicas escuras sobre uma esteira clara. O sistema analisa o Histograma da imagem
+(a distribuição da quantidade de pixels por níveis de cinza) para definir um ponto de corte.
+Sobre esse processo de segmentação e análise de histogramas, assinale a alternativa correta:
+a) O histograma de uma imagem digital é uma representação vetorial que descreve as equações das curvas presentes
+na cena capturada.
+b) Em uma imagem perfeitamente bimodal (com dois picos claros no histograma), o limiar ideal para a segmentação
+deve ser escolhido exatamente no topo do pico mais alto.
+c) A limiarização transforma uma imagem de múltiplos tons de cinza em uma imagem binária (preto e branco),
+facilitando a identificação de formas e áreas pela Visão Computacional.
+d) O processo de limiarização é classificado como Síntese de Imagem, pois cria novos pixels coloridos para preencher
+o interior dos objetos identificados.
+e) A segmentação por limiarização só é possível se a imagem original for capturada utilizando o modelo de cor CMYK,
+devido à sua natureza subtrativa.
+Gabarito: Alternativa c)
+Explicação/Comentário:
+A Limiarização é um dos métodos de segmentação mais fundamentais. Ela funciona definindo um valor de intensidade
+(o "limiar"). Todos os pixels com intensidade acima desse valor tornam-se brancos, e os abaixo, pretos (ou vice-versa).
+• O Objetivo: O resultado é uma imagem binária. Isso é extremamente útil para a Visão Computacional porque
+reduz drasticamente a complexidade dos dados, permitindo que o algoritmo foque apenas na forma (silhueta)
+do objeto para medições, contagem ou reconhecimento, sem se preocupar com variações sutis de textura ou
+iluminação interna.
+Por que as outras estão incorretas?
+• a): O histograma é uma ferramenta estatística de frequência de pixels (dados matriciais), não uma
+representação vetorial/geométrica.
+• b): Em um histograma bimodal, o limiar ideal geralmente fica no vale (entre os dois picos), para separar bem
+o que é "objeto" do que é "fundo".
+• d): A limiarização é um processo de análise/processamento, não de síntese (criação de imagens inexistentes).
+• e): A limiarização é feita geralmente em tons de cinza (luminância), independente de o arquivo original ser
+RGB ou CMYK.
+
+-- 12 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 13 de 31
+Público
+Questão 13
+Um sistema de simulação de cirurgia robótica permite que o médico opere um paciente à distância. O sistema captura
+o vídeo em tempo real dos órgãos do paciente (Entrada A), identifica automaticamente a localização exata de uma
+artéria para evitar cortes acidentais (Processo B) e projeta uma linha vermelha brilhante sobre o monitor do médico
+indicando o caminho seguro para o bisturi (Saída C).
+Assinale a alternativa que identifica corretamente as subáreas da Computação Gráfica predominantes no Processo B
+e na Saída C, respectivamente.
+a) Processo B: Síntese de Imagens; Saída C: Processamento de Imagens.
+b) Processo B: Visão Computacional; Saída C: Síntese de Imagens.
+c) Processo B: Processamento de Imagens; Saída C: Visão Computacional.
+d) Processo B: Síntese de Imagens; Saída C: Visão Computacional.
+e) Processo B: Visão Computacional; Saída C: Processamento de Imagens.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão exige que o aluno diferencie o "entendimento" da imagem da "geração" de novos elementos gráficos:
+• Processo B (Visão Computacional): Quando o sistema precisa "identificar a localização exata de uma
+artéria", ele está interpretando o conteúdo da imagem. A Visão Computacional é a subárea que extrai
+informações de alto nível (conceitos, objetos, medidas) a partir de imagens matriciais.
+• Saída C (Síntese de Imagens): No momento em que o sistema "projeta uma linha vermelha brilhante", ele
+está criando um objeto gráfico inexistente na cena real e renderizando-o na tela. A criação de elementos visuais
+a partir de dados matemáticos ou lógicos é a definição de Síntese de Imagens (ou CG propriamente dita).
+Por que as outras estão incorretas?
+• a) e d): Invertem os conceitos. A Síntese não identifica objetos, ela os cria.
+• c): O Processamento de Imagens (como um filtro de nitidez) poderia ajudar na visualização, mas a tarefa de
+"identificar" é específica da Visão Computacional.
+• e): A Saída C não é apenas um processamento (como mudar o brilho da imagem), mas sim a criação de uma
+primitiva gráfica (linha) sobreposta, o que caracteriza a Síntese.
+
+-- 13 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 14 de 31
+Público
+Questão 14
+No desenvolvimento de um jogo de videogame de última geração, uma equipe de desenvolvedores trabalha na criação
+de um novo personagem. Primeiro, um artista digital utiliza um software para definir a estrutura geométrica do
+personagem, composta por milhares de polígonos e vértices no espaço 3D. Em seguida, outro especialista configura
+como as luzes do ambiente devem atingir essa estrutura para gerar as sombras e os reflexos realistas que o jogador
+verá na tela.
+Assinale a alternativa que apresenta, respectivamente, as subáreas da Computação Gráfica que descrevem o trabalho
+desses dois especialistas.
+a) Especialista 1: Síntese de Imagens; Especialista 2: Processamento de Imagens.
+b) Especialista 1: Visão Computacional; Especialista 2: Modelagem Tridimensional.
+c) Especialista 1: Modelagem Tridimensional; Especialista 2: Síntese de Imagens.
+d) Especialista 1: Processamento de Imagens; Especialista 2: Visão Computacional.
+e) Especialista 1: Modelagem Tridimensional; Especialista 2: Processamento de Imagens.
+Gabarito: Alternativa c)
+Explicação/Comentário:
+Esta questão ajuda a consolidar a distinção entre a criação da forma e a criação da imagem final:
+• Especialista 1 (Modelagem Tridimensional): Esta subárea foca na representação matemática de objetos.
+Definir vértices, arestas e polígonos para formar um "corpo" no espaço 3D é o cerne da modelagem. O
+resultado aqui é um modelo geométrico, não uma imagem visual final.
+• Especialista 2 (Síntese de Imagens): Também chamada de Renderização, esta etapa utiliza o modelo
+geométrico e aplica cálculos de iluminação, texturas e projeção para "tirar uma foto" desse mundo virtual e
+transformá-la em pixels na tela (uma imagem matricial). É o processo de converter dados 3D em uma
+representação visual 2D.
+Por que as outras estão incorretas?
+• a) e e): O Processamento de Imagens atua sobre imagens já existentes (filtros, ajustes). O trabalho do segundo
+especialista é criar a imagem a partir do modelo, o que é Síntese.
+• b): Visão Computacional busca entender imagens reais, o oposto do que o primeiro especialista está fazendo
+(criando algo sintético).
+• d): Inverte completamente os papéis e erra as definições das áreas.
+
+-- 14 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 15 de 31
+Público
+Questão 15
+Um museu de arte utiliza um aplicativo de Realidade Aumentada para enriquecer a experiência dos visitantes. Ao
+apontar a câmera do celular para um quadro específico, o aplicativo identifica a moldura e sobrepõe uma animação
+que explica a técnica de pintura utilizada pelo artista. Para que a animação acompanhe o movimento do usuário,
+mantendo-se perfeitamente alinhada ao quadro mesmo que o visitante se mova, o sistema precisa realizar o Registro
+e o Rastreamento (Tracking).
+Assinale a alternativa que descreve corretamente o papel das subáreas da Computação Gráfica nesse processo de
+alinhamento.
+a) A Visão Computacional é usada para identificar pontos de interesse na moldura do quadro e calcular a posição da
+câmera, enquanto a Síntese de Imagem renderiza a animação na perspectiva correta. b) O Processamento de Imagens
+é usado para comprimir o vídeo da câmera, enquanto a Modelagem Tridimensional reconstrói o quadro físico como um
+objeto digital indestrutível. c) A Síntese de Imagem é responsável por entender a iluminação do ambiente real, enquanto
+a Visão Computacional cria o modelo 3D da animação que será exibida. d) A Realidade Aumentada utiliza
+exclusivamente a Modelagem Tridimensional para converter o sinal analógico da câmera em vetores matemáticos de
+alta precisão. e) O Rastreamento é feito por meio de Modelos de Cor (como o RGB), que identificam a cor predominante
+do quadro e aplicam um filtro de preenchimento para gerar a animação.
+Gabarito: Alternativa a)
+Explicação/Comentário:
+Esta questão aborda a "mágica" técnica por trás da Realidade Aumentada:
+• Visão Computacional (O Olho): É a subárea responsável pelo Rastreamento. Ela analisa os frames da
+câmera em tempo real, encontra características marcantes (bordas, cantos, texturas) e calcula a matriz de
+transformação (posição e orientação) entre a câmera e o objeto real (o quadro).
+• Síntese de Imagem (A Mão): Uma vez que a Visão Computacional diz "o quadro está na posição X, Y, Z e
+inclinado em W graus", a Síntese de Imagem desenha a animação virtual usando essas mesmas coordenadas,
+garantindo que o objeto virtual pareça estar "colado" no mundo físico.
+Por que as outras estão incorretas?
+• b): Compressão de vídeo e reconstrução indestrutível não são os processos fundamentais para o alinhamento
+da RA.
+• c): Inverte as funções. A Visão entende o real; a Síntese cria o virtual.
+• d): A RA é uma combinação de áreas, e o sinal da câmera já é digital (matricial), não analógico.
+• e): Modelos de cor sozinhos não conseguem rastrear movimento ou perspectiva, eles apenas definem a
+representação cromática dos pixels.
+
+-- 15 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 16 de 31
+Público
+Questão 16
+Os sistemas de Realidade Aumentada (RA) podem ser classificados de acordo com a forma como identificam onde
+posicionar o conteúdo virtual. Um aplicativo de decoração de interiores, por exemplo, permite que o usuário "coloque"
+um sofá virtual no meio da sua sala real, identificando automaticamente a superfície do chão sem a necessidade de
+imprimir qualquer papel ou código especial.
+Assinale a alternativa que descreve corretamente a técnica e os processos de Computação Gráfica envolvidos nesse
+cenário de Realidade Aumentada Sem Marcadores.
+a) O sistema utiliza a técnica de Cromaqui (Chroma Key) para substituir a cor do chão real por uma imagem 3D do
+sofá, eliminando a necessidade de Visão Computacional. b) O sistema utiliza algoritmos de SLAM (Simultaneous
+Localization and Mapping), que mapeiam o ambiente em tempo real e identificam planos horizontais através da
+análise de pontos de interesse na imagem matricial. c) O sistema depende exclusivamente de Sensores de
+Geolocalização (GPS), que informam a altitude exata do chão para que o modelo vetorial do sofá seja desenhado na
+coordenada correta. d) O sistema utiliza o Modelo de Cor CMYK para detectar variações de pigmentação no piso,
+permitindo que a Síntese de Imagem crie uma sombra virtual que "prende" o objeto ao local. e) O sistema utiliza a
+Reconstrução 3D por meio de imagens vetoriais pré-existentes da casa do usuário, que devem ser carregadas no
+servidor antes do início da visualização.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão introduz o conceito de SLAM, uma das tecnologias mais avançadas em Visão Computacional aplicada à
+RA:
+• SLAM (Localização e Mapeamento Simultâneos): É o processo pelo qual o aplicativo "entende" um ambiente
+desconhecido. Ele identifica pontos de contraste (quinas de móveis, texturas no tapete) e, conforme o celular
+se move, calcula a profundidade e a inclinação das superfícies. Isso permite que o sistema identifique o "plano
+do chão" e mantenha o sofá virtual estável ali.
+• Análise Matricial: Como vimos nas questões anteriores, todo esse entendimento é feito analisando a grade
+de pixels (matriz) que vem da câmera em tempo real.
+Por que as outras estão incorretas?
+• a): Chroma Key é usado em cinema para substituir fundos coloridos (verde/azul), não serve para rastrear
+espaços físicos em RA.
+• c): O GPS não tem precisão de centímetros para colocar um móvel no chão de uma sala; ele serve apenas
+para localização global (como na Questão 03).
+• d): O modelo CMYK é para impressão. Além disso, a cor do piso não é o fator principal para o rastreamento,
+mas sim a geometria e os pontos de contraste detectados pela Visão Computacional.
+• e): A RA moderna é feita em tempo real sobre o ambiente atual, sem a necessidade de modelos vetoriais
+prévios da casa do usuário.
+
+-- 16 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 17 de 31
+Público
+Questão 17
+Um designer gráfico criou o logotipo de uma nova empresa utilizando um software de ilustração. No monitor de seu
+computador, as cores aparecem vibrantes e brilhantes. No entanto, ao receber as amostras impressas dos cartões de
+visita, o designer notou que as cores pareciam mais "foscas" e menos saturadas do que as visualizadas na tela.
+Assinale a alternativa que explica corretamente o fenômeno ocorrido com base nos modelos de cor RGB e CMYK.
+a) O monitor utiliza o modelo CMYK (subtrativo), que possui um gamut de cores muito maior que o modelo RGB (aditivo)
+utilizado pelas impressoras, causando a distorção.
+b) O fenômeno ocorre porque o modelo RGB é baseado na mistura de pigmentos que refletem a luz, enquanto o CMYK
+é baseado na emissão de luz por LEDs ou tubos de raios catódicos.
+c) As cores no monitor (RGB) são geradas por síntese aditiva (luz), enquanto na impressão (CMYK) são geradas por
+síntese subtrativa (pigmentos). O espaço de cores (gamut) do CMYK é geralmente menor que o do RGB, limitando a
+reprodução de certas cores vibrantes.
+d) O modelo RGB utiliza quatro canais de cor para maior precisão, enquanto o CMYK utiliza apenas três, o que resulta
+na perda de informação cromática durante o processo de conversão para impressão.
+e) O modelo HSL deveria ter sido utilizado na impressão em vez do CMYK, pois o HSL é o único modelo que garante
+a paridade total entre o brilho da tela e o pigmento do papel.
+Gabarito: Alternativa c)
+Explicação/Comentário:
+Esta questão aborda um dos desafios mais comuns na Computação Gráfica: a fidelidade de cor entre dispositivos.
+• RGB (Red, Green, Blue): É o modelo das telas. Ele funciona por adição de luz. Quando somamos as três
+cores primárias em intensidade máxima, obtemos o branco. Por lidar diretamente com a emissão de luz, o RGB
+consegue reproduzir cores muito saturadas e brilhantes.
+• CMYK (Cyan, Magenta, Yellow, Black): É o modelo das impressoras. Ele funciona por subtração de luz. Os
+pigmentos (tintas) absorvem certas frequências de luz e refletem outras. A mistura de pigmentos nunca
+consegue atingir o mesmo nível de vibração da luz pura, resultando em um gamut (alcance de cores) mais
+limitado.
+Por que as outras estão incorretas?
+• a) e b): Invertem completamente as definições de qual modelo é aditivo/subtrativo e qual pertence ao
+monitor/impressora.
+• d): O RGB tem 3 canais e o CMYK tem 4 (o 'K' representa o Preto, usado para dar densidade e economizar as
+outras tintas).
+• e): O HSL é um modelo de representação matemática para facilitar o manuseio humano e o processamento,
+mas as impressoras físicas dependem obrigatoriamente de pigmentos (geralmente CMYK).
+
+-- 17 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 18 de 31
+Público
+Questão 18
+Um desenvolvedor de software de edição de fotos precisa implementar um filtro de "Brilho Inteligente". O objetivo é
+aumentar a claridade de uma imagem sem alterar a percepção das cores originais (o matiz). Ele percebe que, ao
+aumentar os valores de R, G e B simultaneamente no modelo RGB, as cores perdem a saturação ou mudam levemente
+de tonalidade.
+Assinale a alternativa que descreve a solução ideal utilizando o modelo HSL e a justificativa técnica correta.
+a) Deve-se converter a imagem para HSL, aumentar o canal Hue (H) e converter de volta para RGB, pois o canal Hue
+controla a intensidade luminosa da cor.
+b) O modelo HSL é inadequado para essa tarefa, pois ele é um modelo subtrativo e a manipulação de brilho só pode
+ser feita em modelos aditivos como o RGB.
+c) Deve-se converter a imagem para HSL e manipular apenas o canal Lightness (L). Isso permite alterar o brilho de
+forma independente, mantendo o Hue (H) e a Saturation (S) preservados.
+d) O desenvolvedor deve usar o modelo CMYK, aumentando o canal K (Preto) para tornar a imagem mais clara, já
+que o modelo HSL não possui informações de luminosidade.
+e) O modelo HSL só deve ser utilizado se a imagem for vetorial, pois em imagens matriciais o componente de
+Saturação (S) é fundido com o canal Verde (Green) do RGB.
+Gabarito: Alternativa c)
+Explicação/Comentário:
+Esta questão destaca a principal vantagem do modelo HSL sobre o RGB em termos de processamento algorítmico:
+• Desacoplamento de Informação: No modelo RGB, as informações de cor e brilho estão "misturadas" nos
+três canais. Para mudar o brilho, você precisa mexer nos três, o que frequentemente causa distorções na cor
+percebida.
+• Vantagem do HSL: Ele separa a cor propriamente dita (Hue/Matiz) e a pureza da cor (Saturation/Saturação)
+da quantidade de luz (Lightness/Luminosidade). Ao isolar o canal L, o algoritmo pode iluminar ou escurecer
+a cena de forma muito mais natural e simples, sem "lavar" as cores ou mudar o tom do objeto.
+Por que as outras estão incorretas?
+• a): O canal Hue controla o "tom" da cor (ex: se é azul ou vermelho), não o brilho.
+• b): O HSL é um modelo de representação (perceptual), não subtrativo. Ele é perfeitamente adequado para
+ajustes de brilho.
+• d): Aumentar o canal K no CMYK deixaria a imagem mais escura (mais tinta preta), não mais clara.
+• e): O HSL é amplamente utilizado em imagens matriciais (pixels) e não tem relação com o fato de a imagem
+ser vetorial ou não.
+
+-- 18 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 19 de 31
+Público
+Questão 19
+Um fotógrafo profissional está preparando um catálogo digital de alta resolução. Ele precisa decidir entre armazenar
+suas fotografias de paisagens naturais no formato Matricial (Raster/Bitmap) ou convertê-las para o formato Vetorial.
+Ao analisar as imagens, ele percebe que elas contêm milhões de variações sutis de cores, degradês complexos e
+texturas orgânicas capturadas pela lente da câmera.
+Assinale a alternativa que apresenta a melhor decisão técnica e a justificativa correta.
+a) Deve-se optar pelo formato Vetorial, pois ele é capaz de descrever texturas orgânicas e variações fotográficas sutis
+com arquivos muito menores do que o formato matricial.
+b) Deve-se optar pelo formato Matricial, pois imagens que capturam o mundo real possuem uma complexidade de
+cores e detalhes por pixel que seria impraticável e ineficiente descrever através de equações matemáticas (vetores).
+c) O formato Vetorial é a única escolha possível, pois o formato matricial não suporta a visualização em monitores de
+alta definição (4K ou 8K) sem que a imagem desapareça da tela.
+d) Deve-se converter para Vetor apenas se o objetivo for a impressão em grandes formatos, pois o formato matricial é
+fisicamente impossível de ser impresso em superfícies maiores que uma folha A4.
+e) Ambos os formatos são idênticos em termos de armazenamento e realismo, sendo a única diferença o fato de o
+vetor utilizar o modelo de cor RGB e o matricial utilizar o CMYK.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão explora o limite prático entre os dois tipos de imagem:
+• Imagens Matriciais (Raster): São ideais para fotografias. Elas registram o valor exato de cor para cada ponto
+(pixel). Para cenas do mundo real, com bilhões de tons e texturas irregulares, o "mapa de bits" é a forma mais
+fiel de representar a realidade.
+• Imagens Vetoriais: São ideais para formas geométricas, logos e tipografia. Tentar descrever uma fotografia
+complexa com vetores exigiria bilhões de polígonos minúsculos, o que resultaria em um arquivo gigantesco e
+um processamento extremamente lento, perdendo a vantagem da simplicidade matemática.
+Por que as outras estão incorretas?
+• a): Inverte a lógica. O vetor é péssimo para texturas orgânicas e complexas de fotos; ele brilharia em desenhos
+de linhas claras.
+• c): Imagens matriciais são a base de quase tudo o que vemos em telas 4K/8K (filmes, fotos). Elas não
+desaparecem, apenas precisam de resolução adequada.
+• d): É possível imprimir matriciais em outdoors, desde que a resolução original seja alta o suficiente ou se aceite
+certa perda de nitidez de perto.
+• e): São tecnologicamente distintos. O modelo de cor (RGB/CMYK) pode ser aplicado a ambos os tipos de
+imagem.
+
+-- 19 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 20 de 31
+Público
+Questão 20
+Um engenheiro utiliza um software de CAD (Desenho Auxiliado por Computador) para projetar a planta de um novo
+motor. O projeto é inteiramente feito em formato Vetorial, permitindo que o engenheiro aplique zoom infinito para
+analisar detalhes microscópicos das engrenagens. No entanto, para que o motor seja visualizado na tela do monitor de
+LED do escritório, o computador precisa converter essas equações matemáticas em uma grade de pontos luminosos.
+Assinale a alternativa que descreve corretamente o nome desse processo de conversão e sua característica técnica.
+a) Vetorização: É o processo de transformar pixels em equações matemáticas para garantir que a imagem não perca
+resolução ao ser exibida no monitor.
+b) Rasterização: É o processo de amostragem de uma descrição vetorial contínua para gerar uma imagem matricial
+discreta, composta por pixels, compatível com os dispositivos de exibição.
+c) Interpolação de Cores: É o processo de criar novas cores entre os vetores para que o monitor de LED consiga
+exibir o modelo CMYK de forma aditiva.
+d) Digitalização Geométrica: É o processo de converter imagens matriciais capturadas por câmeras em modelos de
+CAD para facilitar o zoom em monitores de alta definição.
+e) Compressão de Dados: É o único processo envolvido, visando reduzir o tamanho das equações do motor para que
+caibam na memória de vídeo da placa gráfica.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão consolida a relação de dependência entre os dois formatos no fluxo de trabalho da Computação Gráfica:
+• O Conceito de Rasterização: Quase todos os nossos dispositivos de saída (monitores, impressoras, telas de
+celular) são dispositivos matriciais (raster). Portanto, mesmo que um objeto seja criado como um vetor
+(equação), ele precisa ser "rasterizado" para ser visto.
+• Amostragem: Rasterizar significa decidir quais pixels da tela devem ser acesos e com qual cor, baseando-se
+na forma geométrica definida pelo vetor. É a transição do mundo matemático ideal (contínuo) para o mundo
+físico dos hardware (discreto).
+Por que as outras estão incorretas?
+• a): A vetorização é o processo inverso (transformar uma foto/pixel em desenho de linhas).
+• c): Interpolação é uma técnica de preenchimento ou redimensionamento, não o nome do processo de
+conversão vetor-para-pixel.
+• d): "Digitalização" é um termo genérico e a definição dada descreve a vetorização, não a exibição de CAD em
+telas.
+• e): A compressão foca em reduzir espaço de armazenamento, não em converter formatos para visualização
+em hardware matricial.
+
+-- 20 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 21 de 31
+Público
+Questão 21
+O algoritmo de Bresenham para a rasterização de retas resolve o problema de aproximar uma linha contínua em uma
+grade discreta de pixels. Durante a execução, ao passar de uma coluna de pixels (x) para a próxima (x+1), o algoritmo
+deve decidir se mantém a mesma linha (y) ou se incrementa a linha (y+1).
+Assinale a alternativa que descreve corretamente como essa decisão é tomada pelo algoritmo de forma eficiente.
+a) O algoritmo calcula o valor real da função da reta y = mx + b para cada x e utiliza uma função de arredondamento
+de ponto flutuante para encontrar o pixel mais próximo.
+b) O algoritmo utiliza uma variável de decisão (erro acumulado) baseada apenas em aritmética de inteiros. Se essa
+variável for positiva, o algoritmo incrementa o valor de y e atualiza o erro; caso contrário, mantém o y atual.
+c) O algoritmo divide a distância total em partes iguais e utiliza a função seno e cosseno para determinar a inclinação
+exata de cada pixel na grade matricial.
+d) O algoritmo de Bresenham só funciona se a inclinação da reta for exatamente de 45o, caso contrário, ele deve ser
+substituído pelo algoritmo DDA, que é mais rápido por usar números reais.
+e) A decisão é tomada através da média aritmética das cores dos pixels vizinhos, processo conhecido como
+Antialiasing, que é a base do funcionamento do algoritmo de Bresenham.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão foca na lógica interna que torna o Bresenham superior ao algoritmo DDA original em termos de
+performance de hardware:
+• Variável de Decisão: Em vez de calcular a posição exata da reta (que envolveria números decimais), o
+Bresenham mantém um rastreio do "erro" (a distância vertical entre a reta teórica e o pixel atual).
+• Aritmética de Inteiros: Todas as operações de atualização dessa variável de decisão envolvem apenas
+somas, subtrações e multiplicações por 2 (que em computação é um simples deslocamento de bits ou bit-shift).
+Isso elimina a necessidade de uma Unidade de Ponto Flutuante (FPU), tornando-o ideal para placas de vídeo
+e processadores simples.
+Por que as outras estão incorretas?
+• a): Esta é a descrição de um algoritmo básico de rasterização, que é ineficiente por exigir cálculos reais e
+arredondamentos constantes.
+• c): Funções trigonométricas são computacionalmente caríssimas e não são usadas no loop principal de
+desenho de retas.
+• d): O Bresenham funciona para qualquer inclinação (embora a implementação básica foque no primeiro
+octante, ela é facilmente espelhável). O DDA é, na verdade, mais lento que o Bresenham por usar floats.
+• e): Antialiasing é uma técnica para suavizar bordas serrilhadas, mas o algoritmo de Bresenham clássico
+desenha apenas pixels "ligados" ou "desligados" (binário), sem suavização.
+
+-- 21 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 22 de 31
+Público
+Questão 22
+Ao estudar a rasterização de segmentos de reta, dois algoritmos são frequentemente comparados: o DDA (Digital
+Differential Analyzer) e o Algoritmo de Bresenham. Ambos têm o objetivo de determinar quais pixels devem ser
+acesos para representar uma reta definida por dois pontos (x1, y1) e (x2, y2).
+Assinale a alternativa que descreve a principal desvantagem do algoritmo DDA em relação ao de Bresenham quando
+implementado em hardware de alto desempenho.
+a) O algoritmo DDA é incapaz de desenhar retas com inclinação maior que 45o, enquanto o de Bresenham funciona
+para qualquer ângulo.
+b) O algoritmo DDA utiliza uma abordagem baseada em números de ponto flutuante (float) e exige uma operação
+de arredondamento (round) em cada iteração, o que é computacionalmente mais caro do que a aritmética de inteiros
+do Bresenham.
+c) O algoritmo DDA consome mais memória de vídeo porque precisa armazenar as coordenadas de todos os pontos
+da reta antes de exibi-los, ao contrário do Bresenham, que é instantâneo.
+d) O algoritmo DDA gera retas "serrilhadas", enquanto o algoritmo de Bresenham aplica automaticamente técnicas de
+Antialiasing para suavizar a imagem.
+e) O algoritmo DDA só pode ser utilizado em imagens vetoriais, sendo impossível converter seus resultados para
+imagens matriciais ou monitores de LED.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão reforça a importância da otimização em nível de hardware:
+• DDA (Digital Differential Analyzer): Ele utiliza o coeficiente angular da reta (m = Δy / Δx) para incrementar as
+coordenadas. Como m é quase sempre um número decimal, o DDA precisa realizar somas de ponto flutuante
+e, para cada pixel, arredondar o resultado para o inteiro mais próximo. Operações de float e round são lentas
+se comparadas a operações básicas de inteiros.
+• Bresenham: Como vimos na questão anterior, ele elimina o ponto flutuante e o arredondamento. Ele usa uma
+variável de decisão inteira para saber se "sobe" ou "segue reto", sendo drasticamente mais rápido em termos
+de ciclos de clock do processador.
+Por que as outras estão incorretas?
+• a): Ambos podem desenhar retas em qualquer ângulo, desde que as variações de quadrantes sejam tratadas
+no código.
+• c): Ambos são algoritmos "on-the-fly", ou seja, calculam o próximo pixel e já o desenham, sem necessidade
+de armazenar a reta inteira em uma lista prévia.
+• d): Nenhum dos dois algoritmos clássicos possui Antialiasing nativo; ambos produzem o efeito "escada"
+(serrilhado) por trabalharem com a grade discreta de pixels.
+• e): Ambos são algoritmos de rasterização, cujo propósito exato é converter dados matemáticos para o formato
+matricial (pixels).
+
+-- 22 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 23 de 31
+Público
+Questão 23
+O algoritmo DDA (Digital Differential Analyzer) é um dos métodos mais simples para a rasterização de segmentos
+de reta. Ele se baseia na equação da reta y = mx + b, onde m é o coeficiente angular (Δy / Δx). No loop principal do
+algoritmo, uma das coordenadas é incrementada unitariamente (1), enquanto a outra é calculada somando-se a
+inclinação proporcional.
+Considere uma reta onde o deslocamento em x é maior que o deslocamento em y (Δx > Δy). Assinale a alternativa
+que descreve corretamente o funcionamento do algoritmo DDA para este caso.
+a) O algoritmo incrementa o valor de y de um em um e calcula o novo valor de x somando 1/m a cada iteração,
+arredondando o resultado para o inteiro mais próximo.
+b) O algoritmo incrementa o valor de x de um em um e calcula o novo valor de y somando o coeficiente angular m a
+cada iteração, arredondando o resultado para o inteiro mais próximo.
+c) O algoritmo calcula todos os pontos da reta simultaneamente usando matrizes de rotação para evitar o uso de
+números decimais.
+d) O algoritmo para a execução caso o valor de m seja um número fracionário, pois o DDA só é capaz de desenhar
+retas com inclinação exata de 0o, 45o ou 90o.
+e) O algoritmo ignora o valor de m e simplesmente acende os pixels em uma linha diagonal perfeita até atingir a
+coordenada final.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+O funcionamento do DDA é puramente baseado em incrementos proporcionais:
+• Eixo Principal: Quando Δx > Δy, a reta é mais "horizontal" do que "vertical". Para garantir que não fiquem
+buracos na reta, incrementamos o eixo de maior deslocamento (x) de 1 em 1.
+• Cálculo do Próximo Pixel: A cada passo em x, a coordenada y aumenta exatamente o valor da inclinação m.
+Como m geralmente é um valor decimal (ex: 0.4), o novo valor de y será algo como 1.4, 1.8, 2.2... e o pixel
+aceso será o resultado do arredondamento desse valor.
+Por que as outras estão incorretas?
+• a): Esta lógica seria aplicada se a reta fosse mais "vertical" (Δy > Δx), onde o incremento unitário seria no eixo
+y.
+• c): O DDA é um algoritmo incremental e iterativo, não baseado em matrizes de transformação.
+• d): O DDA lida perfeitamente com frações; essa é, inclusive, a sua característica principal (e o motivo de ser
+mais lento que o Bresenham).
+• e): Isso geraria uma reta incorreta para qualquer inclinação que não fosse exatamente 45o.
+
+-- 23 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 24 de 31
+Público
+Questão 24
+No contexto de transformações geométricas bidimensionais, a Translação é a operação que desloca um objeto de
+uma posição para outra no plano cartesiano. Suponha que um triângulo possua um vértice no ponto P(x, y) e desejamos
+movê-lo para uma nova posição P'(x', y') utilizando um vetor de deslocamento T(dx, dy).
+Assinale a alternativa que descreve corretamente a relação matemática para o cálculo das novas coordenadas (x', y')
+após a translação.
+a) x' = x * dx e y' = y * dy, pois a translação é uma operação multiplicativa que altera a escala do objeto conforme ele
+se move.
+b) x' = x + dx e y' = y + dy, pois a translação consiste em somar as constantes de deslocamento às coordenadas
+originais de cada ponto do objeto.
+c) x' = x * cos(θ) - y * sin(θ), pois a translação exige que o objeto gire em torno da origem para mudar de posição.
+d) x' = dx e y' = dy, pois na translação as coordenadas originais do objeto são descartadas e substituídas pelos valores
+do vetor de deslocamento.
+e) x' = x - dx e y' = y - dy, pois a translação é uma operação de subtração que move o objeto sempre em direção à
+origem do sistema de coordenadas.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+A translação é a mais simples das transformações geométricas lineares:
+• A Lógica da Soma: Para mover um ponto no espaço, basta adicionar a distância desejada em cada eixo. Se
+você quer mover um objeto 5 unidades para a direita, você soma 5 ao x (x' = x + 5). Se quer mover 3 unidades
+para cima, soma 3 ao y (y' = y + 3).
+• Independência de Eixos: O deslocamento em x (dx) não afeta a posição em y, e vice-versa. Cada coordenada
+é tratada de forma independente.
+Por que as outras estão incorretas?
+• a): A multiplicação por constantes caracteriza a Escala, não a translação.
+• c): Esta fórmula descreve a Rotação de um ponto em torno da origem.
+• d): Isso não moveria o objeto, mas sim colapsaria todos os seus vértices em um único ponto (dx, dy),
+transformando o triângulo em um ponto.
+• e): Embora a subtração possa representar um deslocamento (para a esquerda ou para baixo), a definição
+formal da translação é a soma de um vetor de deslocamento, onde os valores de dx e dy podem ser negativos.
+
+-- 24 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 25 de 31
+Público
+Questão 25
+Na computação gráfica, as transformações geométricas bidimensionais (translação, rotação e escala) são
+frequentemente representadas por matrizes. No entanto, enquanto a rotação e a escala são operações lineares que
+podem ser representadas por matrizes 2 X 2, a translação é uma operação de soma. Para unificar todas essas
+transformações em um único sistema que utilize apenas a multiplicação de matrizes, utiliza-se um sistema de
+coordenadas específico.
+Assinale a alternativa que identifica esse sistema e a mudança estrutural necessária para sua implementação.
+a) Coordenadas Polares: Onde os pontos (x, y) são convertidos para raio e ângulo (r, θ), transformando todas as
+somas em exponenciais.
+b) Coordenadas Homogêneas: Onde um ponto bidimensional (x, y) é representado como uma tripla (x, y, w),
+geralmente com w=1, permitindo o uso de matrizes 3 X 3.
+c) Coordenadas Cartesianas Discretas: Onde os valores decimais são arredondados para inteiros antes da
+multiplicação, eliminando a necessidade de uma terceira coordenada.
+d) Sistema de Coordenadas de Tela: Onde a origem (0,0) é movida para o canto superior esquerdo, transformando
+a translação em uma operação de inversão de sinal.
+e) Coordenadas Baricêntricas: Utilizadas para converter polígonos complexos em triângulos, simplificando a matriz
+de translação para uma matriz identidade.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão introduz um conceito vital para o pipeline gráfico (como o OpenGL ou DirectX):
+• O Problema: Matematicamente, você não pode representar uma translação (soma) usando apenas uma matriz
+2 X 2 multiplicada por um vetor coluna [x, y]T.
+• A Solução (Coordenadas Homogêneas): Ao adicionar uma terceira dimensão fictícia (w), passamos a
+trabalhar no espaço projetivo. Com matrizes 3 X 3, a translação pode ser inserida na terceira coluna da matriz.
+• Vantagem: Isso permite a Composição de Transformações. Um programador pode multiplicar várias
+matrizes (uma de escala, uma de rotação e uma de translação) e gerar uma única Matriz Resultante. Ao
+aplicar essa matriz a dez mil vértices, o computador faz apenas uma operação por vértice, economizando um
+processamento imenso.
+Por que as outras estão incorretas?
+• a): Coordenadas polares facilitam a rotação, mas complicam drasticamente a translação e a escala uniforme.
+• c): Arredondar valores não altera a natureza algébrica da operação (soma vs. multiplicação).
+• d): Mudar a origem do sistema de coordenadas é, por si só, uma translação; não resolve o problema da
+unificação matricial.
+• e): Coordenadas baricêntricas são usadas principalmente para preenchimento de triângulos e interpolação de
+cores, não para transformações globais de objetos.
+
+-- 25 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 26 de 31
+Público
+Questão 26 (Versão Programação Java)
+Um estudante de computação está desenvolvendo um pequeno motor gráfico em Java. Ele precisa implementar um
+método que receba um ponto (x, y) e um ângulo em graus, e retorne as novas coordenadas após uma rotação anti-
+horária em relação à origem (0,0).
+Analise o trecho de código abaixo:
+public double[] rotacionarPonto(double x, double y, double anguloGraus) {
+// Conversão de graus para radianos
+double rad = Math.toRadians(anguloGraus);
+// Cálculo das novas coordenadas
+double novoX = x * Math.cos(rad) - y * Math.sin(rad);
+double novoY = x * Math.sin(rad) + y * Math.cos(rad);
+return new double[] { novoX, novoY };
+}
+Com base no código e nos conceitos de Transformações Geométricas, assinale a alternativa correta:
+a) O código está incorreto, pois em Java a função Math.sin() e Math.cos() aceitam apenas valores em graus, tornando
+a linha Math.toRadians(anguloGraus) redundante e causadora de erros de precisão.
+b) O código implementa corretamente a matriz de rotação 2D, utilizando a conversão necessária para radianos, já que
+as funções trigonométricas da classe Math do Java operam nessa unidade de medida.
+c) A função apresentada realiza uma Translação Circular, pois a operação de subtração no cálculo de novoX desloca
+o ponto para a esquerda antes de aplicar a escala senoidal.
+d) Para que o código realize uma rotação no sentido horário, o desenvolvedor deveria simplesmente trocar todos os
+métodos Math.cos() por Math.tan().
+e) O código só funcionará se o ponto (x, y) for um vetor unitário, caso contrário, o resultado de novoX e novoY excederá
+os limites de memória do tipo double.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão une a fundamentação matemática com a sintaxe da linguagem Java:
+• Radianos vs. Graus: Em quase todas as linguagens de programação (incluindo Java, C++, Python), as
+bibliotecas matemáticas padrão esperam ângulos em radianos. Por isso, o uso de Math.toRadians() é
+obrigatório e correto.
+• Implementação da Matriz: As fórmulas x * cos(θ) - y * sin(θ) e x * sin(θ) + y * cos(θ) são a tradução direta
+da multiplicação da matriz de rotação pelo vetor do ponto, conforme vimos na teoria.
+• Tipagem: O uso de double é o mais adequado para evitar erros de arredondamento excessivos durante os
+cálculos trigonométricos, que resultam em números irracionais.
+Por que as outras estão incorretas?
+• a): É o oposto: Math.sin e Math.cos não aceitam graus diretamente.
+• c): Não existe o termo "Translação Circular" nesse contexto; a operação descrita é estritamente uma Rotação.
+• d): Funções tangentes não são usadas para inverter o sentido da rotação. Para girar no sentido horário,
+bastaria passar o ângulo negativo (-anguloGraus) ou inverter os sinais de sin(rad) nas fórmulas.
+• e): O tipo double suporta valores imensos; a magnitude das coordenadas $(x, y)$ não causa estouro de
+memória apenas por uma rotação.
+
+-- 26 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 27 de 31
+Público
+Questão 27 (Versão Programação Java)
+Um desenvolvedor precisa criar um método em Java para redimensionar um objeto gráfico. O método deve aplicar um
+fator de escala Sx para a largura e Sy para a altura, utilizando a origem (0,0) como ponto de referência.
+Analise o código abaixo, que manipula um array de objetos da classe Point2D.Double:
+public void aplicarEscala(Point2D.Double[] pontos, double sx, double sy) {
+for (int i = 0; i < pontos.length; i++) {
+double novoX = pontos[i].getX() * sx;
+double novoY = pontos[i].getY() * sy;
+pontos[i].setLocation(novoX, novoY);
+}
+}
+Com base na implementação e nos conceitos de Transformações Lineares, assinale a alternativa correta:
+a) O código está incompleto, pois a escala em Java só pode ser realizada através de somas sucessivas, e não por
+multiplicações, devido a restrições da classe Point2D.
+b) Se os fatores de escala forem sx = 2.0 e sy = 2.0, o objeto terá sua área quadruplicada e todos os seus pontos serão
+afastados da origem (0,0) proporcionalmente.
+c) Caso o desenvolvedor queira reduzir o objeto à metade do tamanho original, ele deve passar os parâmetros sx = -
+2.0 e sy = -2.0 para o método.
+d) O método apresentado realiza uma Translação Uniforme, pois ao multiplicar as coordenadas por um fator fixo, o
+objeto apenas muda de posição sem alterar sua forma.
+e) O código resultará em um erro de compilação, pois o Java não permite a multiplicação direta de tipos double dentro
+de um laço for que itera sobre objetos geométricos.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+A escala é uma transformação linear baseada na multiplicação das coordenadas por fatores de escala:
+• Multiplicação e Área: Quando aplicamos um fator de escala 2.0 em ambos os eixos (x e y), cada dimensão
+dobra. Matematicamente, a nova área será 2 X 2 = 4 vezes a original.
+• Referência na Origem: Como o código multiplica as coordenadas x e y diretamente, a transformação ocorre
+em relação à origem (0,0). Isso significa que, além de crescer, o objeto "se afasta" da origem se as coordenadas
+originais forem diferentes de zero.
+• Fatores de Redução: Para reduzir um objeto (como solicitado na alternativa c), os fatores devem estar entre
+0 e 1 (ex: 0.5). Valores negativos resultariam em uma Reflexão (espelhamento) do objeto em relação aos
+eixos.
+Por que as outras estão incorretas?
+• a): A escala é inerentemente multiplicativa. Somas representam translação.
+• c): Valores negativos espelham o objeto no plano cartesiano; para reduzir à metade, usa-se 0.5.
+• d): Translação é soma. O método altera explicitamente as dimensões (forma/tamanho) do conjunto de pontos,
+caracterizando Escala.
+• e): O código é perfeitamente válido em Java e segue as boas práticas de manipulação da API java.awt.geom.
+
+-- 27 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 28 de 31
+Público
+Questão 28
+Na computação gráfica, uma Polilinha (ou polyline) é uma das primitivas geométricas mais fundamentais para a
+descrição de formas. Enquanto um segmento de reta é definido por apenas dois pontos, uma polilinha permite
+representar trajetórias complexas e contornos de objetos.
+Sobre a estrutura e as propriedades das polilinhas, assinale a alternativa correta:
+a) Uma polilinha é definida como um conjunto de $n$ segmentos de reta independentes, onde o ponto final de um
+segmento nunca coincide com o ponto inicial do próximo.
+b) A estrutura de dados de uma polilinha consiste em uma lista ordenada de vértices P0, P1, ..., Pn, onde cada par de
+vértices consecutivos (Pi, Pi+1) define um segmento de reta da sequência.
+c) Uma polilinha é considerada um polígono fechado por definição, independentemente de o último vértice ser igual
+ou diferente do primeiro vértice da lista.
+d) As polilinhas são limitadas ao espaço bidimensional (2D), pois a inclusão de uma coordenada z transformaria
+automaticamente a polilinha em uma superfície curva (spline).
+e) Para desenhar uma polilinha de 10 segmentos, o computador precisa obrigatoriamente armazenar 20 pontos
+distintos na memória, pois não há compartilhamento de vértices entre os trechos.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+Esta questão foca na eficiência e na lógica de encadeamento das polilinhas:
+• Conectividade: A grande vantagem da polilinha é a continuidade. Em uma lista de n vértices, o vértice P1 é o
+fim do primeiro segmento e, simultaneamente, o início do segundo. Isso garante que a linha seja contínua.
+• Eficiência de Memória: Diferente de 10 retas isoladas (que precisariam de 20 pontos), uma polilinha de 10
+segmentos precisa de apenas 11 pontos, economizando espaço e facilitando transformações geométricas em
+bloco.
+• Versatilidade: Se o último ponto for igual ao primeiro, temos uma polilinha fechada, que define um polígono.
+Se forem diferentes, temos uma polilinha aberta.
+Por que as outras estão incorretas?
+• a): É o oposto. A principal característica da polilinha é que o ponto final de um segmento é o ponto inicial do
+próximo.
+• c): Uma polilinha só é um polígono se for explicitamente "fechada" (último ponto = primeiro ponto).
+• d): Polilinhas existem perfeitamente em 3D (muitas vezes chamadas de 3D Polylines), sendo usadas para
+trajetórias no espaço ou arestas de poliedros.
+• e): Conforme explicado na conectividade, há compartilhamento de vértices. Para 10 segmentos, bastam 11
+pontos.
+
+-- 28 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 29 de 31
+Público
+Questão 29
+Ao utilizar polilinhas fechadas para descrever polígonos, a Computação Gráfica os classifica em duas categorias
+principais com base em sua geometria interna: Convexos e Côncavos (ou não-convexos). Essa classificação é
+determinante para a eficiência dos algoritmos de renderização e sombreamento.
+Assinale a alternativa que descreve corretamente uma propriedade que define um Polígono Convexo.
+a) Um polígono é convexo se, e somente se, todos os seus ângulos internos forem superiores a 180o, criando
+reentrâncias em sua estrutura.
+b) Um polígono é convexo se qualquer segmento de reta que conecte dois pontos quaisquer em seu interior estiver
+totalmente contido dentro do próprio polígono.
+c) Um polígono é considerado convexo quando possui pelo menos uma "ponta" voltada para dentro, facilitando o cálculo
+de interseção de raios de luz.
+d) A convexidade de um polígono depende exclusivamente do número de vértices: polígonos com mais de 5 vértices
+são obrigatoriamente côncavos no espaço 2D.
+e) Um polígono convexo é aquele cujas arestas da polilinha se cruzam entre si, formando subáreas independentes
+conhecidas como polígonos complexos.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+A definição de convexidade é um dos pilares da geometria computacional:
+• O Teste do Segmento: A forma mais simples de verificar a convexidade é imaginar dois pontos quaisquer
+dentro da forma. Se você puder traçar uma linha reta entre eles e essa linha sair do polígono em algum
+momento, o polígono é Côncavo. Se a linha estiver sempre "protegida" dentro das bordas, ele é Convexo.
+• Ângulos Internos: Outra propriedade importante é que, em um polígono convexo, todos os ângulos internos
+são menores ou iguais a 180o.
+• Importância na CG: Polígonos convexos são muito mais fáceis de processar. Por exemplo, triângulos são
+sempre convexos, e é por isso que as placas de vídeo (GPUs) preferem trabalhar com "malhas de triângulos"
+para renderizar objetos 3D complexos.
+Por que as outras estão incorretas?
+• a): Ângulos maiores que 180o definem um polígono Côncavo.
+• c): "Pontas voltadas para dentro" são reentrâncias, características de formas côncavas.
+• d): Não há limite de vértices para a convexidade (um círculo, por exemplo, pode ser aproximado por um
+polígono convexo de centenas de lados).
+• e): Polígonos cujas arestas se cruzam são chamados de Polígonos Complexos ou Auto-intersecionados, e
+não são convexos.
+
+-- 29 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 30 de 31
+Público
+Questão 30 (Versão Programação Java)
+Um desenvolvedor está criando um sistema de mapas e precisa representar um lote de terra como um polígono. Em
+Java, a classe java.awt.Polygon é utilizada para encapsular uma lista de coordenadas (x, y) que definem os vértices
+de um polígono.
+Analise o seguinte trecho de código:
+import java.awt.Polygon;
+public class MapaGrapico {
+public void criarLote() {
+Polygon lote = new Polygon();
+lote.addPoint(10, 10);
+lote.addPoint(50, 10);
+lote.addPoint(50, 40);
+lote.addPoint(10, 40);
+boolean resultado = lote.contains(30, 20);
+System.out.println("O ponto está dentro? " + resultado);
+}
+}
+Com base no funcionamento da classe Polygon e no código acima, assinale a alternativa correta:
+a) O método addPoint exige que os pontos sejam adicionados em ordem alfabética de coordenadas, caso contrário, o
+Java lançará uma exceção de "Geometria Inválida".
+b) O código define um retângulo e o método contains(30, 20) retornará true, pois a classe Polygon implementa
+algoritmos de geometria computacional para verificar se um ponto está dentro da área delimitada pelos vértices.
+c) O objeto lote será considerado uma polilinha aberta, pois a classe Polygon não fecha automaticamente o último
+ponto com o primeiro, a menos que o método close() seja chamado.
+d) O método contains só funciona para polígonos convexos; se o desenvolvedor adicionar um quinto ponto que torne
+o polígono côncavo, o método sempre retornará false.
+e) A classe Polygon armazena as coordenadas internamente como um único String de vetores, o que torna a operação
+de busca de pontos muito lenta para polígonos com mais de 4 lados.
+Gabarito: Alternativa b)
+Explicação/Comentário:
+A classe Polygon do Java é uma ferramenta poderosa para manipulação de formas:
+• Encapsulamento: Ela gerencia internamente dois arrays de inteiros (xpoints e ypoints) e um contador de
+pontos.
+• Teste de Inclusão: O método contains(x, y) é uma das funcionalidades mais importantes. Ele utiliza o algoritmo
+de "Ray Casting" (Cruzamento de Raios) para determinar se um par de coordenadas está no interior da forma.
+No caso do código, o ponto (30, 20) está claramente dentro dos limites do retângulo definido pelos pontos (10,
+10) e (50, 40).
+• Fechamento Automático: Diferente de uma polilinha genérica, a classe Polygon assume que a forma é
+fechada para fins de preenchimento e testes de colisão.
+Por que as outras estão incorretas?
+• a): Os pontos devem ser adicionados na ordem em que as arestas se conectam, mas não há restrição de
+ordem "alfabética" ou numérica de coordenadas.
+• c): A classe Polygon é, por definição, uma forma fechada.
+
+-- 30 of 31 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 31 de 31
+Público
+• d): O algoritmo de inclusão de pontos do Java (baseado na interface Shape) funciona perfeitamente para
+polígonos côncavos ou convexos.
+• e): Os dados são armazenados em arrays de inteiros (int[]), o que é extremamente eficiente em termos de
+memória e processamento.
+
+-- 31 of 31 --
+

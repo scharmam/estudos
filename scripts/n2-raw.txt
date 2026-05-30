@@ -1,0 +1,2392 @@
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 1 de 62
+Público	Público
+Questionário Resolvido e
+Comentado para Prova N2
+Questão 01
+No espaço bidimensional (2D) padrão utilizando coordenadas cartesianas (x, y), as transformações geométricas de rotação e escala são calculadas
+por meio de multiplicação de matrizes. No entanto, a translação comporta-se de forma diferente.
+A respeito das propriedades matemáticas da translação e do uso de coordenadas homogêneas, assinale a alternativa correta:
+A) A translação em coordenadas cartesianas padrão é uma operação de adição vetorial, o que impede que ela seja representada como uma
+multiplicação matricial simples de tamanho 2 X 2.
+B) A translação é uma transformação linear pura que mantém a origem do sistema de coordenadas fixo na posição (0,0).
+C) O uso de coordenadas homogêneas serve exclusivamente para reduzir o tamanho das matrizes de transformação de 3 X 3 para 2 X 2,
+economizando memória RAM.
+D) Ao introduzir coordenadas homogêneas, a translação passa a ser calculada inserindo-se o vetor de deslocamento diretamente na diagonal
+principal da matriz.
+E) Em computação gráfica, a translação e a rotação não podem ser combinadas em uma única matriz, exigindo que o processador execute os
+cálculos em etapas totalmente separadas.
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa: Em coordenadas cartesianas 2D, a translação é dada por uma soma ($x' = x + dx$ e $y' = y + dy$), impossibilitando sua
+representação em uma matriz de rotação/escala tradicional 2 X 2 (que opera por multiplicação). Para unificar todas as transformações em
+um único produto matricial, a computação gráfica utiliza coordenadas homogêneas, expandindo a matriz para 3 X 3.
+• A alternativa B está incorreta porque a translação move a origem (logo, é uma transformação afim, não linear pura).
+• As letras C e a D erram as dimensões e posições dos vetores na matriz, e a E desconsidera o propósito da unificação matricial.
+
+-- 1 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 2 de 62
+Público	Público
+Questão 02
+No sistema de coordenadas homogêneas para duas dimensões (2D), os pontos são representados por vetores de três elementos (x, y, 1) e as
+transformações geométricas são calculadas usando matrizes de ordem 3 X 3.
+A respeito das propriedades de multiplicação e da estrutura dessas matrizes quando combinamos mais de uma transformação, assinale a alternativa
+correta:
+A) A multiplicação de matrizes de transformação geométrica é comutativa, ou executa-se na mesma ordem, ou seja, aplicar escala e depois
+translação gera o mesmo resultado visual que aplicar translação e depois escala.
+B) Para aplicar uma transformação composta onde a escala ocorre primeiro e a translação ocorre depois, os fatores de escala e translação podem
+ser expressos em uma única matriz 3 X 3, onde os fatores de escala ficam na diagonal principal e os de translação na última coluna.
+C) O componente homogêneo w adicionado ao vetor do ponto cartesiano deve ser configurado obrigatoriamente como w = 0 para que a translação
+funcione por multiplicação.
+D) Se invertermos a ordem das matrizes em uma transformação composta (como rotação e translação), a posição geométrica final do objeto na tela
+permanecerá rigorosamente a mesma.
+E) As matrizes de coordenadas homogêneas em 2D precisam ser de ordem 2 X 2 para que seja matematicamente possível embutir o vetor de
+deslocamento.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: No espaço homogêneo 2D, a matriz resultante de aplicar primeiro a escala e depois a translação agrupa os fatores de escala
+na diagonal principal superior (m11 e m22) e os fatores de deslocamento na terceira coluna (m13 e m23), criando uma matriz única 3 X 3.
+• A alternativa A e D estão incorretas porque a multiplicação de matrizes não é comutativa (a ordem altera o resultado final).
+• A letra C está errada porque para pontos o valor deve ser w = 1 (w = 0 indica vetores de direção, que ignoram a translação).
+• A letra E está errada porque matrizes afins em 2D exigem ordem 3 X 3.
+
+-- 2 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 3 de 62
+Público	Público
+Questão 03
+No desenvolvimento de sistemas gráficos bidimensionais, a rotação é uma transformação geométrica linear fundamental que altera a orientação de
+um objeto ao girá-lo em torno de um ponto de referência. Por padrão, as equações matemáticas de rotação trigonométrica realizam o giro de um
+ponto (x, y) por um ângulo θ considerando a origem do sistema de coordenadas (0,0) como o centro da rotação.
+Caso um programador precise rotacionar um objeto em torno de seu próprio centro geométrico (centroide) localizado em um ponto arbitrário (xc, yc),
+e não em torno da origem, ele deverá compor uma matriz de transformação afim combinando diferentes operações operadas sequencialmente.
+Com base nos princípios de composição de transformações geométricas em coordenadas homogêneas, assinale a opção que apresenta a sequência
+correta de operações necessárias para realizar a rotação em torno de um ponto arbitrário (xc, yc):
+A) Rotacionar o objeto pelo ângulo θ em torno da origem, transladar o objeto pelo vetor (xc, yc) e, por fim, transladar de volta pelo vetor (-xc, -yc).
+B) Transladar o objeto pelo vetor (-xc, -yc), rotacionar o objeto pelo ângulo θ em torno da origem e, por fim, transladar o objeto pelo vetor (xc, yc).
+C) Transladar o objeto pelo vetor (xc, yc), rotacionar o objeto pelo ângulo θ em torno da origem e, por fim, transladar o objeto pelo vetor (-xc, -yc).
+D) Multiplicar diretamente a matriz de rotação padrão pelos fatores de translação (xc, yc) posicionados na diagonal principal da matriz composta.
+E) Realizar o cisalhamento dos eixos X e Y proporcionalmente a (xc, yc) antes de aplicar a matriz de rotação padrão em torno da origem.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: Para rotacionar um objeto em torno de um ponto qualquer (xc, yc), o pipeline gráfico exige três passos sequenciais:
+o 1) Transladar o objeto de modo que o ponto de rotação desejado coincida com a origem do sistema, ou seja, translação por
+(-xc, -yc);
+o 2) Aplicar a rotação padrão de ângulo θ em torno da origem;
+o 3) Transladar o objeto de volta à sua posição original, ou seja, translação por (xc, yc).
+• Algebricamente, isso preserva a geometria do objeto enquanto altera sua orientação no local correto.
+• As demais alternativas invertem a ordem ou sugerem transformações incorretas (como o cisalhamento na E ou a diagonal na D).
+
+-- 3 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 4 de 62
+Público	Público
+Questão 04
+O Cisalhamento (Shear) é uma transformação geométrica usada para distorcer objetos. No caso de um cisalhamento puramente horizontal, a
+coordenada X de um ponto é alterada de forma proporcional ao valor da sua coordenada Y, enquanto o valor de Y permanece o mesmo (x' = x + k
+* y e y' = y, onde k é o fator de distorção).
+A respeito do comportamento geométrico e da estrutura da matriz de um cisalhamento horizontal, assinale a alternativa correta:
+A) Os pontos localizados exatamente sobre o eixo X (onde y = 0) sofrem o deslocamento máximo da tela, movendo-se para o infinito do cenário.
+B) Na matriz de transformação 2 X 2 do cisalhamento horizontal, o fator de distorção k fica posicionado na diagonal principal, substituindo os valores
+de identidade.
+C) Os pontos que possuem a coordenada y = 0 permanecem completamente imóveis em sua posição original, pois qualquer fator de distorção
+multiplicado por zero resultará em alteração nula.
+D) O cisalhamento horizontal deforma os objetos alterando simultaneamente e na mesma proporção as alturas verticais de todos os pixels da malha.
+E) Essa transformação quebra completamente as linhas retas paralelas do objeto original, transformando retângulos em curvas complexas.
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: Pela equação do cisalhamento horizontal (x' = x + k * y), se um ponto está sobre o eixo X, sua coordenada Y é
+obrigatoriamente zero. Substituindo na fórmula, temos x' = x + k * 0 => x' = x. Portanto, esses pontos específicos não se movem.
+• A alternativa A diz o oposto.
+• A letra B está incorreta porque o fator k fica fora da diagonal principal (na posição superior direita, m12), enquanto a diagonal mantém os
+valores $1$ para preservar a identidade do ponto.
+• A letra D está errada porque o eixo Y não muda.
+• E a letra E está errada porque o cisalhamento preserva o paralelismo das retas (um retângulo vira um paralelogramo, mantendo linhas
+retas).
+
+-- 4 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 5 de 62
+Público	Público
+Questão 05
+Na computação gráfica, as operações aplicadas aos objetos são classificadas matematicamente como transformações lineares puras ou como
+transformações afins, dependendo de suas propriedades algébricas no espaço cartesiano.
+A respeito das características que diferenciam e definem esses dois tipos de transformações, assinale a alternativa correta:
+A) Uma transformação linear pura (como rotação ou escala) calculada por uma matriz 2 X 2 altera a posição da origem do sistema, movendo o ponto
+(0,0) para coordenadas aleatórias.
+B) As transformações afins englobam a translação e, por moverem a origem do sistema de coordenadas, perdem a linearidade estrita nas
+coordenadas cartesianas padrão (x, y).
+C) Toda transformação afim pode ser representada e operada por multiplicação matricial simples em uma matriz de tamanho 2 X 2, dispensando o
+uso de coordenadas homogêneas.
+D) A rotação e o cisalhamento são exemplos de transformações afins puras que necessitam obrigatoriamente de somas vetoriais externas para
+funcionar no plano cartesiano.
+E) O uso de espaços projetivos e coordenadas homogêneas é uma técnica aplicada exclusivamente para acelerar o desenho de círculos e elipses,
+não possuindo relação com matrizes de translação.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: As transformações afins expandem o conceito das lineares ao incluir a operação de translação (T(x) = Ax + b). Como a
+translação soma um vetor de deslocamento, ela desloca a origem (T(0) = b != 0), quebrando a propriedade de linearidade estrita no espaço
+cartesiano padrão. Por essa razão, o pipeline gráfico recorre às coordenadas homogêneas para unificar a operação por multiplicação.
+• A alternativa A está incorreta porque transformações lineares obrigatoriamente preservam a origem no ponto (0,0).
+• A C erra o tamanho da matriz (exige 3 X 3 em 2D homogêneo).
+• A D cita rotação e cisalhamento como afins puras com somas (são lineares puras operadas por multiplicação).
+• E a E ignora o verdadeiro propósito matemático das coordenadas homogêneas.
+
+-- 5 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 6 de 62
+Público	Público
+Questão 06
+Considere que as transformações geométricas de rotação (R), escala (S) e translação (T) estejam representadas por matrizes de ordem 3 X 3 em
+coordenadas homogêneas e aplicadas a vetores-coluna.
+A respeito das propriedades de composição dessas matrizes, assinale a alternativa correta:
+A) A multiplicação de matrizes gráficas é estritamente comutativa, o que significa que a operação composta R * S * T gera exatamente o mesmo
+resultado espacial que T * S * R.
+B) Ao calcular um novo ponto usando a expressão P' = (T * R * S ) * P, a operação lida da direita para a esquerda indica que a escala (S) é a primeira
+transformação a ser aplicada ao ponto P.
+C) Caso a matriz de escala S aplique fatores idênticos em ambos os eixos (escala uniforme), ela comuta com a rotação, ou substitui-se a ordem sem
+alterar o resultado: R * Suniforme = Suniforme * R.
+D) Para calcular a matriz inversa de uma transformação composta, basta inverter as matrizes mantendo a ordem original dos fatores, ou seja, (T *
+R)-1 = T-1 * R-1.
+E) Qualquer transformação afim composta mantém a integridade dos ângulos internos e das distâncias originais dos objetos, mesmo que inclua
+cisalhamentos ou escalas não uniformes.
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: Uma escala uniforme multiplica ambos os eixos pelo mesmo fator s, comportando-se algebricamente como uma matriz
+escalar (uma matriz identidade multiplicada por s). Matrizes escalares possuem a propriedade matemática de comutar com qualquer outra
+matriz quadrada de mesma ordem. Logo, aplicar uma escala uniforme e depois rotacionar resulta na mesma posição e proporção do que
+rotacionar primeiro e escalar uniformemente depois.
+• A alternativa A está incorreta porque a multiplicação de matrizes gerais não é comutativa.
+• A letra B erra a ordem de leitura em vetores-coluna (que ocorre da direita para a esquerda, tornando S a primeira e não a última).
+• A letra D falha na propriedade da inversa de um produto, que inverte a ordem dos fatores ((T * R)-1 = R-1 * T-1).
+• E a letra E ignora que escalas não uniformes e cisalhamentos distorcem ângulos e proporções.
+
+-- 6 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 7 de 62
+Público	Público
+Questão 07
+No estágio de projeção do pipeline gráfico, as coordenadas 3D são convertidas em coordenadas 2D de tela. Para isso, a computação gráfica divide
+as projeções em duas grandes categorias: a Projeção Paralela (Ortogonal) e a Projeção Perspectiva.
+A respeito das propriedades geométricas e teóricas dessas projeções, assinale a alternativa correta:
+A) Na projeção perspectiva, o centro de projeção (câmera) fica localizado a uma distância infinita do plano de visualização, fazendo com que os
+raios projetores fiquem perfeitamente paralelos entre si.
+B) A projeção ortogonal reproduz o efeito de encurtamento por perspectiva (foreshortening), onde objetos mais distantes da câmera aparecem
+significativamente menores na tela.
+C) Na projeção perspectiva, linhas que são perfeitamente paralelas no espaço 3D podem convergir para pontos de fuga comuns ao serem projetadas,
+o que impede a realização de medições industriais diretas sobre a imagem.
+D) A projeção paralela ortogonal é a que melhor emula a visão humana e as lentes fotográficas reais, sendo amplamente usada em jogos de
+simulação imersiva em primeira pessoa.
+E) Ambas as projeções utilizam raios convergentes fixados em uma coordenada finita, diferenciando-se apenas pela cor de fundo configurada no
+buffer da janela.
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: A alternativa C descreve perfeitamente o comportamento da projeção perspectiva. Como os raios de luz convergem para
+um ponto focal finito (a posição da câmera), linhas paralelas que se estendem em profundidade parecem se aproximar até se encontrarem
+em um ponto de fuga. Isso distorce as proporções reais, impossibilitando medições diretas (técnicas).
+• A alternativa A está incorreta porque quem tem centro de projeção no infinito é a projeção paralela.
+• A letra B inverte os conceitos (a ortogonal mantém o tamanho dos objetos independente da distância).
+• A letra D está errada pelo mesmo motivo (a perspectiva é que emula o olho humano).
+• E a letra E erra a natureza geométrica dos raios da projeção paralela.
+
+-- 7 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 8 de 62
+Público	Público
+Questão 08
+Matematicamente, as projeções ortogonal e perspectiva são aplicadas aos objetos 3D por meio de matrizes homogêneas de ordem 4 X 4. No entanto,
+o comportamento do componente homogêneo w' após a multiplicação é diferente entre os dois modelos.
+A respeito das características matemáticas dessas matrizes e da etapa de divisão perspectiva, assinale a alternativa correta:
+A) Na projeção ortogonal, o volume de visualização (viewing frustum) assume o formato geométrico de uma pirâmide truncada, onde o topo é o
+plano de corte próximo (near).
+B) O efeito de diminuição dos objetos mais distantes da câmera ocorre na etapa de "divisão perspectiva", na qual as coordenadas X, Y e Z são
+divididas pelo componente homogêneo w', que acumulou o valor da profundidade da cena.
+C) A matriz de projeção perspectiva mantém o componente homogêneo fixo no valor w' = 1, dispensando qualquer cálculo de divisão posterior.
+D) A projeção ortogonal distorce os ângulos de linhas paralelas ao plano de projeção, o que impede seu uso na plotagem de plantas arquitetônicas
+e diagramas de engenharia.
+E) Após passar pela projeção perspectiva, a profundidade dos objetos armazenada no Z-buffer continua variando de forma perfeitamente linear em
+relação à coordenada Z original do mundo.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: Na projeção perspectiva, a matriz 4 X 4 é estruturada para que a última linha capture a profundidade do ponto (armazenando-
+a na variável homogênea w'). Posteriormente, o pipeline gráfico divide todas as coordenadas por esse w' (x/w', y/w', z/w'). É exatamente
+essa divisão por um fator de profundidade que faz com que objetos mais distantes resultem em coordenadas menores na tela, gerando o
+efeito visual de encurtamento por perspectiva (foreshortening).
+• A alternativa A descreve o volume da perspectiva (o da ortogonal é uma caixa/paralelepípedo).
+• A letra C e a letra E estão incorretas porque a perspectiva altera o w' e torna a variação da profundidade em tela não linear (proporcional
+a 1/z).
+• E a letra D ignora que a projeção ortogonal preserva perfeitamente o paralelismo e as proporções.
+
+-- 8 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 9 de 62
+Público	Público
+Questão 09
+Na modelagem de objetos 3D, duas das abordagens mais utilizadas são a Representação por Fronteira (B-Rep) e a Geometria Sólida Construtiva
+(CSG). A tecnologia CSG constrói objetos complexos a partir de blocos básicos bem definidos.
+A respeito das características estruturais da Geometria Sólida Construtiva (CSG), assinale a alternativa correta:
+A) O modelo CSG armazena apenas vértices, arestas e faces soltas no espaço, o que frequentemente resulta em superfícies abertas que não
+encerram um volume real.
+B) A estrutura interna do modelo CSG armazena o objeto como uma árvore binária de operações booleanas (como união, interseção e diferença)
+aplicadas sobre primitivas geométricas sólidas.
+C) Uma das desvantagens do modelo CSG é a facilidade com que ele permite a criação acidental de "sólidos impossíveis" ou sem integridade física.
+D) As operações lógicas aplicadas no modelo CSG operam exclusivamente sobre imagens rasterizadas bidimensionais, não possuindo relação com
+volumes 3D.
+E) A árvore hierárquica do modelo CSG descarta o histórico de criação do objeto, salvando apenas a malha final de triângulos na memória flash do
+hardware.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente a essência da Geometria Sólida Construtiva (CSG). Nesse modelo, o objeto não é
+salvo por suas superfícies externas, mas sim por uma árvore hierárquica que dita como formas geométricas primitivas fechadas (como
+cubos, esferas e cilindros) combinam-se por meio de operadores booleanos. Como as primitivas de entrada são volumes perfeitamente
+válidos e fechados, as operações lógicas garantem implicitamente a integridade topológica do sólido final.
+• As alternativas A, C e E descrevem falhas ou características associadas a outros modelos (como B-Rep ou malhas poligonais), e a D erra
+a dimensionalidade da técnica.
+
+-- 9 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 10 de 62
+Público	Público
+Questão 10
+Os modelos de Representação por Fronteira definem um objeto tridimensional descrevendo explicitamente os limites que separam o espaço interno
+do sólido do espaço externo. Essa descrição é feita por meio de elementos topológicos conectados, organizados em estruturas de dados que
+mapeiam o relacionamento mútuo entre essas partes. Na prática, o sucesso da manipulação de um modelo de fronteira depende de o software
+garantir que a malha de polígonos seja considerada "manifold" (variedade topológica regular).
+A respeito dos conceitos teóricos envolvidos nas malhas e nas estruturas de dados de representação por fronteira, assinale a opção correta:
+A) Uma malha poligonal é considerada regular do ponto de vista topológico quando cada uma de suas arestas é compartilhada por um número
+indefinido de faces vizinhas, garantindo a continuidade visual do sombreamento.
+B) A estrutura de dados conhecida como lista de triângulos indexados armazena a geometria duplicando as coordenadas de posição de cada vértice
+para cada face em que ele aparece, otimizando o consumo de memória do sistema.
+C) Em um modelo de representação por fronteira válido e fechado, superfícies não orientáveis são amplamente aceitas pelos motores de
+renderização comerciais porque facilitam o cálculo de iluminação e o descarte de faces traseiras.
+D) Para que uma malha poligonal fechada seja considerada topologicamente consistente e represente um sólido real e contínuo, suas arestas devem
+conectar faces de forma que exatamente duas faces se encontrem em cada aresta comum, evitando furos ou ramificações abertas.
+E) As estruturas de dados topológicas focam exclusivamente na posição espacial dos pontos no mundo tridimensional, sem se preocupar em
+armazenar quais vértices estão conectados por quais arestas.
+Gabarito Comentado:
+• Alternativa correta: D
+• Justificativa: A alternativa D está correta porque define uma das propriedades fundamentais das malhas regulares. Para que uma
+superfície represente a fronteira estrita de um sólido fechado, ela não pode ter bordas abertas (arestas com apenas uma face) e nem
+autointerseções ou bifurcações absurdas (arestas compartilhadas por três ou mais faces). Cada aresta deve unir exatamente duas faces.
+A alternativa A está errada por sugerir um número indefinido de faces.
+• A alternativa B descreve o oposto (a indexação serve justamente para evitar duplicar coordenadas).
+• A alternativa C está incorreta porque superfícies precisam ser orientáveis para que o sistema saiba diferenciar o "dentro" do "fora" do
+objeto.
+• A alternativa E está errada porque as estruturas de fronteira servem primordialmente para guardar a conectividade (topologia), separada
+da posição geométrica pura.
+
+-- 10 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 11 de 62
+Público	Público
+Questão 11
+No design de produtos, animação digital e modelagem de superfícies complexas – como a lataria de um automóvel ou a face de um personagem –,
+o uso de polígonos planos pode se mostrar insuficiente para representar formas perfeitamente suaves. Para resolver isso, a Computação Gráfica
+utiliza representações paramétricas baseadas em splines, como as curvas de Bézier e as B-Splines. Em vez de definir cada ponto da curva, o
+projetista manipula um conjunto discreto de pontos que determinam a trajetória e o comportamento da forma geométrica.
+Considerando as propriedades teóricas de controle, aproximação e continuidade dessas curvas, analise as asserções a seguir e a relação proposta
+entre elas:
+I. As curvas B-Splines oferecem uma vantagem de usabilidade técnica superior às curvas de Bézier tradicionais quando se trabalha com modelos
+complexos de muitos vértices, pois permitem o controle local da geometria manipulada.
+PORQUE
+II. Ao alterar a posição de um único ponto de controle em uma curva B-Spline, o efeito de distorção ou ajuste propaga-se de maneira global por toda
+a extensão da curva, exigindo o recálculo completo de todos os seus segmentos adjacentes.
+A respeito dessas asserções, assinale a opção correta:
+A) As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.
+B) As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.
+C) A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.
+D) A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.
+E) Ambas as asserções são proposições falsas.
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: A asserção I é verdadeira. Nas curvas de Bézier, o controle é estritamente global; se mudamos um ponto, toda a curva se
+modifica, dificultando modelagens detalhadas. As B-Splines resolvem isso dividindo a curva em segmentos matematicamente vinculados,
+oferecendo o chamado controle local.
+• A asserção II é falsa justamente porque ela descreve o comportamento de Bézier, e não das B-Splines. Nas B-Splines, a alteração de um
+ponto afeta apenas uma região restrita (sua vizinhança imediata), mantendo o restante da forma intacto.
+
+-- 11 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 12 de 62
+Público	Público
+Questão 12
+As técnicas de subdivisão de superfícies revolucionaram a modelagem geométrica ao unir a simplicidade das malhas poligonais com a suavidade
+das superfícies baseadas em splines. Em vez de lidar com equações matemáticas complexas de alto nível, o modelador cria uma malha poligonal
+grosseira de controle (com poucos polígonos) e o algoritmo aplica regras sucessivas de refinamento topológico e suavização de posições. Esse
+processo gera, no limite, uma superfície perfeitamente lisa e contínua, ideal para processos de animação.
+A respeito dos conceitos e algoritmos teóricos de subdivisão de superfícies poligonais, assinale a opção correta:
+A) Os algoritmos de subdivisão geram superfícies suaves aplicando os passos de refinamento apenas na renderização final, impossibilitando que a
+malha de controle mantenha a mesma estrutura topológica inicial.
+B) Esquemas de subdivisão aproximativos, como o método de Catmull-Clark, criam superfícies lisas onde a malha limite resultante passa
+obrigatoriamente por cima de cada um dos vértices originais da malha grosseira de controle.
+C) Algoritmos de subdivisão baseados em esquemas interpolativos alteram a posição dos vértices originais a cada iteração, movendo-os em direção
+à média dos pontos vizinhos para garantir a continuidade das faces.
+D) A grande vantagem teórica das superfícies de subdivisão em relação às representações tradicionais por remendos de superfícies (como os
+NURBS patches) é a capacidade de lidar com malhas de topologia arbitrária, permitindo ramificações e fechamentos complexos sem criar rachaduras
+ou costuras visíveis no objeto.
+E) O processo de subdivisão poligonal consiste puramente na duplicação do número de polígonos de uma cena, sem realizar nenhum tipo de média
+ou deslocamento geométrico dos pontos no espaço 3D.
+Gabarito Comentado:
+• Alternativa correta: D
+• Justificativa: A alternativa D está correta. Remendos paramétricos tradicionais exigem uma estrutura de grade estritamente retangular, o
+que torna muito difícil costurar partes complexas (como os dedos de uma mão ou a asa de um dragão) sem gerar fendas visíveis. As
+superfícies de subdivisão resolvem isso porque aceitam qualquer topologia de malha de entrada, aplicando regras locais para manter a
+continuidade visual e geométrica perfeita em toda a peça.
+• A alternativa A está errada porque a estrutura topológica inicial serve de guia fixo em todo o pipeline.
+• As alternativas B e C estão invertidas: métodos aproximativos (Catmull-Clark) puxam a malha final em direção aos pontos de controle sem
+necessariamente tocá-los; métodos interpolativos é que mantêm os vértices originais fixos em suas posições exatas.
+• A alternativa E está errada porque duplicar polígonos sem suavização geométrica resultaria apenas em uma malha idêntica e plana.
+
+-- 12 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 13 de 62
+Público	Público
+Questão 13
+Para representar volumes tridimensionais preenchidos por blocos chamados voxels, os sistemas gráficos frequentemente utilizam estruturas de
+dados hierárquicas conhecidas como Octrees (árvores de subdivisão de base oito), visando economizar memória em relação a matrizes estáticas
+lineares.
+A respeito do princípio de funcionamento e da economia de memória proporcionada pelo algoritmo de uma Octree, assinale a alternativa correta:
+A) A Octree armazena individualmente cada coordenada tridimensional vazia do espaço, exigindo mais memória RAM do que uma matriz estática
+quando o cenário está completamente limpo.
+B) O algoritmo subdivide recursivamente uma região do espaço em oito subvolumes idênticos apenas quando aquela região contiver uma mistura
+de áreas cheias e vazias, interrompendo a divisão se o bloco for totalmente homogêneo.
+C) Uma Octree realiza divisões fixas e obrigatórias de todo o cenário até o nível máximo de profundidade da árvore, independentemente de o objeto
+ser uma caixa simples ou uma escultura complexa.
+D) A estrutura de uma Octree é estritamente unidimensional, o que impede a sua aplicação em motores de renderização que tratem de profundidade
+espacial e eixos cartesianos.
+E) Ao encontrar uma região totalmente preenchida pelo objeto sólido, a Octree descarta essa informação da memória, gerando buracos e furos
+invisíveis na malha final rasterizada na tela.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B explica com precisão o princípio de compressão hierárquica da Octree. Em vez de gastar memória com todos
+os pontos do espaço, a árvore analisa um bloco. Se esse bloco estiver 100% vazio ou 100% cheio, ela cria apenas um único nó e interrompe
+o processo ali. Ela só realiza a quebra recursiva em oito novos quadrantes tridimensionais se houver um nó parcial (fronteiras mistas com
+detalhes). Isso reduz drasticamente o consumo de memória em grandes volumes homogêneos.
+• A alternativa A e C dizem o oposto desse funcionamento inteligente.
+• A letra D erra a natureza da estrutura (que é tridimensional por definição).
+• E a letra E causaria a destruição dos dados do objeto.
+
+-- 13 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 14 de 62
+Público	Público
+Questão 14
+A escolha da topologia fundamental dos elementos que compõem uma malha poligonal exerce grande impacto em diferentes etapas do pipeline de
+produção gráfica. Na indústria moderna, desenhistas de personagens e animadores preferem criar malhas baseadas majoritariamente em
+quadriláteros (quad-dominant meshes). Por outro lado, os engenheiros de hardware de placas gráficas e os desenvolvedores de motores de jogos
+em tempo real projetam seus sistemas para operar quase que exclusivamente com malhas baseadas em triângulos (triangle meshes).
+Sob a perspectiva teórica das propriedades geométricas e computacionais dessas duas estruturas de malha, assinale a opção correta:
+A) Três pontos quaisquer no espaço tridimensional podem definir uma superfície não plana, o que torna as malhas de triângulos instáveis para o
+cálculo preciso de vetores normais de sombreamento.
+B) As malhas de quadriláteros são amplamente preferidas para a animação de deformação de personagens (como expressões faciais) porque suas
+linhas de fluxo topológico acompanham a musculatura de forma natural e evitam artefatos visíveis de dobra quando a malha se flexiona.
+C) Placas de vídeo realizam a rasterização de polígonos baseando-se em quadriláteros nativos porque dividir um polígono em formas menores
+adiciona complexidade desnecessária ao processamento interno do circuito lógico.
+D) A interpolação de coordenadas internas em um quadrilátero é matematicamente mais simples e direta do que em um triângulo, garantindo que o
+mapeamento de texturas seja sempre livre de ambiguidades em superfícies distorcidas.
+E) Malhas compostas inteiramente por triângulos são incapazes de representar superfícies fechadas com volumes válidos, limitando seu uso apenas
+a planos bidimensionais de fundo.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Na modelagem voltada à animação orgânica, os quadriláteros criam "edge loops" (anéis de
+arestas contínuos) que simulam a direção dos músculos do corpo ou do rosto. Quando o personagem se move, a malha se dobra de forma
+previsível e limpa. Triângulos nessas áreas tendem a criar "pontas" ou vincos estranhos sob iluminação dinâmica.
+• A alternativa A está errada porque três pontos definem estritamente um plano (o triângulo é sempre plano, o que o torna ideal para o
+hardware).
+• A alternativa C está errada porque o hardware gráfico transforma tudo internamente em triângulos exatamente pela simplicidade
+geométrica deles.
+• A alternativa D está incorreta porque a interpolação em quadriláteros pode ser ambígua se os quatro pontos não estiverem no mesmo
+plano.
+• A alternativa E está incorreta porque malhas de triângulos representam qualquer volume tridimensional complexo perfeitamente.
+
+-- 14 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 15 de 62
+Público	Público
+Questão 15
+Em aplicações de computação gráfica de mundo aberto, motores de renderização utilizam a técnica de Nível de Detalhe (LOD - Level of Detail)
+para gerenciar a quantidade de polígonos processados na tela, garantindo uma taxa de quadros estável.
+A respeito dos princípios fundamentais do LOD e do processamento de modelos geométricos complexos, assinale a alternativa correta:
+A) A técnica de LOD substitui modelos simples por versões progressivamente mais densas e com mais polígonos à medida que o objeto se afasta
+da câmera virtual.
+B) Algoritmos de LOD baseiam-se na premissa de que objetos distantes da câmera ocupam áreas pequenas na tela, permitindo reduzir seus detalhes
+geométricos sem perda perceptível de qualidade para o observador.
+C) Uma nuvem de pontos bruta capturada por escaneamento a laser dispensa técnicas de LOD, pois vértices sem conectividade polonosa são
+renderizados sem custo computacional pela GPU.
+D) A aplicação de LOD é um recurso puramente estético e obrigatório apenas para objetos bidimensionais (2D) planos que não sofrem influência de
+luz e sombra.
+E) O uso de LOD impede o motor gráfico de renderizar cenários distantes, forçando o desaparecimento abrupto de montanhas e terrenos do
+horizonte.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B define perfeitamente o fundamento biológico e computacional por trás do Level of Detail. Como a resolução
+geométrica projetada na tela diminui drasticamente com a distância, o olho humano torna-se incapaz de distinguir pequenos detalhes em
+objetos distantes. Substituir um modelo de milhares de polígonos por uma versão de poucas dezenas economiza imenso processamento
+sem prejudicar a fidelidade visual da cena.
+• A alternativa A descreve o inverso do algoritmo.
+• A letra C está incorreta porque nuvens de pontos puras são extremamente pesadas e ineficientes para renderização direta a longas
+distâncias, exigindo filtragem ou reconstrução de superfícies.
+• As letras D e E contradizem os conceitos espaciais e de otimização do horizonte de visualização de jogos e simuladores.
+
+-- 15 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 16 de 62
+Público	Público
+Questão 16
+Diferente da modelagem tradicional, onde um artista esculpe ou posiciona manualmente cada vértice de um objeto, a Modelagem Procedural delega
+a geração da geometria a regras, algoritmos e funções predefinidas. No desenvolvimento de cenas naturais complexas, duas abordagens se
+destacam: os Sistemas Lindenmayer (Sistemas L) e a geometria fractal. Os Sistemas L utilizam regras gramaticais de reescrita de strings para
+simular processos de crescimento biológico, enquanto os fractais aplicam o conceito de autossimilaridade para gerar terrenos, nuvens e texturas
+orgânicas.
+A respeito das características teóricas e das aplicações da modelagem baseada em procedimentos e regras gramaticais, assinale a opção correta:
+A) Os Sistemas L baseiam-se em estruturas gramaticais estritamente lineares que impedem a ramificação de ramagens, limitando seu uso prático à
+modelagem de texturas de superfícies rochosas e cristais planos.
+B) A principal característica teórica de uma estrutura geométrica fractal é a autossimilaridade, o que significa que o objeto exibe formas e padrões
+estruturais repetitivos e análogos quando observado em diferentes escalas de ampliação.
+C) A modelagem procedural de terrenos por meio de ruídos e fractais consome muito mais espaço de armazenamento permanente em disco do que
+guardar a malha poligonal finalizada do cenário, embora simplifique o processamento em tempo real.
+D) Algoritmos procedurais de geração de vegetação são incapazes de introduzir fatores de aleatoriedade, resultando em florestas onde todas as
+árvores geradas pelas mesmas regras possuem ramificações idênticas e simétricas.
+E) Os Sistemas L operam convertendo diretamente imagens bidimensionais em coordenadas espaciais através de filtros de detecção de borda, sem
+utilizar interpretações baseadas em comandos de desenho geométrico.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. A essência dos fractais na computação gráfica (como na modelagem de montanhas ou nuvens)
+é a propriedade de manter a complexidade e o padrão visual independentemente de quão perto a câmera chegue do objeto.
+• A alternativa A está errada porque os Sistemas L usam colchetes em suas regras gramaticais justamente para salvar estados e permitir
+ramificações complexas (essenciais para criar galhos de árvores e plantas).
+• A alternativa C está errada porque a modelagem procedural faz o oposto: economiza armazenamento, guardando apenas a "fórmula" ou
+algoritmo em vez de milhões de polígonos.
+• A alternativa D está incorreta porque variações estocásticas (aleatórias) são facilmente adicionadas às regras para criar florestas diversas.
+• A alternativa E está incorreta porque os Sistemas L convertem strings de texto em comandos geométricos (frequentemente usando a
+lógica de gráficos de tartaruga).
+
+-- 16 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 17 de 62
+Público	Público
+Questão 17
+No pipeline gráfico tridimensional, a Matriz de Visualização (View Matrix) é responsável por transformar as coordenadas dos objetos do Espaço
+do Mundo para o Espaço da Câmera (ou de Visualização), adaptando a cena ao ponto de vista do observador.
+A respeito dos fundamentos matemáticos e geométricos que regem a criação da câmera virtual, assinale a alternativa correta:
+A) Mover a câmera virtual 10 unidades para cima no espaço do mundo equivale matematicamente a mover todos os objetos do universo 10 unidades
+para cima no referencial da tela.
+B) Para transformar os objetos do espaço do mundo para o espaço da câmera, a matriz de visualização executa operações que equivalem a mover
+o universo virtual na direção inversa à posição e orientação reais da câmera.
+C) No espaço da câmera, a origem do sistema de coordenadas (0,0,0) permanece fixa no centro geométrico do cenário global do mundo, ignorando
+onde o observador está posicionado.
+D) A matriz de visualização é obtida calculando-se exatamente a mesma matriz de transformação linear do objeto e multiplicando sua diagonal
+principal por fatores nulos.
+E) Os eixos de visualização da câmera são configurados para que ela aponte aleatoriamente para qualquer direção fluida, sem a necessidade de
+alinhamento com um dos eixos principais do pipeline.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve com precisão o truque matemático por trás da câmera virtual em computação gráfica. Como a tela
+está rigidamente ligada ao referencial da câmera, simular que a câmera se moveu para a direita e para cima exige que o motor gráfico
+mova o mundo inteiro para a esquerda e para baixo para que a imagem projetada seja correta. Algebricamente, a matriz de visualização
+é a matriz inversa da matriz de transformação de translação e rotação da própria câmera no mundo.
+• A alternativa A descreve o sentido direto (o correto seria o inverso).
+• A letra C está incorreta porque o objetivo da transformação é justamente trazer a origem do sistema para o olho do observador.
+• A letra D erra a operação algébrica (exige a inversão da matriz da câmera).
+• E a letra E desconsidera que o espaço da câmera exige o alinhamento do vetor de visão com um eixo principal (geralmente o eixo Z) para
+viabilizar os cálculos de projeção subsequentes.
+
+-- 17 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 18 de 62
+Público	Público
+Questão 18
+O modelo matemático mais fundamental utilizado para descrever a geometria de formação de imagens na câmera virtual é o modelo de câmera
+escura de orifício de agulha, conhecido tradicionalmente como câmera pinhole. Esse modelo teórico serve de base para compreender o
+comportamento da perspectiva e a projeção de pontos tridimensionais em um plano bidimensional de imagem, capturando a essência da visualização
+sem a necessidade de simular a complexidade física de lentes ópticas de vidro.
+A respeito das características conceituais e teóricas do modelo de câmera pinhole aplicado à Computação Gráfica, assinale a opção correta:
+A) No modelo físico ideal de uma câmera pinhole, os raios de luz que partem do objeto passam pelo orifício central e projetam no plano traseiro uma
+imagem que se apresenta orientada de forma idêntica (direita e para cima) em relação ao objeto original do mundo.
+B) Para facilitar a implementação computacional e evitar o processamento de imagens invertidas, os sistemas gráficos posicionam conceitualmente
+o plano de projeção virtual à frente do centro de projeção (orifício), entre a câmera e os objetos da cena.
+C) A principal desvantagem teórica do modelo de câmera pinhole é a ocorrência de distorções geométricas severas nas bordas da tela, conhecidas
+como aberrações cromáticas, causadas pela refração da luz nas margens do orifício.
+D) Ao aproximar o plano de projeção em direção ao orifício central da câmera, o ângulo de visão do observador (campo de visão ou Field of View)
+diminui drasticamente, produzindo um efeito visual semelhante ao de uma lente de aproximação (teleobjetiva).
+E) O modelo pinhole assume que o centro de projeção coleta raios de luz vindos de infinitas direções para um único ponto da tela de forma paralela,
+eliminando o conceito de profundidade espacial do pipeline.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Na física real, uma câmera escura projeta a imagem invertida de cabeça para baixo e espelhada
+no plano de fundo. Na computação gráfica, para simplificar os cálculos e manter as coordenadas intuitivas, os programadores colocam o
+plano de projeção virtual de forma abstrata à frente do centro de projeção. Dessa forma, as linhas de projeção que saem do olho
+interceptam esse plano simétrico antes de cruzarem o centro, gerando uma imagem perfeitamente reta e orientada.
+• A alternativa A descreve o comportamento físico real (onde a imagem fica invertida).
+• A alternativa C está errada porque aberrações cromáticas são falhas exclusivas de lentes de vidro reais (refração de cores), algo que o
+modelo pinhole não possui por não usar lentes.
+• A alternativa D está errada porque aproximar o plano do centro aumenta o ângulo de visão (lente grande angular).
+• A alternativa E está errada porque os raios são convergentes, e não paralelos.
+
+-- 18 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 19 de 62
+Público	Público
+Questão 19
+No pipeline gráfico 3D, o volume de visualização é delimitado pelos planos de corte próximo (Near Plane) e afastado (Far Plane). A distribuição da
+precisão matemática do buffer de profundidade (Z-buffer) ao longo desse volume não é uniforme, o que pode gerar artefatos visuais como o Z-
+fighting (polígonos piscando ou se misturando incorretamente).
+A respeito da precisão do Z-buffer e do surgimento do Z-fighting, assinale a alternativa correta:
+A) O Z-fighting ocorre porque o Z-buffer possui precisão matemática infinita, o que faz com que a GPU se confunda ao tentar processar valores
+numéricos excessivamente exatos.
+B) Posicionar o plano de corte próximo (Near Plane) excessivamente perto do olho do observador prejudica a resolução do Z-buffer, comprimindo a
+precisão em um espaço minúsculo e fazendo com que objetos distantes percam a capacidade de distinção de profundidade.
+C) A precisão do Z-buffer é distribuída de forma perfeitamente linear e idêntica por todo o volume, garantindo a mesma quantidade de bits para
+mapear objetos colados à câmera ou no horizonte.
+D) O plano afastado (Far Plane) é o único fator que dita a precisão do sistema, de modo que aproximá-lo da câmera elimina instantaneamente
+qualquer erro de arredondamento de subpixels.
+E) O Z-fighting afeta exclusivamente as cores texturizadas das primitivas, sem possuir qualquer relação com as coordenadas de profundidade ou
+com a posição geométrica dos polígonos.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A resolução do Z-buffer é finita (baseada em bits, como 16, 24 ou 32 bits) e sua distribuição é não linear devido à divisão
+perspectiva (proporcional a 1/z). Isso significa que a maior parte da precisão fica concentrada extremamente perto do plano próximo (Near).
+Se o programador trouxer o plano Near para muito perto da câmera (ex: 0.001), ele estica essa escala de forma desfavorável, fazendo
+com que a precisão caia drasticamente para o restante do cenário. Sem bits suficientes para diferenciar polígonos que estão muito
+próximos um do outro no espaço médio/distante, a placa de vídeo arredonda suas profundidades para o mesmo valor, fazendo-os
+"disputar" o pixel e gerando o efeito de piscar na tela (Z-fighting).
+• A alternativa A fala em precisão infinita (é finita).
+• A letra C alega que a distribuição é linear (é não linear).
+• A letra D ignora o impacto crítico do plano Near.
+• E a letra E erra a natureza do defeito, que é puramente geométrico de profundidade.
+
+-- 19 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 20 de 62
+Público	Público
+Questão 20
+Para configurar e manipular adequadamente uma câmera virtual em um motor gráfico, os desenvolvedores manipulam propriedades organizadas
+didaticamente em dois conjuntos distintos de parâmetros: as propriedades extrínsecas e as propriedades intrínsecas da câmera. Enquanto um grupo
+define o relacionamento da câmera com o cenário tridimensional que a cerca, o outro determina como os raios que entram por ela são mapeados
+no sensor digital ou na tela de exibição.
+A respeito das características conceituais que diferenciam os parâmetros intrínsecos e extrínsecos de uma câmera virtual, assinale a opção correta:
+A) A alteração do ângulo de abertura do campo de visão horizontal e vertical da cena é uma modificação que afeta exclusivamente os parâmetros
+extrínsecas da câmera gráfica.
+B) Os parâmetros extrínsecos são responsáveis por mapear a transformação de projeção matemática, controlando aspectos internos como a razão
+de aspecto da tela e a distorção da imagem.
+C) A especificação dos vetores de orientação da câmera — compostos pela posição da câmera, o ponto para onde ela aponta e o vetor que indica
+qual direção é considerada "para cima" — constitui os parâmetros extrínsecos que dão origem à matriz de visualização.
+D) Ao transladar a câmera virtual para trás ao longo do espaço global do mundo, o desenvolvedor está modificando um parâmetro intrínseco, pois
+altera as propriedades ópticas da lente virtual.
+E) Os parâmetros intrínsecos dependem diretamente da rotação do mundo e descrevem o comportamento de alinhamento dos objetos em relação
+aos limites laterais das janelas do sistema operacional.
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: A alternativa C está correta. Os parâmetros extrínsecos definem o posicionamento externo da câmera no mundo
+tridimensional (sua localização e orientação no espaço). Eles são comumente definidos pelos vetores de posição, alvo de visualização e
+vetor de orientação vertical, gerando a matriz de visualização.
+• As alternativas A, B e D estão incorretas porque trocam os conceitos: o campo de visão, a razão de aspecto e as propriedades de
+projeção/lente são parâmetros intrínsecos (características internas da própria câmera).
+• A alternativa E está incorreta porque os parâmetros intrínsecos não dependem da rotação do mundo exterior, mas sim das propriedades
+geométricas de projeção de imagem na tela.
+
+-- 20 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 21 de 62
+Público	Público
+Questão 21
+No pipeline de renderização 3D, após a aplicação da matriz de projeção e da divisão perspectiva, os objetos são mapeados no espaço de
+Coordenadas de Dispositivo Normalizadas (NDC), que serve como um referencial intermediário e padronizado.
+A respeito das características teóricas e do papel do espaço NDC no pipeline gráfico, assinale a alternativa correta:
+A) O espaço NDC depende diretamente da resolução física em pixels do monitor, alterando seus limites internos caso o usuário mude a qualidade
+do jogo de 1080p para 4K.
+B) O mapeamento para o espaço NDC converte o volume de visualização em um cubo fixo e bem definido, o que simplifica e acelera o processamento
+de algoritmos de recorte (clipping) de polígonos no hardware.
+C) As coordenadas no espaço NDC variam de zero a infinito em todos os eixos, permitindo que a placa de vídeo armazene dados sem qualquer
+limite espacial cúbico.
+D) O espaço NDC é a última etapa do pipeline gráfico, sendo o responsável direto por acender fisicamente os LEDs ou cristais líquidos da tela do
+monitor.
+E) A principal função do NDC é aplicar texturas coloridas e mapeamento de sombras sobre os polígonos, descartando as posições geométricas dos
+eixos X, Y e Z.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente o propósito do NDC. O volume de visualização original (frustum da perspectiva) é
+uma pirâmide truncada matematicamente complexa para se calcular recortes de polígonos em tempo real. A projeção deforma esse
+espaço, transformando-o em um volume cúbico regular padronizado (onde os limites de X, Y e Z geralmente variam entre -1.0 e 1.0). Ter
+um cubo fixo permite que o hardware faça o clipping (corte do que está fora da tela) de forma extremamente rápida.
+• A alternativa A e D estão incorretas porque o NDC é totalmente independente da resolução da tela; o ajuste para os pixels reais do
+monitor só ocorre na etapa seguinte (Transformação de Viewport).
+• A letra C erra os limites matemáticos do cubo.
+• E a letra E descreve funções de sombreamento/rasterização que não pertencem ao escopo geométrico do NDC.
+
+-- 21 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 22 de 62
+Público	Público
+Questão 22
+Embora o modelo de câmera pinhole seja o padrão básico para a projeção em computação gráfica devido à sua simplicidade, ele produz imagens
+perfeitamente nítidas em todas as distâncias focais, o que difere do comportamento de câmeras reais e da visão humana. Para aumentar o
+fotorrealismo de cenas tridimensionais, motores gráficos modernos implementam efeitos ópticos avançados na câmera virtual, como a Profundidade
+de Campo (Depth of Field) e o Borrão de Movimento (Motion Blur), simulando as imperfeições e características mecânicas de lentes e obturadores
+físicos.
+A respeito das características teóricas e conceituais desses efeitos de câmera avançados, assinale a opção correta:
+A) O efeito de profundidade de campo ocorre naturalmente nos sistemas gráficos devido ao espessamento dos polígonos em regiões distantes,
+dispensando o uso de algoritmos de pós-processamento de imagem.
+B) Na simulação de profundidade de campo, a região do espaço tridimensional onde os objetos aparecem com nitidez máxima na imagem final é
+conhecida como plano focal, e a intensidade do desfoque aumenta à medida que os objetos se afastam dessa zona, seja para a frente ou para trás.
+C) O borrão de movimento atua estritamente sobre objetos estáticos do cenário, simulando falhas na taxa de atualização vertical do monitor de vídeo
+quando o usuário permanece parado.
+D) O parâmetro físico simulado pela câmera virtual para controlar a intensidade do borrão de movimento é a distância do plano de corte próximo, de
+modo que planos mais distantes geram mais rastros na imagem.
+E) Ambos os efeitos são aplicados diretamente na geometria dos vértices dos objetos antes da aplicação das matrizes de translação, alterando a
+estrutura topológica original da malha.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. A profundidade de campo simula lentes reais com aberturas de diafragma variadas. Existe uma
+distância específica (o plano focal) onde os raios convergem perfeitamente e a imagem fica nítida. Objetos que estão mais próximos da
+câmera ou muito mais distantes do que essa faixa de foco sofrem uma dispersão de luz, resultando no desfoque (bokeh).
+• A alternativa A está incorreta porque o pipeline básico gera tudo perfeitamente nítido, exigindo simulações extras (como algoritmos de
+pós-processamento baseados no buffer de profundidade).
+• A alternativa C está incorreta porque o borrão de movimento simula o tempo de exposição do obturador sobre objetos em movimento
+rápido ou movimentos bruscos da própria câmera.
+• A alternativa D e E estão erradas porque esses efeitos não alteram a topologia geométrica e não dependem do plano próximo.
+
+-- 22 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 23 de 62
+Público	Público
+Questão 23
+A projeção paralela ortográfica é amplamente utilizada na indústria de jogos (como em visões isométricas de RPGs clássicos e jogos de estratégia)
+e em softwares de engenharia, pois mantém as dimensões dos objetos inalteradas, independentemente da distância.
+A respeito do comportamento geométrico e dos raios projetores em uma câmera ortográfica, assinale a alternativa correta:
+A) Um objeto que se afasta do observador diminuirá progressivamente de tamanho na tela até sumir em um ponto de fuga central.
+B) O volume de visualização de uma câmera ortográfica é formado por raios projetores que divergem a partir de um único ponto focalizado atrás da
+câmera.
+C) Um objeto que se desloca se afastando do observador manterá exatamente o mesmo tamanho na tela, pois os raios projetores dessa câmera
+correm estritamente paralelos uns aos outros.
+D) A projeção isométrica quebra o paralelismo das arestas dos objetos, transformando cubos perfeitos em esferas distorcidas na tela.
+E) As câmeras ortográficas exigem que o componente homogêneo w' mude constantemente de valor para aplicar o efeito de encurtamento por
+perspectiva (foreshortening).
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: A alternativa C descreve perfeitamente a natureza da projeção ortográfica e, por consequência, da isométrica. Como os
+raios projetores são perfeitamente paralelos entre si e interceptam o plano de projeção em ângulo reto, o pipeline gráfico não realiza a
+divisão pela profundidade (Z). Dessa forma, a distância de um objeto até a câmera não altera sua escala final na tela, eliminando o senso
+de profundidade baseado na diminuição de tamanho.
+• A alternativa A descreve a projeção perspectiva.
+• A letra B está errada porque raios divergentes de um único ponto focal pertencem à perspectiva (na ortográfica eles vêm do infinito e são
+paralelos).
+• A letra D está incorreta porque a projeção preserva o paralelismo das arestas (um cubo vira um hexágono regular projetado, mantendo
+linhas retas).
+• E a letra E cita propriedades da projeção perspectiva.
+
+-- 23 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 24 de 62
+Público	Público
+Questão 24
+A Transformação de Viewport representa o estágio final do pipeline geométrico de visualização na Computação Gráfica. Após os objetos passarem
+pelas transformações de mundo, visualização da câmera, projeção e terem suas coordenadas normalizadas dentro de um espaço cúbico abstrato
+(o espaço NDC), o motor gráfico precisa mapear esses dados conceituais para a região física da tela do computador onde os pixels serão de fato
+acesos e rasterizados. Esse mapeamento é regido pelas configurações de tamanho e posição da janela do software.
+A respeito das características teóricas e funcionais da transformação de viewport e do mapeamento de janela, assinale a opção correta:
+A) A matriz de viewport opera sobre as coordenadas normalizadas, convertendo o espaço cúbico abstrato em coordenadas de tela expressas em
+unidades físicas de pixels baseadas na resolução da janela do usuário.
+B) Caso o usuário altere o tamanho da janela do jogo na área de trabalho, a transformação de viewport mantém as coordenadas de pixels estáticas
+e imutáveis, forçando a placa de vídeo a recalcular a matriz de mundo de todos os objetos.
+C) A transformação de viewport é o estágio responsável por descartar as faces traseiras dos polígonos ocultos, mapeando os pontos tridimensionais
+exclusivamente em uma escala logarítmica de cores primárias.
+D) Ao contrário das transformações anteriores do pipeline, a transformação de viewport descarta completamente a coordenada de profundidade dos
+objetos, impossibilitando que algoritmos como o Z-buffer funcionem na etapa subsequente de rasterização.
+E) O mapeamento de viewport exige que a janela de exibição ocupe obrigatoriamente a tela inteira do monitor do computador, impedindo a
+renderização de cenas tridimensionais em pequenos quadros ou interfaces divididas.
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa: A alternativa A está correta. O papel fundamental da viewport é pegar os pontos que estão no espaço normalizado NDC
+(que varia entre faixas numéricas fixas independentes de dispositivo) e traduzi-los de acordo com a resolução real em pixels da janela do
+aplicativo (por exemplo, de 0 a 1920 em largura e de 0 a 1080 em altura).
+• A alternativa B está incorreta porque, quando a janela muda de tamanho, a viewport é atualizada dinamicamente para redimensionar a
+imagem final de pixels.
+• A alternativa C está errada porque o descarte de polígonos traseiros ocorre antes, na fase de clipping/culling.
+• A alternativa D está errada porque a viewport preserva e escala a coordenada de profundidade para uma faixa padrão aceita pelo hardware,
+permitindo o teste de profundidade do Z-buffer.
+• A alternativa E está incorreta porque a viewport pode ser configurada para ocupar qualquer tamanho ou sub-região da tela (essencial para
+jogos com tela dividida para dois jogadores, por exemplo).
+
+-- 24 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 25 de 62
+Público	Público
+Questão 25
+O pipeline gráfico computacional é dividido em duas macrofases no hardware: o processamento geométrico (baseado em vértices) e o
+processamento de fragmentos (baseado em pixels). Entre essas fases, existe a etapa de Rasterização.
+A respeito das responsabilidades e do momento de execução da Rasterização no pipeline, assinale a alternativa correta:
+A) A rasterização atua como a ponte entre a geometria abstrata e a imagem digital, transformando primitivas matemáticas contínuas (como triângulos)
+em um conjunto discreto de fragmentos associados à grade de pixels.
+B) Esse estágio é executado na fase inicial do pipeline, ocorrendo antes de qualquer operação de projeção ou da aplicação das transformações
+geométricas dos vértices.
+C) A função da rasterização é calcular as operações de física e detecção de colisões complexas da CPU, descartando totalmente a malha poligonais
+em 3D.
+D) O sombreamento e a iluminação por pixel ocorrem obrigatoriamente antes da rasterização, permitindo que a GPU pinte objetos que estão
+completamente fora da tela.
+E) A rasterização opera diretamente e exclusivamente sobre vetores de texto tipográfico, não possuindo relação com triângulos, linhas ou pontos
+tridimensionais.
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa: A alternativa A define com exatidão o papel da rasterização. Ela pega os polígonos que já passaram pelas transformações
+geométricas (escala, rotação, translação, visualização e projeção) e determina quais pixels da tela são cobertos por essa forma
+tridimensional mapeada em 2D, gerando os fragmentos correspondentes.
+• A alternativa B está incorreta porque a rasterização ocorre na metade final do pipeline, sendo impossível executá-la antes de projetar a
+geometria no espaço de tela.
+• A letra C e a letra E erram completamente o escopo funcional da etapa.
+• E a letra D inverte a ordem lógica: o processamento e sombreamento de fragmentos (por pixel) ocorre obrigatoriamente após a
+rasterização ter gerado esses mesmos fragmentos.
+
+-- 25 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 26 de 62
+Público	Público
+Questão 26
+Durante o processamento geométrico no pipeline de visualização, a eficiência do sistema depende diretamente da capacidade de identificar e
+descartar dados que não contribuem para a imagem final. Duas técnicas fundamentais aplicadas nesse estágio são o Recorte (Clipping) e o Descarte
+de Faces Traseiras (Backface Culling). Enquanto um lida com a remoção de geometrias que ultrapassam os limites do volume de visão, o outro
+avalia a orientação das superfícies em relação ao observador para evitar o processamento desnecessário de polígonos ocultos pelo próprio objeto.
+A respeito das características operacionais e teóricas dessas duas técnicas no pipeline gráfico, assinale a opção correta:
+A) O processo de Clipping deleta polígonos inteiros de forma indiscriminada se qualquer uma de suas arestas tocar a borda da tela, gerando furos
+visíveis nas margens da imagem final renderizada.
+B) O Backface Culling elimina polígonos que estão voltados de costas para a câmera, baseando-se no sentido de ordenação dos vértices (horário
+ou anti-horário) após a projeção, o que reduz substancialmente a carga de processamento na fase subsequente de rasterização.
+C) Ambas as técnicas operam diretamente sobre o buffer de cores (Color Buffer) após a pintura final dos pixels, descartando as cores que não
+combinam com o cenário.
+D) A técnica de Backface Culling substitui completamente a necessidade de algoritmos de profundidade (como o Z-buffer), garantindo a remoção
+perfeita de qualquer polígono oculto por outros objetos da cena.
+E) O Clipping é executado exclusivamente no espaço do mundo original antes de qualquer transformação de visualização da câmera, para garantir
+que as coordenadas físicas dos objetos permaneçam estáticas.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. O Backface Culling determina se uma face está voltada para frente ou para trás analisando a
+ordem geométrica em que seus vértices aparecem na tela (conhecida como winding order). Se a face está voltada para trás, ela é
+descartada antes da rasterização, economizando tempo do hardware.
+• A alternativa A está errada porque o Clipping não apenas deleta polígonos, mas calcula novos vértices de interseção nos limites do volume
+para recortar o polígono perfeitamente sem deixar furos.
+• As alternativas C e D estão erradas porque essas operações ocorrem na fase geométrica, bem antes da pintura de pixels, e o Backface
+Culling não resolve a oclusão mútua entre objetos diferentes (tarefa que ainda exige o Z-buffer).
+• A alternativa E está incorreta porque o Clipping é muito mais eficiente quando executado em coordenadas projetadas ou normalizadas
+(NDC).
+
+-- 26 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 27 de 62
+Público	Público
+Questão 27
+A evolução das GPUs consolidou a transição de um pipeline de função fixa para um pipeline programável, permitindo o uso de códigos customizados
+chamados shaders. Dois dos principais componentes programáveis são o Vertex Shader e o Fragment Shader.
+A respeito das responsabilidades e da frequência de execução dessas duas etapas no hardware, assinale a alternativa correta:
+A) O Vertex Shader roda para cada pixel da tela com a função exclusiva de aplicar cores e texturas fotorrealistas aos objetos tridimensionais.
+B) O Fragment Shader apresenta uma frequência de execução computacional significativamente maior do que o Vertex Shader, pois processa cada
+pixel potencial gerado pela rasterização que preenche o interior dos polígonos.
+C) O cálculo de efeitos visuais complexos por pixel — como mapeamento de relevo e sombras dinâmicas — deve ser programado obrigatoriamente
+dentro do Vertex Shader, pois ele executa mais vezes do que o sombreador de fragmentos.
+D) O Vertex Shader e o Fragment Shader operam exatamente sobre as mesmas unidades de dados, sendo acionados de forma idêntica e simultânea
+pela CPU.
+E) O sombreador de fragmentos é executado apenas uma vez para cada ponto discreto que define a estrutura externa da malha geométrica do
+objeto, ignorando o preenchimento da tela.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente a diferença de granularidade e carga de processamento entre os dois shaders. O
+Vertex Shader atua na fase geométrica, sendo executado uma vez para cada vértice que compõe o modelo 3D (para calcular posições,
+aplicar transformações, etc.). Já o Fragment Shader roda na fase de pixels, processando cada elemento gerado após a rasterização. Como
+um único polígono definido por apenas 3 vértices pode ocupar milhares ou milhões de pixels na tela, o Fragment Shader é acionado com
+uma frequência infinitamente maior, sendo o estágio ideal para efeitos complexos e cálculos de iluminação por pixel.
+• As alternativas A, C e E invertem completamente os conceitos de atuação e carga de trabalho de cada estágio.
+• E a letra D ignora que eles manipulam dados totalmente distintos (estruturas de vértices vs. fragmentos discretos de tela).
+
+-- 27 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 28 de 62
+Público	Público
+Questão 28
+No pipeline gráfico, a rasterização transforma primitivas geométricas em fragmentos na tela. Contudo, informações essenciais como cores, vetores
+normais de iluminação e coordenadas de mapeamento de textura são originalmente definidas de forma discreta, ou seja, apenas nos vértices que
+compõem o polígono. Para determinar os valores corretos desses atributos em cada ponto interior do triângulo que está sendo desenhado, o
+hardware realiza uma operação contínua de interpolação de atributos.
+A respeito das características teóricas e do comportamento do processo de interpolação no pipeline de visualização, assinale a opção correta:
+A) A interpolação de atributos calcula as propriedades internas ignorando as distâncias relativas entre os fragmentos e os vértices, aplicando uma
+cor aleatória em cada pixel rasterizado.
+B) Caso os vértices de um triângulo possuam cores totalmente diferentes configuradas pelo desenvolvedor, a interpolação linear simples realizada
+durante a rasterização gerará uma transição suave e gradual de tonalidades ao longo da superfície do polígono.
+C) Coordenadas de textura interpoladas linearmente de forma direta no espaço bidimensional da tela geram imagens perfeitamente corrigidas contra
+distorções de perspectiva, sem necessitar de ajustes baseados na profundidade espacial.
+D) O processo de interpolação de atributos duplica os dados geométricos originais da malha, aumentando o número de vértices físicos armazenados
+na memória de vídeo após o término da renderização.
+E) A interpolação atua exclusivamente sobre os eixos de posição espacial, sendo teoricamente incapaz de propagar dados abstratos como mapas
+de relevo ou vetores de luz para os fragmentos internos.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. A interpolação (historicamente ligada ao sombreamento Gouraud) calcula o valor de um atributo
+em qualquer ponto interno com base na proximidade daquele fragmento em relação aos vértices. Se os vértices têm cores distintas, o
+resultado é um gradiente suave unindo essas tonalidades.
+• A alternativa A está errada porque a distância em relação aos vértices é o fator determinante no cálculo.
+• A alternativa C está incorreta porque a interpolação linear pura na tela gera distorções visuais em superfícies inclinadas; o hardware
+moderno precisa aplicar a "interpolação corrigida por perspectiva", que usa a coordenada de profundidade para ajustar o mapeamento.
+• A alternativa D está errada porque a interpolação gera dados temporários para os fragmentos na tela e não cria novos vértices na malha
+original.
+• A alternativa E está incorreta porque qualquer atributo associado ao vértice pode ser interpolado.
+
+-- 28 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 29 de 62
+Público	Público
+Questão 29
+Nos estágios finais do pipeline gráfico, o hardware realiza operações por fragmento antes de atualizar a tela. Duas tecnologias essenciais nessa
+fase são o Teste de Profundidade (Z-buffer) e o mecanismo de Duplo Buffer (Double Buffering). Embora ambos manipulem áreas de memória
+na placa de vídeo, eles resolvem problemas totalmente diferentes.
+A respeito das funções e diferenças entre essas duas tecnologias, assinale a alternativa correta:
+A) O mecanismo de Double Buffering é o responsável direto por resolver o problema de oclusão de superfícies, comparando as distâncias Z para
+impedir que objetos de trás fiquem visíveis por cima de objetos da frente.
+B) O Double Buffering divide a memória de vídeo em dois quadros: o buffer frontal (Front Buffer), que exibe a imagem atual no monitor, e o buffer
+traseiro (Back Buffer), onde a próxima cena é desenhada de forma oculta para evitar rasgos visuais (screen tearing).
+C) O Z-buffer atua dividindo a tela horizontalmente em duas metades físicas idênticas para que duas placas de vídeo desenhem o cenário
+simultaneamente.
+D) A troca entre o Front Buffer e o Back Buffer ocorre linha por linha diretamente nos pixels acesos da tela do monitor, de modo que o usuário
+acompanha o desenho geométrico em tempo real.
+E) Ambas as tecnologias operam com o mesmo objetivo de aplicar iluminação e sombras fotorrealistas aos fragmentos gerados pelo estágio de
+rasterização.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente a mecânica e o propósito do Double Buffering. Para evitar que o usuário veja a cena
+sendo construída linha por linha na tela (gerando artefatos como o screen tearing), o hardware renderiza todo o próximo quadro de forma
+isolada e oculta no Back Buffer. Quando a imagem está pronta, o sistema faz uma troca rápida (swap buffers) com o Front Buffer, exibindo
+apenas imagens totalmente finalizadas no monitor.
+• A alternativa A está incorreta porque o controle de oclusão (quem está na frente ou atrás) é função estrita do Z-buffer.
+• A letra C erra a definição do Z-buffer (que armazena profundidade por pixel).
+• A letra D descreve justamente o problema que o Double Buffering foi criado para evitar.
+• E a letra E cita propriedades de iluminação que pertencem aos shaders de fragmento, não à gerência de buffers de tela.
+
+-- 29 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 30 de 62
+Público	Público
+Questão 30
+A representação de linhas e bordas de polígonos perfeitamente suaves em um monitor digital constitui um desafio fundamental na Computação
+Gráfica. Como as telas são formadas por uma grade discreta e ortogonal de pixels retangulares, a renderização de formas inclinadas ou curvas gera
+degraus visíveis nas bordas dos objetos, um artefato visual conhecido como serrilhamento (aliasing). Para contornar essa limitação matemática da
+amostragem digital sem alterar a resolução física do monitor, o pipeline implementa técnicas de suavização conhecidas como Antialiasing.
+A respeito dos princípios conceituais e teóricos das técnicas de Antialiasing aplicadas no pipeline de visualização, assinale a opção correta:
+A) O serrilhamento ocorre porque os monitores modernos processam apenas cores primárias puras, o que impede a mistura de gradientes suaves
+nas bordas dos polígonos tridimensionais.
+B) Técnicas de suavização espacial baseadas em superamostragem aumentam a fidelidade visual calculando a cor de cada pixel a partir de múltiplas
+subamostras de posições internas, suavizando a transição de cor nos contornos geométricos.
+C) O algoritmo de Antialiasing altera a posição física dos vértices da malha original no espaço tridimensional, entortando as arestas para que elas
+se alinhem perfeitamente à grade de pixels da tela.
+D) A aplicação de técnicas de Antialiasing reduz drasticamente o consumo de memória e o esforço computacional da GPU, tornando-se uma
+ferramenta obrigatória para otimizar o desempenho em hardwares limitados.
+E) A suavização por amostragem atua exclusivamente no início do pipeline geométrico, antes do processamento dos sombreadores de vértices,
+para garantir que as linhas cheguem limpas à fase de projeção.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Métodos de Antialiasing espacial (como o SSAA ou o MSAA) coletam informações de cor e
+profundidade em múltiplos pontos dentro de uma área correspondente a um único pixel (subpixels). Se um polígono cobre apenas metade
+dessas subamostras, o pixel recebe uma cor intermediária combinada, gerando um efeito visual de suavização que engana o olho humano
+e elimina o aspecto serrilhado.
+• A alternativa A está errada porque o serrilhamento é um problema estritamente geométrico de amostragem espacial, e não de limitação
+de cores.
+• As alternativas C e E estão incorretas porque o Antialiasing atua no final do pipeline (na fase de fragmentação/rasterização) e não modifica
+a geometria dos vértices.
+• A alternativa D está errada porque processar múltiplos subpixels exige muito mais poder de processamento e largura de banda de memória
+da placa gráfica.
+
+-- 30 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 31 de 62
+Público	Público
+Questão 31
+No pipeline gráfico, após o processamento individual dos pontos no Vertex Shader, o hardware executa o estágio de Montagem de Primitivas
+(Primitive Assembly) antes de enviar a cena para a rasterização.
+A respeito das funções lógicas e da necessidade do estágio de Montagem de Primitivas, assinale a alternativa correta:
+A) Esse estágio serve para converter triângulos tridimensionais em pixels coloridos na memória, dispensando qualquer definição de conectividade
+entre os vértices.
+B) A Montagem de Primitivas agrupa os vértices isolados de saída de acordo com a topologia definida pela aplicação (como listas de triângulos ou
+linhas), gerando entidades geométricas que servem de entrada obrigatória para os estágios de recorte (clipping) e rasterização.
+C) Sem essa etapa, o pipeline gráfico continuaria operando perfeitamente, pois a GPU preenche o interior dos objetos interpretando os vértices
+sempre como pontos flutuantes desconectados no espaço 2D de tela.
+D) A única função da Montagem de Primitivas é aplicar filtros de textura e mapeamento de cores sobre imagens rasterizadas vindas da CPU.
+E) Esse estágio opera na macrofase de processamento de fragmentos, ocorrendo imediatamente após a gravação final do pixel no Front Buffer.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente o papel do Primitive Assembly. O Vertex Shader processa cada vértice de forma
+puramente matemática e individual, sem "saber" quem faz parte de qual face. É o estágio de Montagem de Primitivas que pega essa
+sequência de pontos transformados e os organiza logicamente em entidades geométricas formais (triângulos, linhas, etc.) com base na
+topologia da malha. Sem essa amarração estrutural, o hardware veria apenas uma nuvem de pontos soltos, tornando matematicamente
+impossível calcular equações de plano, realizar o recorte (clipping) de superfícies ou determinar os limites de varredura que a rasterização
+usa para preencher os pixels.
+• A alternativa A confunde o estágio com a rasterização.
+• As alternativas C e E trazem erros conceituais crônicos de funcionamento e ordem.
+• E a letra D confunde a etapa com o mapeamento de texturas.
+
+-- 31 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 32 de 62
+Público	Público
+Questão 32
+No coração do processo de conversão geométrica do pipeline está a rasterização, cujo papel é traduzir as primitivas contínuas saídas dos estágios
+geométricos em fragmentos discretos. Um dos métodos teóricos e algorítmicos clássicos para realizar essa operação em hardwares e softwares
+gráficos é a Rasterização por Varredura de Linhas (Scanline Rasterization). Esse algoritmo processa a primitiva linha por linha da tela
+(horizontalmente), determinando com precisão quais pixels estão contidos nos limites do polígono projetado.
+Considerando os princípios operacionais e as estruturas de dados teóricas que regem o algoritmo de varredura por linhas (scanline), assinale a
+opção correta:
+A) O algoritmo de varredura por linhas preenche o polígono de forma aleatória, escolhendo pontos esparsos na tela e testando se eles estão perto
+do centroide do triângulo geométrico.
+B) Para otimizar o processamento e evitar testar todos os pixels da tela, o algoritmo utiliza estruturas como a Tabela de Arestas Ativas, que rastreia
+dinamicamente apenas as interseções das arestas do polígono que cruzam a linha de varredura horizontal atual.
+C) A varredura por linhas funciona inspecionando a tela verticalmente, da direita para a esquerda, o que impede a interpolação paralela de atributos
+de cor e profundidade pelo hardware de fragmentos.
+D) Esse método de rasterização exige que o polígono seja previamente subdividido em círculos perfeitos, uma vez que o algoritmo é teoricamente
+incapaz de calcular limites lineares em superfícies triangulares planas.
+E) Durante a varredura horizontal, o algoritmo descarta automaticamente qualquer primitiva que possua arestas perfeitamente horizontais, pois essas
+linhas geram loops infinitos na memória cache do processador.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. O algoritmo de scanline é altamente eficiente porque ele calcula as interseções das arestas do
+polígono com a linha horizontal atual (linha de varredura) e preenche os pixels apenas entre os pares de interseção internos. A Tabela de
+Arestas Ativas (AET - Active Edge Table) guarda justamente as arestas que interceptam a linha atual, atualizando suas posições
+horizontais conforme a varredura desce ou sobe pela tela, eliminando a necessidade de testar pixels fora do polígono.
+• A alternativa A está errada porque o preenchimento é estritamente sequencial e determinístico.
+• A alternativa C está errada porque a varredura é horizontal.
+• A alternativa D está errada porque o algoritmo foi desenhado nativamente para polígonos (formas com arestas retas).
+• A alternativa E está incorreta porque arestas horizontais são tratadas como casos especiais simples ou simplificadas no pipeline, sem
+causar falhas de sistema.
+
+-- 32 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 33 de 62
+Público	Público
+Questão 33
+O mapeamento de texturas adiciona detalhes visuais ricos às superfícies 3D. Para otimizar o uso da largura de banda da GPU e evitar artefatos
+visuais quando objetos estão distantes da câmera, os sistemas gráficos utilizam a técnica de Mipmapping.
+A respeito do funcionamento do Mipmapping e dos problemas que ele resolve no pipeline gráfico, assinale a alternativa correta:
+A) O Mipmapping consiste em aumentar dinamicamente a resolução da textura original quando o objeto se afasta da câmera, forçando a GPU a
+processar imagens mais pesadas no horizonte.
+B) Renderizar um objeto distante com uma textura de altíssima resolução gera subamostragem, o que desperdiça largura de banda de memória e
+causa artefatos visuais de cintilação ou ruído texturizado na tela; o Mipmapping resolve isso utilizando cópias pré-calculadas da textura em resoluções
+progressivamente menores.
+C) A técnica de Mipmapping armazena as texturas exclusivamente na CPU, impedindo que a memória cache da placa de vídeo acesse as imagens
+durante a fase de rasterização.
+D) Ao aplicar o Mipmapping, as linhas retas dos polígonos são quebradas e transformadas em curvas complexas, alterando a topologia da malha
+geométrica.
+E) Essa tecnologia é aplicada obrigatoriamente antes do Vertex Shader, alterando as coordenadas tridimensionais (X, Y, Z) de todos os vértices do
+modelo.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente o problema e a solução matemática trazidos pelo Mipmapping. Mapear uma textura
+gigante em um polígono que ocupa poucos pixels na tela faz com que o hardware "pule" muitos pixels da imagem original a cada quadro
+(fenômeno de subamostragem espacial), gerando um efeito desagradável de chiado visual ou cintilação conforme a câmera se move. O
+Mipmapping resolve isso armazenando uma pirâmide de imagens pré-calculadas em resoluções progressivamente menores (ex: 1024 X
+1024 descendo até 1 X 1). O hardware seleciona automaticamente o nível da pirâmide que melhor se ajusta ao tamanho do polígono na
+tela, economizando largura de banda e estabilizando a imagem.
+• As alternativas A, C, D e E trazem erros graves sobre a localização da etapa (fase de fragmentos), o armazenamento físico (VRAM/Cache)
+e o impacto geométrico (que é nulo, pois afeta apenas a amostragem de cores).
+
+-- 33 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 34 de 62
+Público	Público
+Questão 34
+No estágio de operações por fragmento, localizado no encerramento do pipeline de visualização, a placa gráfica determina o destino final de cada
+dado de cor calculado. Quando a cena envolve objetos opacos, o teste de profundidade (Z-buffer) é suficiente para descartar fragmentos ocultos e
+sobrescrever as cores na memória. Contudo, quando o cenário apresenta elementos translúcidos ou transparentes — como vidro, água, fumaça ou
+interfaces gráficas —, o pipeline precisa combinar a cor do novo fragmento com a cor que já estava armazenada naquele pixel. Essa operação de
+composição matemática é conhecida como Mistura de Cores (Alpha Blending).
+A respeito das características teóricas e das restrições operacionais do Alpha Blending no pipeline gráfico, assinale a opção correta:
+A) O cálculo de mistura de cores por transparência é estritamente comutativo, o que garante que objetos transparentes sejam renderizados
+corretamente na tela independentemente da ordem em que são desenhados.
+B) Para que o Alpha Blending produza resultados visualmente corretos em superfícies transparentes sobrepostas, o motor gráfico precisa ordenar
+os objetos da cena, renderizando primeiro os objetos opacos e, em seguida, os objetos transparentes organizados de trás para a frente em relação
+à câmera.
+C) A ativação do Alpha Blending desativa o buffer de cores frontal, fazendo com que os fragmentos fiquem invisíveis e acelerando o desempenho
+da aplicação para taxas de quadros extremas.
+D) O canal alfa (Alpha) de um fragmento descreve unicamente o vetor de reflexão especular da luz, não possuindo qualquer relação teórica com a
+opacidade ou o nível de transmissão de luz da superfície.
+E) O pipeline gráfico moderno realiza a mistura de cores misturando os comprimentos de onda diretamente no sombreador de vértices, impedindo
+que a fase de fragmentos altere as cores finais dos polígonos.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. A equação matemática padrão de mistura (blending) combina a cor da fonte (o fragmento vindo
+do objeto) com a cor do destino (o que já está no buffer de cor) ponderada pelo fator alfa. Como essa operação matemática não é
+comutativa, a ordem do desenho importa drasticamente. Objetos opacos devem ser desenhados primeiro para preencher o fundo (e o Z-
+buffer). Depois, os objetos transparentes precisam ser desenhados estritamente do mais distante para o mais próximo da câmera (back-
+to-front sorting). Se forem desenhados fora de ordem, o teste de profundidade bloqueará incorretamente fragmentos de trás, quebrando a
+ilusão de transparência.
+• A alternativa A está incorreta por afirmar que a operação é comutativa.
+• A alternativa C está errada porque o blending precisa atualizar o buffer de cor continuamente.
+• A alternativa D está errada porque o canal alfa denota exatamente o grau de opacidade da superfície (onde 1 é opaco e 0 é totalmente
+invisível).
+• A alternativa E está errada porque o blending é uma operação clássica do final do pipeline, executada na fase de fragmentos/pixels.
+
+-- 34 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 35 de 62
+Público	Público
+Questão 35
+Diferente da rasterização, o algoritmo de Ray Casting adota uma abordagem de renderização por imagem (image-order rendering), disparando raios
+simulados a partir da câmera, passando por cada pixel da tela para interagir com o ambiente 3D.
+A respeito dos princípios operacionais do algoritmo básico de Ray Casting, assinale a alternativa correta:
+A) O Ray Casting determina a cor de cada pixel identificando o primeiro ponto de interseção entre o raio projetado por aquele pixel e a superfície do
+objeto mais próximo na cena, calculando a iluminação local desse ponto.
+B) O Ray Casting é uma técnica puramente recursiva global que subdivide cada raio primário em múltiplos raios secundários de refração e reflexão
+ao colidir com superfícies, simulando nativamente a iluminação indireta.
+C) Ao contrário de outros métodos de renderização, o Ray Casting opera projetando os vértices geométricos diretamente na CPU antes de criar
+qualquer raio no espaço tridimensional.
+D) A principal desvantagem do Ray Casting clássico é a sua incapacidade absoluta de determinar a visibilidade de superfícies, exigindo o uso
+obrigatório de um Z-buffer de hardware para funcionar.
+E) Os raios disparados pelo Ray Casting viajam em trajetórias curvas e espirais fluidas, sendo afetados exclusivamente pela configuração de cores
+de fundo do aplicativo.
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa: A alternativa A define com exatidão a mecânica do Ray Casting clássico (proposto por Arthur Appel em 1968). O algoritmo
+dispara um raio para cada pixel da tela e calcula as interseções geométricas com as superfícies da cena. O primeiro ponto de colisão
+encontrado determina qual objeto está visível naquele pixel, e o sistema calcula o sombreamento local (direto) daquele ponto específico.
+• A alternativa B está incorreta porque descreve o Ray Tracing (Traçado de Raios recursivo de Turner Whitted); o Ray Casting básico não
+é recursivo e não gera raios secundários para reflexos e refrações.
+• A C inverte o conceito (ele é baseado em raios, não em projeção direta de vértices).
+• A D está errada porque o algoritmo resolve a oclusão e a visibilidade de forma natural através da primeira colisão. E a E erra a física
+geométrica elementar dos raios, que viajam em linha reta.
+
+-- 35 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 36 de 62
+Público	Público
+Questão 36
+Na história da Computação Gráfica, o algoritmo de Ray Casting foi amplamente utilizado para criar os primeiros motores de jogos digitais em primeira
+pessoa com aparência tridimensional em hardwares severamente limitados. Para viabilizar taxas de quadros fluidas em tempo real, esses sistemas
+operavam sob restrições geométricas severas: o cenário era representado não por polígonos complexos e livres no espaço, mas sim por uma matriz
+ou grade bidimensional de células (grid), onde cada bloco definia a presença de uma parede estrutural homogênea com altura fixa.
+A respeito das características operacionais e das simplificações teóricas presentes nessa modalidade de Ray Casting baseado em grades, assinale
+a opção correta:
+A) Para determinar as colisões de forma eficiente em uma grade, o algoritmo varre o espaço pixel por pixel de forma contínua e infinitesimal,
+ignorando as linhas de divisão dos blocos da matriz do cenário.
+B) Como o ambiente é baseado em uma grade bidimensional regular, o raio avança saltando sistematicamente de linha em linha e de coluna em
+coluna da matriz (técnica conhecida como Análise Digital de Diferencial - DDA), o que reduz drasticamente o número de testes de colisão necessários
+por raio.
+C) O uso de cenários estruturados em grades bidimensionais exige que o hardware calcule a iluminação de cada bloco de forma estritamente global,
+gerando efeitos de sombras e reflexos realistas equivalentes ao pipeline moderno de traçado de raios.
+D) Esse modelo de renderização permite que o jogador incline a câmera livremente para cima e para baixo em ângulos de visão verticais absolutos,
+uma vez que a projeção geométrica dos raios lida nativamente com três graus de liberdade rotacional.
+E) A principal desvantagem dessa abordagem estrutural é a necessidade de redefinir a malha de polígonos dos vértices a cada iteração de
+movimento, consumindo muita memória de vídeo da placa gráfica.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Em um ambiente pseudo-3D baseado em uma grade (como o clássico Wolfenstein 3D), disparar
+um raio e avançá-lo em passos minúsculos e fixos seria computacionalmente caro. Em vez disso, algoritmos como o DDA (Digital
+Differential Analysis) calculam geometricamente onde o raio cruzará a próxima linha horizontal ou vertical da grade. Desse modo, o
+algoritmo "salta" de interseção em interseção de blocos, testando apenas as posições na matriz do mapa onde as paredes de fato podem
+existir, otimizando o processamento.
+• A alternativa A está incorreta por descrever o método ineficiente de passos contínuos.
+• As alternativas C e D estão erradas porque esse sistema calcula apenas iluminação local simples e possui restrições severas de
+visualização, não permitindo olhar livremente para cima ou para baixo justamente porque a projeção assume uma linha de horizonte fixa.
+• A alternativa E está errada porque não existem malhas de polígonos nesse modelo; a cena é puramente desenhada coluna por coluna na
+tela a partir dos dados de distância coletados na matriz.
+
+-- 36 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 37 de 62
+Público	Público
+Questão 37
+No desenvolvimento de sistemas de renderização por lançamento de raios (Ray Casting), testar a interseção de cada raio contra milhões de triângulos
+individuais é computacionalmente inviável. Para resolver esse gargalo, utilizam-se técnicas baseadas em Volumes Delimitadores (Bounding
+Volumes).
+A respeito do funcionamento matemático e do ganho de desempenho proporcionado pelos Volumes Delimitadores, assinale a alternativa correta:
+A) Ao envolver uma malha complexa em uma primitiva simples (como uma esfera), a GPU é forçada a calcular a colisão de todos os triângulos
+internos antes de verificar o volume externo.
+B) Se um raio simulado não interceptar o volume delimitador externo (como uma caixa envolvente), o motor de renderização pode descartar
+imediatamente toda a malha de milhares de polígonos internos com um custo computacional baixíssimo.
+C) O teste matemático de colisão de um raio contra uma esfera envolvente exige equações muito mais pesadas e demoradas do que testar o raio
+contra milhões de triângulos soltos na cena.
+D) Os volumes delimitadores servem exclusivamente para alterar as cores e texturas do objeto, não possuindo qualquer relação com os cálculos
+geométricos de colisão ou visibilidade.
+E) O uso de caixas envolventes desativa permanentemente o lançamento de raios, forçando o pipeline gráfico a alternar para o modo de renderização
+puramente bidimensional em formato de texto.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B explica com precisão o princípio da otimização por volumes envolventes (técnica de descarte antecipado ou
+early rejection). O teste de interseção de uma linha (raio) contra uma forma geométrica simples, como uma esfera ou uma caixa alinhada
+aos eixos (AABB), exige pouquíssimas operações matemáticas. Se o raio passa direto por esse volume externo sem tocá-lo, o sistema
+tem a garantia geométrica absoluta de que ele jamais atingirá qualquer polígono que esteja lá dentro. Isso permite ignorar objetos
+complexos inteiros com um único teste rápido, salvando imenso poder de processamento da GPU/CPU.
+• A alternativa A inverte a lógica do algoritmo.
+• A letra C afirma erroneamente que o teste simples é mais pesado que o exaustivo.
+• E as alternativas D e E trazem erros conceituais severos sobre o propósito e o funcionamento da técnica.
+
+-- 37 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 38 de 62
+Público	Público
+Questão 38
+Além de ser utilizado para renderizar superfícies poligonais sólidas, o algoritmo de Ray Casting possui uma extensão teórica poderosa aplicada à
+visualização científica e médica conhecida como Lançamento de Raios Volumétrico (Volumetric Ray Casting). Essa técnica é empregada para gerar
+imagens tridimensionais diretamente a partir de matrizes de dados volumétricos densos, como os resultantes de exames de tomografia
+computadorizada ou ressonância magnética, onde o interior dos objetos não é vazio, mas sim preenchido por informações contínuas de densidade.
+A respeito das características operacionais e teóricas do algoritmo de Ray Casting Volumétrico, assinale a opção correta:
+A) No lançamento de raios volumétrico, o raio disparado para o interior do volume para imediatamente na primeira camada externa de dados, agindo
+de forma idêntica ao cálculo de superfícies opacas tradicionais.
+B) Ao atravessar o volume de dados, o raio realiza uma amostragem sequencial ao longo de sua trajetória, coletando e acumulando valores de
+opacidade e cor a partir de uma função de transferência, integrando esses dados até sair do volume ou atingir a opacidade máxima.
+C) As estruturas de dados tridimensionais utilizadas nessa técnica são compostas estritamente por polígonos triangulares vazios, o que dispensa o
+uso de interpolação trilinear de dados espaciais.
+D) A função de transferência aplicada ao volume serve para alterar a posição geométrica dos vértices das células do modelo, distorcendo o mapa
+de visualização antes do processamento.
+E) Por operar exclusivamente com projeções paralelas ortogonais fixas de baixa definição, o Ray Casting volumétrico é incapaz de simular
+transparências graduais em tecidos biológicos sobrepostos.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Diferente do Ray Casting de superfícies (que para no primeiro ponto de impacto), o raio
+volumétrico avança e "penetra" no bloco de dados. À medida que avança, ele coleta amostras dos blocos volumétricos próximos (voxels).
+Uma função de transferência converte os valores abstratos de densidade física em propriedades visuais de cor e transparência. O algoritmo
+então integra (combina) progressivamente esses valores da frente para trás (front-to-back composition), gerando uma imagem final onde
+estruturas internas (como ossos ou órgãos) podem ser vistas através de tecidos semitransparentes.
+• A alternativa A está errada porque descreve o comportamento de superfícies normais.
+• A alternativa C está incorreta porque o modelo trabalha com matrizes densas de voxels, e não triângulos.
+• A alternativa D está errada porque a função de transferência altera dados de cor e opacidade, não posições.
+• A alternativa E está errada porque a técnica é amplamente valorizada justamente por sua capacidade de lidar com transparências
+dinâmicas e detalhadas.
+
+-- 38 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 39 de 62
+Público	Público
+Questão 39
+Para computar sombras em algoritmos baseados em projeção por imagem, o sistema gráfico utiliza raios secundários específicos chamados Raios
+de Sombra (Shadow Rays), que partem do ponto de interseção na superfície do objeto em direção à posição de cada fonte de luz do cenário.
+A respeito do comportamento mecânico e da função dos Raios de Sombra, assinale a alternativa correta:
+A) Os raios de sombra calculam a atenuação física e a refração da luz através de múltiplos saltos recursivos e infinitos por todo o cenário antes de
+definir a cor do pixel.
+B) Se um raio de sombra colidir com qualquer objeto opaco antes de alcançar a coordenada da fonte de luz, o ponto de origem é marcado como
+sombreado, recebendo apenas a iluminação ambiente do sistema.
+C) O raio de sombra viaja exclusivamente em trajetórias circulares ao redor do objeto, dependendo da quantidade de pixels da viewport para
+encontrar as lâmpadas da cena.
+D) A única função do raio de sombra é mover a posição dos vértices da malha original na CPU, alterando as dimensões de escala geométrica do
+modelo 3D.
+E) Caso um raio de sombra encontre um obstáculo opaco no meio do caminho, o sistema gráfico ignora a colisão e ilumina o ponto com a intensidade
+máxima da lâmpada.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B define perfeitamente o papel de teste de oclusão direta do Shadow Ray. Sua mecânica funciona como uma
+verificação de linha de visão: um raio em linha reta é disparado do ponto interceptado até a posição da lâmpada. Se o raio colidir com
+qualquer obstáculo opaco no meio do caminho, significa que a luz direta daquela fonte está bloqueada para aquele ponto específico da
+superfície, resultando em uma sombra projetada (o ponto passa a receber apenas a luz de fundo ou ambiente da cena).
+• A alternativa A está incorreta porque o raio de sombra executa um teste direto e binário, não realizando saltos recursivos ou refrações
+globais.
+• As alternativas C, D e E trazem erros conceituais graves sobre a trajetória geométrica dos raios e as propriedades físicas do cálculo de
+iluminação local.
+
+-- 39 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 40 de 62
+Público	Público
+Questão 40
+Ao implementar a técnica de Raios de Sombra (Shadow Rays) em um motor de renderização por lançamento de raios, os desenvolvedores enfrentam
+um desafio clássico de precisão numérica. Quando um raio primário atinge uma superfície, as coordenadas do ponto de interseção calculadas sofrem
+com pequenas imprecisões de arredondamento causadas pela precisão finita do hardware. Se o raio de sombra for disparado em direção à fonte de
+luz partindo estritamente desse ponto calculado, o algoritmo pode detectar erroneamente que o raio colidiu com a própria superfície de onde ele
+acabou de sair. Esse fenômeno gera um artefato visual indesejado de listras ou manchas escuras espalhadas pelo objeto, conhecido tecnicamente
+como Shadow Acne.
+A respeito das características teóricas desse problema e da solução conceitual aplicada para corrigi-lo, assinale a opção correta:
+A) O fenômeno de Shadow Acne ocorre porque o canal alfa do objeto transparente inverte o sentido dos vetores normais de iluminação durante o
+cálculo do sombreamento local.
+B) Para eliminar esse artefato visual de autointerseção incorreta, os motores gráficos aplicam um pequeno deslocamento numérico linear (Shadow
+Bias), movendo artificialmente o ponto de origem do raio de sombra ligeiramente para fora da superfície, na direção do vetor normal da face.
+C) A única maneira teoricamente válida de resolver o problema de manchas na sombra é duplicar a resolução física em pixels da janela de viewport
+no hardware de rasterização.
+D) O surgimento de listras escuras é uma característica exclusiva de superfícies perfeitamente planas, desaparecendo por completo quando o
+cenário é composto por geometrias esféricas e orgânicas.
+E) O deslocamento do ponto de origem deve ser feito na direção oposta à fonte de luz, empurrando o raio de sombra para o interior do objeto para
+garantir que ele atravesse a malha geométrica.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Devido a erros de arredondamento de ponto flutuante, o ponto de colisão calculado pode ficar
+ligeiramente abaixo da superfície geométrica real do objeto. Ao disparar o raio de sombra dali, o algoritmo encontra uma interseção
+imediata com o próprio triângulo dono do ponto (autointerseção), gerando as manchas do Shadow Acne. A solução conceitual padrão é
+aplicar um bias (tolerância), que consiste em somar um pequeno valor ao ponto de origem, empurrando-o um milímetro para "fora" da
+superfície ao longo do vetor normal antes de testar a oclusão.
+• A alternativa A está errada porque o problema é de precisão geométrica, não de transparência ou canal alfa.
+• As alternativas C, D e E estão incorretas porque a viewport não altera erros de precisão espacial, o problema afeta qualquer tipo de
+geometria, e empurrar o raio para dentro do objeto pioraria o erro de autointerseção.
+
+-- 40 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 41 de 62
+Público	Público
+Questão 41
+No algoritmo de Ray Casting, antes de testar colisões, o sistema precisa construir matematicamente cada raio no espaço tridimensional. Esse
+processo converte a posição 2D de um pixel na tela em uma linha contínua no mundo, definida por um ponto de origem e um vetor de direção.
+A respeito da geração de raios primários em uma configuração de câmera com projeção perspectiva, assinale a alternativa correta:
+A) Todos os raios primários disparados possuem origens totalmente diferentes no espaço, mas viajam compartilhando exatamente o mesmo vetor
+de direção paralelo.
+B) A origem de todos os raios primários coincide exatamente com a coordenada do centro de projeção (posição da câmera) no espaço do mundo,
+alterando-se apenas o vetor de direção de cada raio de acordo com a posição do pixel na tela.
+C) O vetor de direção de um raio primário perspectiva é gerado de forma aleatória pelo hardware, sem qualquer relação com a grade de pixels ou
+com o campo de visão da câmera.
+D) Para construir os raios em uma projeção perspectiva, o sistema gráfico descarta a posição da câmera do mundo, fixando a origem de todos os
+disparos no ponto focal infinito da cena.
+E) A geração de raios primários opera modificando a cor de fundo das texturas da CPU, não gerando linhas matemáticas ou vetores tridimensionais
+na memória.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve perfeitamente a propriedade geométrica da projeção perspectiva. Como todos os raios de luz
+convergem ou divergem a partir de um único ponto focal (que representa o olho do observador ou a posição da câmera), a coordenada de
+origem do raio é constante e idêntica para todos os pixels da tela. O que muda de um pixel para o outro é o vetor de direção, obtido ao
+traçar um segmento de reta que parte da posição da câmera e passa pela coordenada mapeada correspondente ao pixel no plano de
+projeção virtual, estendendo-se em direção ao cenário.
+• A alternativa A descreve o funcionamento de uma projeção paralela ortográfica.
+• As alternativas C, D e E trazem erros conceituais graves que violam a geometria analítica e a lógica de inversão de espaços do pipeline
+de renderização por imagem.
+
+-- 41 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 42 de 62
+Público	Público
+Questão 42
+Embora o Ray Casting tenha surgido na Computação Gráfica como uma técnica de renderização visual, seus princípios geométricos de projeção de
+linhas e detecção de colisões foram amplamente absorvidos pelos motores de jogos modernos (game engines) para governar sistemas de física,
+inteligência artificial e mecânicas de jogabilidade em tempo real, operando de forma totalmente independente da geração de pixels na tela.
+A respeito da aplicação conceitual e prática do Ray Casting para lógica e física em jogos, assinale a opção correta:
+A) O uso de Ray Casting para física exige que o raio modifique as texturas e os materiais dos objetos atingidos para que a colisão seja detectada
+pelo processador central.
+B) Sistemas de inteligência artificial utilizam o lançamento de raios invisíveis para simular a linha de visão (Line of Sight) de personagens não
+jogáveis, verificando se há obstrução geométrica por paredes entre o inimigo e o jogador.
+C) Mecânicas de tiro baseadas em Ray Casting (comumente chamadas de hitscan) simulam a trajetória física real de projéteis lentos através de
+curvas parabólicas afetadas pela gravidade do cenário.
+D) No cálculo de colisão por física, os raios de teste são disparados exclusivamente a partir do centro do cenário em direção ao teto do mapa,
+inviabilizando testes horizontais de proximidade de terreno.
+E) Essa técnica é teoricamente incapaz de retornar informações sobre o ponto exato de impacto ou sobre o vetor normal da superfície atingida,
+limitando-se a responder se houve ou não toque de forma binária.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Em jogos, o Ray Casting é largamente empregado para checagem de visibilidade de IA.
+Disparando um raio dos olhos do inimigo até o jogador, se o raio interceptar um obstáculo antes, a IA "sabe" teoricamente que o jogador
+está oculto.
+• A alternativa A está errada porque o teste é puramente geométrico e matemático, sem qualquer relação com renderização ou mudança
+de texturas.
+• A alternativa C está errada porque armas de hitscan usam raios em linha reta e o impacto é instantâneo no exato quadro do disparo, sem
+simular balística ou gravidade.
+• A alternativa D está errada porque raios podem ser disparados de qualquer origem e em qualquer direção no espaço 3D.
+• A alternativa E está incorreta porque os motores de física retornam estruturas de dados completas (raycast hits) contendo a distância, o
+ponto exato no espaço e a normal do polígono atingido para calcular o ricochete.
+
+-- 42 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 43 de 62
+Público	Público
+Questão 43
+O algoritmo de Bresenham é um dos marcos da Computação Gráfica para a rasterização de retas em dispositivos matriciais. Sua principal vantagem
+matemática e computacional reside no uso exclusivo de operações aritméticas com números inteiros, eliminando tipos primitivos de ponto flutuante
+(float ou double) e divisões dentro do laço principal de repetição. O algoritmo monitora o desvio acumulado entre a reta matemática contínua e as
+coordenadas discretas dos pixels por meio de uma variável de decisão de erro.
+Considere o código Java apresentado, que implementa o algoritmo de Bresenham para retas cujo deslocamento horizontal é maior que o vertical,
+avançando do menor para o maior valor de X.
+public void rasterizarRetaBresenham(int x0, int y0, int x1, int y1) {
+int dx = x1 - x0;
+int dy = y1 - y0;
+int yi = 1;
+if (dy < 0) {
+yi = -1;
+dy = -dy;
+}
+// [LACUNA 1] - Inicialização da variável de decisão do erro
+int erro = 2 * dy - dx;
+int y = y0;
+for (int x = x0; x <= x1; x++) {
+desenharPixel(x, y); // Método que acende o pixel na tela
+// [LACUNA 2] - Avaliação do desvio e atualização das coordenadas
+if (erro > 0) {
+y = y + yi;
+erro = erro + 2 * (dy - dx);
+} else {
+erro = erro + 2 * dy;
+}
+}
+}
+A respeito da lógica de funcionamento do controle de erro representado nas lacunas do código, assinale a opção correta:
+A) Na [LACUNA 1], a variável erro é inicializada com o valor da inclinação da reta convertido para ponto flutuante, forçando o Java a lançar uma
+exceção de divisão por zero caso a reta seja perfeitamente horizontal.
+B) Na [LACUNA 2], o bloco condicional verifica se o erro acumulado tornou-se maior que zero. Caso positivo, isso indica que a reta matemática se
+aproximou mais da próxima fileira de pixels em Y, exigindo o incremento da variável y e o ajuste compensatório do erro subtraindo o termo contendo
+dx.
+C) A expressão erro = erro + 2 * dy localizada no bloco else serve para teleportar a varredura do pixel diretamente para o ponto final (x1, y1),
+quebrando o laço for prematuramente por meio de um comando de desvio.
+D) Se a condição if (erro > 0) for avaliada como falsa, o algoritmo decrementa o valor da variável de controle x em duas unidades dentro do laço
+para forçar a reexecução do pixel anterior.
+E) A inicialização em [LACUNA 1] dada por 2 * dy - dx serve exclusivamente para determinar a cor do pixel a ser desenhado na tela através do
+método desenharPixel.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B descreve com precisão a essência matemática e lógica do algoritmo de Bresenham. A variável erro atua
+como um acumulador de desvio em relação à reta ideal. Quando o erro passa de zero (erro > 0), significa que a reta teórica cruzou a
+metade da distância entre o pixel atual e o pixel vizinho da linha de cima (ou de baixo, dependendo de yi). Logo, o algoritmo avança um
+passo no eixo vertical (y = y + yi) e aplica um ajuste contendo - dx para recalibrar o erro para a próxima iteração. Caso o erro seja menor
+ou igual a zero, o avanço permanece estritamente horizontal e o erro cresce linearmente com 2 * dy.
+• As demais alternativas criam comportamentos inexistentes na estrutura algorítmica ou violam a execução do laço em Java.
+
+-- 43 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 44 de 62
+Público	Público
+Questão 44
+A correta rasterização de uma primitiva geométrica depende não apenas do cálculo do erro incremental, mas também do controle rigoroso das
+iterações que delimitam o segmento de reta. No código Java do algoritmo de Bresenham apresentado, o fluxo de execução e a quantidade de pixels
+pintados na tela são governados pelas condições estabelecidas na estrutura do laço de repetição for.
+public void rasterizarRetaBresenham(int x0, int y0, int x1, int y1) {
+int dx = x1 - x0;
+int dy = y1 - y0;
+int yi = 1;
+if (dy < 0) {
+yi = -1;
+dy = -dy;
+}
+// [LACUNA 1] - Inicialização da variável de decisão do erro
+int erro = 2 * dy - dx;
+int y = y0;
+for (int x = x0; x <= x1; x++) {
+desenharPixel(x, y); // Método que acende o pixel na tela
+// [LACUNA 2] - Avaliação do desvio e atualização das coordenadas
+if (erro > 0) {
+y = y + yi;
+erro = erro + 2 * (dy - dx);
+} else {
+erro = erro + 2 * dy;
+}
+}
+}
+Considerando o comportamento das variáveis de controle de iteração no código fornecido, assinale a opção correta:
+A) Se o parâmetro de entrada x0 possuir o mesmo valor numérico que x1, o laço for entrará em um estado de loop infinito, travando a execução da
+aplicação Java por falta de memória.
+B) O laço for utiliza a variável x como variável de controle, iniciando em x0 e avançando de forma incremental unitária até atingir e incluir o limite x1,
+o que garante que todos os pixels horizontais que compõem a extensão da reta sejam processados sequencialmente.
+C) A condição de parada x <= x1 determina que, se a reta for muito longa, o Java interromperá o desenho exatamente na metade do caminho para
+evitar o estouro de pilha (stack overflow).
+D) Modificar a expressão do laço para x < x1 (utilizando o operador menor estrito) não causaria nenhuma alteração visual, garantindo que o pixel
+final na coordenada (x1, y1) seja pintado normalmente na tela.
+E) O laço de repetição controla simultaneamente o avanço indexado dos eixos X e Y dentro da assinatura do for, impedindo que a variável y mude
+de valor fora da instrução de incremento do laço.
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: A alternativa B está correta. Na estrutura for (int x = x0; x <= x1; x++), o algoritmo de Bresenham estabelece o eixo X como
+o eixo de varredura principal (eixo de maior deslocamento para este caso). O laço começa exatamente na coordenada inicial x0, incrementa
+de um em um pixel (x++) e termina somente após processar o valor final x1 devido ao operador <=. Isso garante a continuidade visual da
+reta de uma ponta à outra.
+• A alternativa A está errada porque se x0 for igual a x1, o laço executará exatamente uma vez e terminará.
+• A alternativa C é fantasiosa sobre o comportamento do Java.
+• A alternativa D está errada porque remover a igualdade (< x1) faria o algoritmo parar um pixel antes, deixando a reta incompleta na tela.
+• A alternativa E está incorreta porque a variável y é controlada e atualizada internamente pelas condicionais de erro, e não na assinatura
+do for.
+
+-- 44 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 45 de 62
+Público	Público
+Questão 45
+O algoritmo original de Bresenham foi matematicamente deduzido considerando que a reta se desloca estritamente para cima e para a direita no
+primeiro octante do plano cartesiano. Para que uma implementação prática em software seja robusta e capaz de desenhar linhas em outras direções
+sem duplicar o código estrutural, são aplicadas transformações de simetria refletida logo na recepção dos parâmetros de entrada. No código Java
+fornecido, esse ajuste é gerenciado pelas variáveis yi e dy.
+public void rasterizarRetaBresenham(int x0, int y0, int x1, int y1) {
+int dx = x1 - x0;
+int dy = y1 - y0;
+int yi = 1;
+if (dy < 0) {
+yi = -1;
+dy = -dy;
+}
+// [LACUNA 1] - Inicialização da variável de decisão do erro
+int erro = 2 * dy - dx;
+int y = y0;
+for (int x = x0; x <= x1; x++) {
+desenharPixel(x, y); // Método que acende o pixel na tela
+// [LACUNA 2] - Avaliação do desvio e atualização das coordenadas
+if (erro > 0) {
+y = y + yi;
+erro = erro + 2 * (dy - dx);
+} else {
+erro = erro + 2 * dy;
+}
+}
+}
+Considerando a lógica de controle geométrico aplicada antes da inicialização do laço de repetição, assinale a opção correta:
+A) Se o ponto final da reta estiver verticalmente abaixo do ponto inicial, a variável dy resultará em um valor negativo, fazendo com que a condicional
+if (dy < 0) seja executada para configurar o passo vertical yi como negativo e rebater a magnitude de dy para um valor positivo.
+B) A variável yi serve exclusivamente como um contador do número de pixels coloridos de vermelho na tela, perdendo sua função lógica se a reta
+for desenhada na cor preta.
+C) Caso a condição if (dy < 0) seja verdadeira, o algoritmo interrompe imediatamente a execução do programa em Java, pois o método de Bresenham
+é teoricamente incapaz de calcular passos decimais negativos.
+D) A instrução dy = -dy; dentro do bloco condicional duplica o deslocamento vertical da reta, forçando o algoritmo a saltar duas fileiras de pixels a
+cada iteração do laço for.
+E) Se a reta for perfeitamente horizontal, a variável yi será configurada automaticamente com o valor zero, impedindo que o método desenharPixel
+receba a coordenada inicial y0.
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa: A alternativa A está correta. Quando a reta é decrescente ($y1 < y0$), a diferença y1 - y0 gera um dy negativo. Como a
+matemática interna do acumulador de erro de Bresenham exige magnitudes positivas para funcionar corretamente no laço, o algoritmo
+detecta essa condição (dy < 0), guarda a direção do passo vertical como negativa (yi = -1) para que a reta desça em vez de subir, e inverte
+o sinal de dy (dy = -dy), transformando-o em seu valor absoluto (positivo). Isso permite reaproveitar a mesma lógica de decisão do erro do
+primeiro octante.
+• As alternativas B, C, D e E trazem interpretações errôneas sobre a aritmética inteira e o propósito geométrico das variáveis de controle de
+sinal do algoritmo.
+
+-- 45 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 46 de 62
+Público	Público
+Questão 46
+Embora o código Java apresentado seja robusto o suficiente para tratar retas crescentes e decrescentes, ele não constitui uma implementação
+universal para qualquer orientação espacial. Algoritmos de rasterização baseados em eixos de varredura fixos possuem restrições teóricas atreladas
+à taxa de variação angular da primitiva geométrica.
+public void rasterizarRetaBresenham(int x0, int y0, int x1, int y1) {
+int dx = x1 - x0;
+int dy = y1 - y0;
+int yi = 1;
+if (dy < 0) {
+yi = -1;
+dy = -dy;
+}
+// [LACUNA 1] - Inicialização da variável de decisão do erro
+int erro = 2 * dy - dx;
+int y = y0;
+for (int x = x0; x <= x1; x++) {
+desenharPixel(x, y); // Método que acende o pixel na tela
+// [LACUNA 2] - Avaliação do desvio e atualização das coordenadas
+if (erro > 0) {
+y = y + yi;
+erro = erro + 2 * (dy - dx);
+} else {
+erro = erro + 2 * dy;
+}
+}
+}
+Analisando a estrutura global do código fornecido em relação aos conceitos de octantes de projeção, assinale a opção correta:
+A) Este código funciona perfeitamente para qualquer reta imaginável, inclusive para retas perfeitamente verticais onde o deslocamento em Y é
+imensamente maior do que o deslocamento em X.
+B) Caso o método receba parâmetros onde o deslocamento vertical seja maior que o horizontal, o laço for avançará corretamente no eixo Y,
+invertendo automaticamente a assinatura do método em tempo de execução na máquina virtual Java (JVM).
+C) Esta implementação assume estritamente que o deslocamento horizontal é maior ou igual ao vertical, o que significa que se tentarmos desenhar
+uma reta inclinada a mais de 45 graus (onde o deslocamento vertical supera o horizontal), o algoritmo falhará em preencher os pixels continuamente,
+gerando uma linha tracejada ou incompleta devido ao avanço insuficiente em Y.
+D) O algoritmo falhará catastroficamente se o valor de x0 for menor do que x1, uma vez que a estrutura do laço for exige que a reta seja desenhada
+da direita para a esquerda.
+E) A linha de código int dx = x1 - x0; impossibilita o desenho de retas no plano tridimensional, pois o cálculo de pixels na tela exige obrigatoriamente
+a presença de uma coordenada Z na assinatura do método de rasterização.
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa: A alternativa C está correta. A estrutura deste código assume que X é o eixo de maior deslocamento (eixo de varredura),
+pois o laço avança de um em um em X (x++) e decide se deve ou não avançar em Y a cada passo. Se passarmos uma reta muito inclinada
+(acima de 45° ou abaixo de -45°), o deslocamento em Y será maior que em X. Como o laço roda apenas com base na quantidade de
+pixels em X, a reta não terá iterações suficientes para subir ou descer toda a altura necessária, resultando em uma linha quebrada,
+incompleta ou com furos visíveis. Para corrigir isso, o algoritmo geral precisaria de uma condicional externa para inverter os papéis de X
+e Y caso o deslocamento em Y fosse maior.
+• Todas as outras alternativas contradizem as leis de execução de laços ou a mecânica matemática de octantes de Bresenham.
+
+-- 46 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 47 de 62
+Público	Público
+Questão 47
+No desenvolvimento de aplicações gráficas bidimensionais em Java utilizando a classe Graphics, a aplicação de transformações geométricas como
+a translação exige que o desenvolvedor compreenda a relação entre os vetores de deslocamento abstratos e o sistema de coordenadas nativo da
+tela da janela de renderização.
+Considere o código Java fornecido da classe TranslacaoExemplo.
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class TranslacaoExemplo extends JPanel{
+// Coordenadas do objeto original
+private int x = 50;
+private int y = 50;
+// Valores de translação
+private int dx = 100;
+private int dy = 80;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Cor do objeto original
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Aplicando translação
+int xNovo = x + dx;
+int yNovo = y + dy;
+// Cor do objeto transladado
+g.setColor(Color.RED);
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Transladado", xNovo, yNovo - 10);
+// Vetor de deslocamento (visual)
+g.setColor(Color.BLACK);
+g.drawLine(x + 40, y + 25, xNovo + 40, yNovo + 25);
+}
+}
+Julgue as afirmações a seguir:
+I. O cálculo realizado para obter xNovo e yNovo representa a aplicação direta de um vetor de translação na forma (dx, dy) sobre as coordenadas
+iniciais (x, y), fazendo com que o retângulo vermelho seja deslocado 100 unidades para a direita e 80 unidades para baixo em relação à posição do
+retângulo azul original.
+II. O sistema de coordenadas cartesianas utilizado pelo método paintComponent possui a origem (0,0) posicionada no centro geométrico exato da
+tela do monitor, o que significa que o valor positivo de dy faz com que o objeto transladado suba em direção ao topo da janela.
+III. A instrução g.drawLine(x + 40, y + 25, xNovo + 40, yNovo + 25); serve para traçar uma linha preta que conecta visualmente os centros geométricos
+dos dois retângulos (o original e o transladado), evidenciando a trajetória e a magnitude do vetor de deslocamento aplicado.
+É correto o que se afirma em:
+A) I, apenas.
+B) II, apenas.
+C) I e III, apenas.
+D) II e III, apenas.
+E) I, II e III.
+
+-- 47 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 48 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa:
+o A afirmação I é verdadeira. No Java, as operações x + dx e y + dy aplicam o deslocamento linear. Como dx = 100 e dy = 80, o
+retângulo se move naquelas exatas proporções. Devido ao sistema de coordenadas de tela do Java, o eixo Y cresce para baixo,
+logo, somar em Y move o objeto para baixo.
+o A afirmação II é falsa. No Java (AWT/Swing), a origem (0,0) fica no canto superior esquerdo da tela/janela, e não no centro.
+O eixo X cresce para a direita e o eixo Y cresce para baixo. Portanto, valores positivos em dy deslocam o retângulo para baixo,
+e não para o topo.
+o A afirmação III é verdadeira. Os retângulos têm largura 80 e altura 50. Seus centros são encontrados somando a metade desses
+valores às suas coordenadas iniciais (x + 40 e y + 25). A linha desenhada une exatamente esses dois centros, ilustrando
+graficamente o vetor de translação.
+
+-- 48 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 49 de 62
+Público	Público
+Questão 48
+No desenvolvimento de interfaces e elementos de Computação Gráfica com a biblioteca Java AWT/Swing, a renderização final depende da invocação
+de métodos específicos da classe Graphics que manipulam buffers de desenho, canetas de cor e primitivas geométricas textuais ou vetoriais.
+Considere o código Java reproduzido abaixo para responder à questão:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class TranslacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+int x = 50;
+int y = 50;
+// Valores de translação
+int dx = 100;
+int dy = 80;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Cor do objeto original
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Aplicando translação
+int xNovo = x + dx;
+int yNovo = y + dy;
+// Cor do objeto transladado
+g.setColor(Color.RED);
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Transladado", xNovo, yNovo - 10);
+// Vetor de deslocamento (visual)
+g.setColor(Color.BLACK);
+g.drawLine(x + 40, y + 25, xNovo + 40, yNovo + 25);
+}
+}
+Relacione as chamadas de métodos extraídas do código com o seu respectivo papel analítico na lógica de transformação e renderização:
+1. super.paintComponent(g);
+2. g.drawRect(x, y, 80, 50);
+3. g.drawString("Original", x, y - 10);
+4. g.drawLine(x + 40, y + 25, xNovo + 40, yNovo + 25);
+( ) Desenha uma linha reta que serve para representar espacialmente a direção, o sentido e o comprimento da transformação linear aplicada.
+( ) Realiza a limpeza do fundo do componente na tela e atualiza o estado do buffer de desenho antes que as novas formas sejam adicionadas.
+( ) Renderiza o contorno da primitiva geométrica bidimensional baseada nas coordenadas estáticas originais de memória antes do vetor de
+deslocamento.
+( ) Exibe uma informação textual de identificação ligeiramente deslocada para cima em relação à borda superior do objeto inicial para evitar
+sobreposição.
+Assinale a opção que apresenta a sequência correta de preenchimento dos parênteses, de cima para baixo:
+A) 4 – 1 – 2 – 3
+B) 4 – 2 – 1 – 3
+C) 2 – 1 – 4 – 3
+D) 1 – 4 – 3 – 2
+E) 3 – 1 – 2 – 4
+
+-- 49 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 50 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa:
+o O método g.drawLine(...) (4) conecta o ponto médio do retângulo azul ao ponto médio do vermelho, mapeando graficamente a
+translação.
+o A chamada super super.paintComponent(g); (1) é obrigatória no Swing para garantir que o componente limpe a tela e redesenhe
+o fundo corretamente.
+o O método g.drawRect(x, y, 80, 50); (2) cria o contorno do retângulo inicial azul.
+o O método g.drawString(...) (3) escreve o rótulo "Original" em uma posição calculada (y - 10) para ficar acima do retângulo,
+funcionando como identificador legível.
+
+-- 50 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 51 de 62
+Público	Público
+Questão 49
+Durante a manutenção ou refatoração de sistemas de renderização gráfica, pequenas alterações nas atribuições de variáveis ou na ordem das
+instruções podem alterar drasticamente o resultado visual apresentado ao usuário.
+Considere o código Java original utilizado em nossa disciplina:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class TranslacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+int x = 50;
+int y = 50;
+// Valores de translação
+int dx = 100;
+int dy = 80;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Cor do objeto original
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Aplicando translação
+int xNovo = x + dx;
+int yNovo = y + dy;
+// Cor do objeto transladado
+g.setColor(Color.RED);
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Transladado", xNovo, yNovo - 10);
+// Vetor de deslocamento (visual)
+g.setColor(Color.BLACK);
+g.drawLine(x + 40, y + 25, xNovo + 40, yNovo + 25);
+}
+}
+Imagine que um programador realizou uma modificação estrutural na fase de aplicação da translação, alterando as linhas que calculam o novo
+posicionamento para a seguinte configuração:
+int xNovo = x;
+int yNovo = y;
+A respeito do impacto visual e lógico que essa alteração causará na renderização final quando o painel for atualizado na janela, assinale a opção
+correta:
+A) A aplicação Java disparará uma falha crítica de compilação, impedindo a execução do código devido à duplicidade de escopo de variáveis no
+Swing.
+B) Os dois retângulos (o azul e o vermelho) seriam desenhados na mesma exata posição geométrica da janela, fazendo com que o retângulo
+vermelho se sobreponha perfeitamente ao azul, e a linha preta de vetor se transforme em um único ponto invisível.
+C) O retângulo vermelho seria teleportado para fora dos limites visíveis da janela, enquanto o retângulo azul seria redimensionado para o dobro do
+seu tamanho de largura original.
+D) O texto "Transladado" passaria a ser exibido de ponta-cabeça no centro exato da tela do monitor, invertendo as cores padrões configuradas pela
+classe Color.
+E) A alteração anula a ação do método super.paintComponent(g), forçando os retângulos antigos a ficarem eternamente borrados na tela à medida
+que o usuário move a janela.
+
+-- 51 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 52 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa: Ao remover a adição de dx e dy do cálculo de xNovo e yNovo, as novas coordenadas passam a ser idênticas às coordenadas
+iniciais x e y. Consequentemente, o método g.drawRect(xNovo, yNovo, 80, 50); desenhará o retângulo vermelho exatamente por cima do
+azul. A linha preta calculada por g.drawLine tentará conectar a mesma coordenada de origem e destino (x + 40 para xNovo + 40), resultando
+em uma linha de comprimento zero, que aparece como um único pixel imóvel na tela. A compilação e a execução do Java continuam
+funcionando perfeitamente, apenas a transformação geométrica foi anulada na lógica do código.
+
+-- 52 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 53 de 62
+Público	Público
+Questão 50
+No desenvolvimento de sistemas gráficos interativos, o isolamento lógico das coordenadas de um objeto e a aplicação sequencial de vetores de
+deslocamento são passos fundamentais para a animação e movimentação de primitivas. Se as equações de transformação ou as configurações de
+estado do pipeline gráfico forem omitidas ou preenchidas incorretamente, o hardware será incapaz de renderizar as modificações espaciais
+esperadas.
+Considere o código Java abaixo, no qual três trechos críticos foram substituídos por lacunas indicadas por [LACUNA A], [LACUNA B] e [LACUNA
+C]:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class TranslacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+private int x = 50;
+private int y = 50;
+// Valores de translação
+private int dx = 100;
+private int dy = 80;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Cor do objeto original
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Aplicando translação
+int xNovo = [LACUNA A];
+int yNovo = [LACUNA B];
+// Cor do objeto transladado
+[LACUNA C];
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Transladado", xNovo, yNovo - 10);
+// Vetor de deslocamento (visual)
+g.setColor(Color.BLACK);
+g.drawLine(x + 40, y + 25, xNovo + 40, yNovo + 25);
+}
+}
+Para que o programa execute corretamente a transformação geométrica de translação de acordo com as especificações originais da disciplina e
+renderize o retângulo transformado com a cor de destaque correta (vermelha), as lacunas [LACUNA A], [LACUNA B] e [LACUNA C] devem ser
+preenchidas, respectivamente, por:
+A) x * dx; / y * dy; / g.setColor(Color.RED)
+B) x - dx; / y - dy; / g.setColor(Color.BLUE)
+C) x + dx; / y + dy; / g.setColor(Color.RED)
+D) dx; / dy; / g.setColor(Color.BLACK)
+E) x + y; / dx + dy; / g.setColor(Color.WHITE)
+
+-- 53 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 54 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa:
+o A operação matemática que define o conceito geométrico de translação linear em um espaço bidimensional é a adição dos
+fatores de deslocamento às coordenadas originais. Portanto, para computar as novas posições espaciais, as expressões
+corretas em [LACUNA A] e [LACUNA B] são x + dx; e y + dy;.
+o Em sistemas que utilizam a classe Graphics do Java, o contexto gráfico funciona como uma máquina de estados baseada em
+uma "caneta virtual". Para alterar a cor do próximo objeto a ser desenhado sem afetar o que já foi rasterizado, é necessário
+disparar o comando de alteração de estado de cor ativa. Para pintar o retângulo modificado com a cor estabelecida no escopo
+do projeto, a instrução correta em [LACUNA C] é g.setColor(Color.RED);. A alternativa C reúne perfeitamente esses três
+requisitos lógicos.
+
+-- 54 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 55 de 62
+Público	Público
+Questão 51
+No desenvolvimento de sistemas gráficos bidimensionais, a aplicação de rotações geométricas puras por meio de funções trigonométricas exige
+atenção redobrada ao ponto de pivô (âncora) utilizado pelo pipeline matemático e à unidade de medida angular exigida pelas bibliotecas do ambiente
+de execução.
+Considere o código Java da classe RotacaoExemplo reproduzido abaixo:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class RotacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+private int x = 150;
+private int y = 100;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Desenhar um retângulo
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Definir ângulo de rotação
+double angulo = Math.toRadians(45);
+int xNovo = (int)(x * Math.cos(angulo) - y * Math.sin(angulo));
+int yNovo = (int)(x * Math.sin(angulo) + y * Math.cos(angulo));
+// Desenhar o objeto rotacionado
+g.setColor(Color.RED);
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Rotacionado", xNovo, yNovo - 10);
+// Desenhar linha entre posições
+g.setColor(Color.BLACK);
+g.drawLine(x, y, xNovo, yNovo);
+}
+}
+Com base na lógica de transformação trigonométrica observada no código, julgue as afirmações a seguir:
+I. O método Math.toRadians(45) é necessário porque as funções trigonométricas nativas da classe Math do Java (como Math.cos e Math.sin) exigem
+que o ângulo seja expresso em radianos, e não em graus.
+II. As equações aplicadas para calcular xNovo e yNovo realizam uma rotação matemática do retângulo vermelho tendo como ponto de pivô (centro
+de rotação) a origem fixa do sistema de coordenadas de tela (0,0), localizada no canto superior esquerdo da janela, e não o centro geométrico do
+próprio retângulo azul.
+III. A operação de conversão explícita (int) aplicada antes das equações trigonométricas serve para arredondar os valores para ponto flutuante de
+dupla precisão (double), garantindo que a placa de vídeo desenhe subpixels fracionários na tela do Swing.
+É correto o que se afirma em:
+A) I, apenas.
+B) II, apenas.
+C) I e II, apenas.
+D) II e III, apenas.
+E) I, II e III.
+
+-- 55 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 56 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: C
+• Justificativa:
+o A afirmação I é verdadeira. Em Java, Math.cos() e Math.sin() operam estritamente com radianos. Passar 45 direto resultaria em
+45 radianos, quebrando a lógica de rotação de 45 graus.
+o A afirmação II é verdadeira. As equações clássicas de rotação linear usadas no código são deduzidas em relação à origem
+espacial (0,0). Como no Java a origem fica no canto superior esquerdo da janela, o retângulo vermelho sofrerá uma rotação
+orbital em torno desse canto da tela, fazendo com que sua posição final mude drasticamente de lugar (translação colateral).
+Para rotacionar em torno do próprio centro, seria necessário transladar o objeto para a origem, rotacionar e transladar de volta.
+o A afirmação III é falsa. A conversão explícita por type casting (int) converte o resultado decimal de tipo double devolvido pelas
+funções trigonométricas em um número inteiro truncado. Isso é obrigatório porque os métodos de desenho da classe Graphics
+operam apenas com coordenadas inteiras de pixels na tela, e não com subpixels.
+
+-- 56 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 57 de 62
+Público	Público
+Questão 52
+A manipulação de transformações lineares no espaço bidimensional exige o conhecimento das funções matemáticas e dos estados de renderização
+que afetam o posicionamento das primitivas. Na API gráfica do Java, combinam-se métodos geométricos de renderização com funções
+trigonométricas da biblioteca padrão.
+Considere o código Java reproduzido abaixo para responder à questão:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class RotacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+private int x = 150;
+private int y = 100;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Desenhar um retângulo
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Definir ângulo de rotação
+double angulo = Math.toRadians(45);
+int xNovo = (int)(x * Math.cos(angulo) - y * Math.sin(angulo));
+int yNovo = (int)(x * Math.sin(angulo) + y * Math.cos(angulo));
+// Desenhar o objeto rotacionado
+g.setColor(Color.RED);
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Rotacionado", xNovo, yNovo - 10);
+// Desenhar linha entre posições
+g.setColor(Color.BLACK);
+g.drawLine(x, y, xNovo, yNovo);
+}
+}
+Relacione os elementos extraídos do código com o seu respectivo papel analítico na lógica matemática de rotação e desenho:
+1. Math.cos(angulo) e Math.sin(angulo)
+2. (int)
+3. xNovo e yNovo
+4. g.drawLine(x, y, xNovo, yNovo);
+( ) Coordenadas espaciais resultantes que determinam a nova posição do canto superior esquerdo do objeto após sofrer a transformação orbital
+tracionada pela origem.
+( ) Componentes trigonométricos responsáveis por calcular as projeções de projeção horizontal e vertical com base na matriz de rotação
+bidimensional.
+( ) Traça um segmento de reta que conecta o canto superior esquerdo original ao seu respectivo correspondente rotacionado, ilustrando visualmente
+o deslocamento.
+( ) Operação de truncamento necessária para converter os valores reais de precisão dupla retornados pelos cálculos geométricos em coordenadas
+discretas de pixels.
+Assinale a opção que apresenta a sequência correta de preenchimento dos parênteses, de cima para baixo:
+A) 3 – 1 – 4 – 2
+B) 3 – 4 – 1 – 2
+C) 1 – 3 – 4 – 2
+D) 2 – 1 – 4 – 3
+E) 4 – 1 – 3 – 2
+
+-- 57 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 58 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa:
+o As variáveis xNovo e yNovo (3) armazenam a nova posição da quina superior esquerda do retângulo vermelho pós-
+transformação.
+o As funções Math.cos e Math.sin (1) calculam as projeções da matriz de rotação com base no ângulo em radianos.
+o O método g.drawLine(x, y, xNovo, yNovo) (4) une os dois cantos superiores esquerdos correspondentes, gerando a linha de
+referência preta.
+o O type casting (int) (2) é a operação de conversão explícita que converte os dados decimais em inteiros compatíveis com o
+sistema de coordenadas em pixels do Java.
+
+-- 58 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 59 de 62
+Público	Público
+Questão 53
+A ordem dos sinais e a correta aplicação dos operadores aritméticos em expressões algébricas de matrizes de transformação determinam o sentido
+de rotação e a integridade da primitiva geométrica na computação gráfica.
+Considere o código Java original utilizado em nossa disciplina:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class RotacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+private int x = 150;
+private int y = 100;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Desenhar um retângulo
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Definir ângulo de rotação
+double angulo = Math.toRadians(45);
+int xNovo = (int)(x * Math.cos(angulo) - y * Math.sin(angulo));
+int yNovo = (int)(x * Math.sin(angulo) + y * Math.cos(angulo));
+// Desenhar o objeto rotacionado
+g.setColor(Color.RED);
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Rotacionado", xNovo, yNovo - 10);
+// Desenhar linha entre posições
+g.setColor(Color.BLACK);
+g.drawLine(x, y, xNovo, yNovo);
+}
+}
+Imagine que um programador cometeu um equívoco de digitação ao programar a equação do eixo X, invertendo acidentalmente a subtração algébrica
+por uma adição na linha de cálculo da variável xNovo, restando configurada da seguinte forma:
+int xNovo = (int)(x * Math.cos(angulo) + y * Math.sin(angulo));
+A respeito do impacto visual e geométrico provocado por essa alteração no desenho final do retângulo transformado (vermelho), assinale a opção
+correta:
+A) O retângulo vermelho será desenhado normalmente e manterá sua forma retangular perfeita, mas sofrerá uma rotação espelhada incorreta, pois
+a equação alterada desconfigura a matriz clássica de rotação rígida bidimensional.
+B) O programa Java apresentará um erro de estouro de memória (out of memory) instantâneo na JVM, impedindo a janela do Swing de ser exibida
+na tela.
+C) O retângulo vermelho desaparecerá por completo da tela, uma vez que o operador de soma força o resultado de xNovo a ser avaliado como um
+número complexo imaginário.
+D) A alteração causará o redimensionamento do retângulo vermelho para dez vezes o seu tamanho original, convertendo o retângulo em um círculo
+preenchido de cor preta.
+E) A inversão de sinal fará com que o método super.paintComponent(g) desenhe apenas o texto "Original" piscando no centro da tela.
+
+-- 59 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 60 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: A
+• Justificativa: A inversão do sinal de subtração pelo de adição na equação de rotação quebra a formulação da matriz de transformação
+afim de rotação anti-horária padrão para coordenadas homogêneas/cartesianas. Geometricamente, o retângulo vermelho continuará
+existindo com suas proporções de largura 80 e altura 50 mantidas (pois o método drawRect recebe valores estáticos de tamanho), mas
+ele será renderizado em uma coordenada xNovo incorreta, correspondente a uma transformação linear espelhada/distorcida em relação
+ao comportamento orbital esperado. A execução lógica do Java permanece íntegra, sofrendo apenas uma falha semântica de cálculo
+geométrico.
+
+-- 60 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 61 de 62
+Público	Público
+Questão 54
+A implementação manual de transformações afins no espaço bidimensional requer o domínio das matrizes de projeção geométrica. Na ausência de
+transformações automatizadas por matrizes nativas do hardware, o programador deve transcrever as equações matemáticas de rotação diretamente
+no código, respeitando a distribuição dos senos e cossenos e a orientação dos sinais algébricos que governam o sentido do movimento orbital.
+Considere o código Java abaixo, no qual três trechos matemáticos críticos foram substituídos por lacunas indicadas por [LACUNA A], [LACUNA B]
+e [LACUNA C]:
+package Transformacoes;
+import javax.swing.*;
+import java.awt.*;
+public class RotacaoExemplo extends JPanel {
+// Coordenadas do objeto original
+private int x = 150;
+private int y = 100;
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+// Desenhar um retângulo
+g.setColor(Color.BLUE);
+g.drawRect(x, y, 80, 50);
+g.drawString("Original", x, y - 10);
+// Definir ângulo de rotação
+double angulo = Math.toRadians(45);
+int xNovo = (int)(x * [LACUNA A] - y * [LACUNA B]);
+int yNovo = (int)(x * [LACUNA B] + y * [LACUNA A]);
+// Desenhar o objeto rotacionado
+[LACUNA C];
+g.drawRect(xNovo, yNovo, 80, 50);
+g.drawString("Rotacionado", xNovo, yNovo - 10);
+// Desenhar linha entre posições
+g.setColor(Color.BLACK);
+g.drawLine(x, y, xNovo, yNovo);
+}
+}
+Para que o programa execute corretamente a transformação trigonométrica de rotação rígida ao redor da origem e configure a caneta do contexto
+gráfico para pintar o retângulo transformado com a cor vermelha de destaque, as lacunas [LACUNA A], [LACUNA B] e [LACUNA C] devem ser
+preenchidas, respectivamente, por:
+A) Math.sin(angulo) / Math.cos(angulo) / g.setColor(Color.BLUE)
+B) Math.cos(angulo) / Math.sin(angulo) / g.setColor(Color.RED)
+C) Math.tan(angulo) / Math.cos(angulo) / g.setColor(Color.BLACK)
+D) Math.cos(angulo) / Math.tan(angulo) / g.setColor(Color.RED)
+E) Math.sin(angulo) / Math.sin(angulo) / g.setColor(Color.WHITE)
+
+-- 61 of 62 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPUTAÇÃO GRÁFICA E PROCESSAMENTO DE IMAGENS
+QUESTIONÁRIO
+Página 62 de 62
+Público	Público
+Gabarito Comentado:
+• Alternativa correta: B
+• Justificativa:
+o As equações que regem a rotação bidimensional de um ponto em relação à origem cartesiana (0,0) são dadas matematicamente
+por:
+$x' = x * cos(θ) - y * sin(θ)
+$y' = x * sin(θ) + y * cos(θ)
+o Analisando a estrutura algébrica do código fornecido, as funções trigonométricas que preenchem corretamente o mapeamento
+são o cosseno para a [LACUNA A] (Math.cos(angulo)) e o seno para a [LACUNA B] (Math.sin(angulo)).
+o Por fim, para que a primitiva gráfica altere seu estado e renderize o novo retângulo com a cor estabelecida pelo escopo prático
+do exercício, o método do contexto gráfico deve ser carregado com o parâmetro de cor vermelha, tornando a instrução da
+[LACUNA C] obrigatoriamente g.setColor(Color.RED);.
+o A alternativa B satisfaz conjuntamente todas as condições.
+
+-- 62 of 62 --
+

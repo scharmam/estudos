@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Hub — Treinamentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=11">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow--1"></div>
+  <div class="bg-glow bg-glow--2"></div>
+  <div class="scanline"></div>
+
+  <div id="app">
+    <!-- HUB DE TREINAMENTOS -->
+    <section id="screen-hub" class="screen screen--active">
+      <div class="panel panel--hero panel--hub">
+        <div class="logo-block">
+          <span class="logo-tag">Central de Treinamentos</span>
+          <h1 class="logo-title">STUDY<span class="logo-accent">HUB</span></h1>
+          <p class="logo-sub">Escolha uma matéria e comece a treinar</p>
+        </div>
+
+        <div id="hub-trainings-grid" class="trainings-grid"></div>
+
+        <p class="hub-footer">Novos treinamentos serão adicionados aqui · progresso salvo localmente</p>
+      </div>
+    </section>
+
+    <!-- EM BREVE (treinamento futuro) -->
+    <section id="screen-training-soon" class="screen">
+      <div class="panel panel--hero">
+        <button type="button" id="btn-soon-back" class="btn btn--ghost btn--sm hub-back">← Treinamentos</button>
+        <div id="training-soon-content" class="training-soon"></div>
+      </div>
+    </section>
+
+    <!-- CGPI — TELA INICIAL -->
+    <section id="screen-welcome" class="screen">
+      <div class="panel panel--hero">
+        <button type="button" id="btn-back-hub" class="btn btn--ghost btn--sm hub-back">← Treinamentos</button>
+        <div class="logo-block">
+          <span class="logo-tag">Computação Gráfica & PI</span>
+          <h1 class="logo-title">CGPI<span class="logo-accent">QUEST</span></h1>
+          <p class="logo-sub">Prova N1 + N2 · 84 questões · Mini game de estudo</p>
+        </div>
+
+        <form id="start-form" class="start-form">
+          <label class="field-label" for="player-name">Seu nome de jogador</label>
+          <input type="text" id="player-name" class="field-input" placeholder="Digite seu nome..." maxlength="24" autocomplete="name" required>
+
+          <label class="field-label">Modo de jogo</label>
+          <div class="mode-grid">
+            <label class="mode-card">
+              <input type="radio" name="mode" value="N1" checked>
+              <span class="mode-card__inner"><strong>N1</strong><small>30 questões</small></span>
+            </label>
+            <label class="mode-card">
+              <input type="radio" name="mode" value="N2">
+              <span class="mode-card__inner"><strong>N2</strong><small>54 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--nob">
+              <input type="radio" name="mode" value="N2_NOB">
+              <span class="mode-card__inner">
+                <strong>N2 Sem B</strong>
+                <small id="n2-nob-count">20 questões · sem gabarito B</small>
+              </span>
+            </label>
+            <label class="mode-card mode-card--wide">
+              <input type="radio" name="mode" value="ALL">
+              <span class="mode-card__inner"><strong>Completo</strong><small>N1 + N2 · 84 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--prova mode-card--wide">
+              <input type="radio" name="mode" value="PROVA">
+              <span class="mode-card__inner">
+                <strong>Simulado PROVA</strong>
+                <small>15 questões · 8 N1 + 3 N2 + 4 com código Java</small>
+              </span>
+            </label>
+            <label class="mode-card mode-card--code mode-card--wide">
+              <input type="radio" name="mode" value="N2_CODE">
+              <span class="mode-card__inner">
+                <strong>N2 · Só Código</strong>
+                <small id="n2-code-count">12 questões · Java do PDF (N2-43…54)</small>
+              </span>
+            </label>
+            <label class="mode-card mode-card--prova-code mode-card--wide">
+              <input type="radio" name="mode" value="PROVA_N2_CODE">
+              <span class="mode-card__inner">
+                <strong>Simulado N2 · Código</strong>
+                <small>4 questões · sorteio como na prova</small>
+              </span>
+            </label>
+          </div>
+
+          <p id="prova-mode-hint" class="prova-mode-hint" hidden>
+            Ordem fixa: questões 1–8 N1 (aleatórias) → 9–11 N2 → 12–15 N2 com código do PDF.
+          </p>
+
+          <div id="welcome-options-wrap">
+          <label class="field-label" for="filter-unit" id="filter-unit-label">Filtrar por unidade (opcional)</label>
+          <select id="filter-unit" class="field-input">
+            <option value="">Todas as unidades</option>
+          </select>
+
+          <label class="toggle-row">
+            <input type="checkbox" id="shuffle-questions" checked>
+            <span class="toggle-row__box"></span>
+            <span>Embaralhar questões</span>
+          </label>
+
+          <label class="toggle-row">
+            <input type="checkbox" id="memorization-mode" checked>
+            <span class="toggle-row__box"></span>
+            <span>Modo memorização (5 erros → revisão sem pontos)</span>
+          </label>
+
+          <label class="toggle-row">
+            <input type="checkbox" id="spaced-rep-mode" checked>
+            <span class="toggle-row__box"></span>
+            <span>Repetição espaçada (rever erros antigos)</span>
+          </label>
+
+          <label class="toggle-row">
+            <input type="checkbox" id="confidence-mode">
+            <span class="toggle-row__box"></span>
+            <span>Nível de confiança (certeza vs chute)</span>
+          </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--glow">
+            <span>Iniciar Missão</span>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          </button>
+        </form>
+
+        <div id="welcome-mastery" class="welcome-mastery" hidden></div>
+
+        <div class="welcome-actions">
+          <button type="button" id="btn-study-hub" class="btn btn--secondary">📚 Central de Estudo</button>
+          <button type="button" id="btn-dashboard" class="btn btn--ghost">Ver Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUVEM — TELA INICIAL -->
+    <section id="screen-cloud-welcome" class="screen">
+      <div class="panel panel--hero panel--cloud">
+        <button type="button" id="btn-back-hub-cloud" class="btn btn--ghost btn--sm hub-back">← Treinamentos</button>
+        <div class="logo-block">
+          <span class="logo-tag logo-tag--cloud">Computação em Nuvem · Revisão B2</span>
+          <h1 class="logo-title">CLOUD<span class="logo-accent logo-accent--cloud">QUEST</span></h1>
+          <p class="logo-sub">100 questões · 10 temas · simulado de prova</p>
+        </div>
+
+        <form id="cloud-start-form" class="start-form">
+          <label class="field-label" for="cloud-player-name">Seu nome de jogador</label>
+          <input type="text" id="cloud-player-name" class="field-input" placeholder="Digite seu nome..." maxlength="24" autocomplete="name" required>
+
+          <label class="field-label">Modo de jogo</label>
+          <div class="mode-grid mode-grid--cloud">
+            <label class="mode-card mode-card--cloud">
+              <input type="radio" name="cloud-mode" value="CLOUD_ALL" checked>
+              <span class="mode-card__inner"><strong>Completo</strong><small>100 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--cloud-unit">
+              <input type="radio" name="cloud-mode" value="CLOUD_UNIT">
+              <span class="mode-card__inner"><strong>Por Tema</strong><small>10 questões por unidade</small></span>
+            </label>
+            <label class="mode-card mode-card--cloud-quick mode-card--wide">
+              <input type="radio" name="cloud-mode" value="CLOUD_QUICK">
+              <span class="mode-card__inner"><strong>Treino Rápido</strong><small>20 questões aleatórias</small></span>
+            </label>
+            <label class="mode-card mode-card--cloud-prova mode-card--wide">
+              <input type="radio" name="cloud-mode" value="CLOUD_PROVA">
+              <span class="mode-card__inner"><strong>Simulado PROVA</strong><small>20 questões · sorteio como na prova</small></span>
+            </label>
+          </div>
+
+          <p id="cloud-prova-mode-hint" class="prova-mode-hint prova-mode-hint--cloud" hidden>
+            20 questões sorteadas de todo o banco — ideal para simular a prova B2.
+          </p>
+
+          <div id="cloud-welcome-options-wrap">
+            <label class="field-label" for="filter-unit-cloud" id="filter-unit-cloud-label">Tema / unidade</label>
+            <select id="filter-unit-cloud" class="field-input" hidden>
+              <option value="">Selecione um tema...</option>
+            </select>
+
+            <label class="toggle-row">
+              <input type="checkbox" id="cloud-shuffle-questions" checked>
+              <span class="toggle-row__box"></span>
+              <span>Embaralhar questões</span>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" id="cloud-memorization-mode" checked>
+              <span class="toggle-row__box"></span>
+              <span>Modo memorização (5 erros → revisão)</span>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" id="cloud-confidence-mode">
+              <span class="toggle-row__box"></span>
+              <span>Nível de confiança (certeza vs chute)</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--glow btn--cloud">
+            <span>Iniciar Treino</span>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          </button>
+        </form>
+
+        <div id="cloud-welcome-mastery" class="welcome-mastery" hidden></div>
+
+        <div class="welcome-actions">
+          <button type="button" id="btn-cloud-dashboard" class="btn btn--ghost">Ver Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CPL — COMPILADORES -->
+    <section id="screen-cpl-welcome" class="screen">
+      <div class="panel panel--hero panel--cpl">
+        <button type="button" id="btn-back-hub-cpl" class="btn btn--ghost btn--sm hub-back">← Treinamentos</button>
+        <div class="logo-block">
+          <span class="logo-tag logo-tag--cpl">Compiladores</span>
+          <h1 class="logo-title">CPL<span class="logo-accent logo-accent--cpl">QUEST</span></h1>
+          <p class="logo-sub">Prova N1 + N2 · 78 questões · Mini game de estudo</p>
+        </div>
+
+        <form id="cpl-start-form" class="start-form">
+          <label class="field-label" for="cpl-player-name">Seu nome de jogador</label>
+          <input type="text" id="cpl-player-name" class="field-input" placeholder="Digite seu nome..." maxlength="24" autocomplete="name" required>
+
+          <label class="field-label">Modo de jogo</label>
+          <div class="mode-grid mode-grid--cpl">
+            <label class="mode-card mode-card--cpl">
+              <input type="radio" name="cpl-mode" value="N1" checked>
+              <span class="mode-card__inner"><strong>N1</strong><small>30 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--cpl">
+              <input type="radio" name="cpl-mode" value="N2">
+              <span class="mode-card__inner"><strong>N2</strong><small>48 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--cpl mode-card--wide">
+              <input type="radio" name="cpl-mode" value="ALL">
+              <span class="mode-card__inner"><strong>Completo</strong><small>N1 + N2 · 78 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--cpl-prova mode-card--wide">
+              <input type="radio" name="cpl-mode" value="PROVA">
+              <span class="mode-card__inner">
+                <strong>Simulado PROVA</strong>
+                <small>15 questões · 8 N1 + 4 N2 + 3 com código Java</small>
+              </span>
+            </label>
+            <label class="mode-card mode-card--cpl-code mode-card--wide">
+              <input type="radio" name="cpl-mode" value="N2_CODE">
+              <span class="mode-card__inner">
+                <strong>N2 · Só Código</strong>
+                <small id="cpl-n2-code-count">6 questões · Java (N2-43…48)</small>
+              </span>
+            </label>
+            <label class="mode-card mode-card--cpl-prova-code mode-card--wide">
+              <input type="radio" name="cpl-mode" value="PROVA_N2_CODE">
+              <span class="mode-card__inner">
+                <strong>Simulado N2 · Código</strong>
+                <small>4 questões · sorteio como na prova</small>
+              </span>
+            </label>
+          </div>
+
+          <p id="cpl-prova-mode-hint" class="prova-mode-hint prova-mode-hint--cpl" hidden>
+            Ordem fixa: questões N1 → N2 teórica → N2 com código Java do PDF.
+          </p>
+
+          <div id="cpl-welcome-options-wrap">
+            <label class="toggle-row">
+              <input type="checkbox" id="cpl-shuffle-questions" checked>
+              <span class="toggle-row__box"></span>
+              <span>Embaralhar questões</span>
+            </label>
+            <label class="toggle-row">
+              <input type="checkbox" id="cpl-memorization-mode" checked>
+              <span class="toggle-row__box"></span>
+              <span>Modo memorização (5 erros → revisão)</span>
+            </label>
+            <label class="toggle-row">
+              <input type="checkbox" id="cpl-confidence-mode">
+              <span class="toggle-row__box"></span>
+              <span>Nível de confiança (certeza vs chute)</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--glow btn--cpl">
+            <span>Iniciar Missão</span>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          </button>
+        </form>
+
+        <div id="cpl-welcome-mastery" class="welcome-mastery" hidden></div>
+
+        <div class="welcome-actions">
+          <button type="button" id="btn-cpl-dashboard" class="btn btn--ghost">Ver Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CENTRAL DE ESTUDO -->
+    <section id="screen-study" class="screen">
+      <div class="panel panel--study">
+        <header class="dash-header">
+          <div>
+            <h2 class="dash-title">Central de Estudo</h2>
+            <p class="dash-sub">Memorização · Flashcards · Conceitos · Exportação</p>
+          </div>
+          <button type="button" id="btn-study-back" class="btn btn--ghost btn--sm">← Voltar</button>
+        </header>
+
+        <label class="field-label" for="study-player-name">Nome do jogador</label>
+        <input type="text" id="study-player-name" class="field-input" placeholder="Mesmo nome usado no jogo..." maxlength="24">
+
+        <div id="study-streak" class="study-streak"></div>
+
+        <div class="study-grid">
+          <button type="button" class="study-card" data-action="errors">
+            <span class="study-card__icon">📕</span>
+            <strong>Caderno de Erros</strong>
+            <small id="study-errors-count">0 questões salvas</small>
+          </button>
+          <button type="button" class="study-card" data-action="flashcard">
+            <span class="study-card__icon">🃏</span>
+            <strong>Modo Flashcard</strong>
+            <small>Enunciado → revelar → sabia?</small>
+          </button>
+          <button type="button" class="study-card" data-action="daily">
+            <span class="study-card__icon">☀️</span>
+            <strong>Desafio Diário</strong>
+            <small>5 questões difíceis do dia</small>
+          </button>
+          <button type="button" class="study-card" data-action="concepts">
+            <span class="study-card__icon">📊</span>
+            <strong>Comparador de Conceitos</strong>
+            <small>Tabelas CGPI</small>
+          </button>
+        </div>
+
+        <div class="study-export">
+          <span class="field-label">Exportar caderno de erros</span>
+          <div class="study-export__btns">
+            <button type="button" id="btn-export-txt" class="btn btn--ghost btn--sm">📄 Texto (.txt)</button>
+            <button type="button" id="btn-export-anki" class="btn btn--ghost btn--sm">🎴 Anki/CSV</button>
+          </div>
+        </div>
+
+        <div id="study-unit-mastery" class="study-unit-mastery"></div>
+        <div id="study-concepts" class="study-concepts" hidden></div>
+      </div>
+    </section>
+
+    <!-- TELA DO QUIZ -->
+    <section id="screen-quiz" class="screen">
+      <header class="hud">
+        <div class="hud__left">
+          <div class="hud-badge hud-badge--player">
+            <span class="hud-badge__label">Jogador</span>
+            <span id="hud-name" class="hud-badge__value">—</span>
+          </div>
+          <div class="hud-badge">
+            <span class="hud-badge__label">Modo</span>
+            <span id="hud-mode" class="hud-badge__value">—</span>
+          </div>
+        </div>
+        <div class="hud__center">
+          <div class="progress-ring-wrap">
+            <svg class="progress-ring" viewBox="0 0 120 120">
+              <circle class="progress-ring__bg" cx="60" cy="60" r="52"/>
+              <circle id="progress-ring-fill" class="progress-ring__fill" cx="60" cy="60" r="52"/>
+            </svg>
+            <div class="progress-ring__text">
+              <span id="hud-progress-num">0</span>
+              <small>/ <span id="hud-total">0</span></small>
+            </div>
+          </div>
+        </div>
+        <div class="hud__right">
+          <div class="stat-pill stat-pill--streak">
+            <span class="stat-pill__icon">🔥</span>
+            <span id="hud-streak">0</span>
+          </div>
+          <div class="stat-pill stat-pill--score">
+            <span class="stat-pill__icon">✓</span>
+            <span id="hud-score">0</span>
+          </div>
+          <div class="stat-pill stat-pill--wrong-hud">
+            <span class="stat-pill__icon">✗</span>
+            <span id="hud-wrong">0</span>
+          </div>
+          <div class="stat-pill stat-pill--timer">
+            <span class="stat-pill__icon">⏱</span>
+            <span id="hud-timer">00:00</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="quiz-bar">
+        <div id="quiz-bar-fill" class="quiz-bar__fill"></div>
+      </div>
+
+      <main class="quiz-stage">
+        <article id="question-card" class="question-card">
+          <div class="question-card__meta">
+            <span id="q-exam" class="chip chip--exam">N1</span>
+            <span id="q-unit" class="chip chip--unit"></span>
+            <span id="q-prova-section" class="chip chip--prova" hidden></span>
+            <span id="q-memo-badge" class="chip chip--memo" hidden>📚 Memorização</span>
+            <span id="q-answer-badge" class="chip chip--answer" hidden></span>
+            <span id="q-attempts" class="chip chip--attempts" hidden></span>
+            <span id="q-number" class="chip chip--num">Q01</span>
+          </div>
+          <h2 id="q-text" class="question-card__text"></h2>
+          <div id="q-text-code" class="question-text-blocks" hidden></div>
+
+          <div id="confidence-row" class="confidence-row" hidden>
+            <span class="confidence-row__label">Quão confiante você está?</span>
+            <div class="confidence-row__btns">
+              <button type="button" class="btn btn--confidence" data-confidence="sure">💪 Tenho certeza</button>
+              <button type="button" class="btn btn--confidence" data-confidence="guess">🎲 Chute</button>
+            </div>
+          </div>
+
+          <div id="memo-study-panel" class="memo-study-panel" hidden>
+            <p class="memo-study-panel__title">Fase 1 — Estude o gabarito</p>
+            <div id="memo-study-options" class="options-list options-list--readonly"></div>
+            <p id="memo-study-hint" class="memo-study-panel__hint"></p>
+          </div>
+
+          <div id="options-list" class="options-list"></div>
+
+          <div id="flashcard-panel" class="flashcard-panel" hidden>
+            <div id="flashcard-answer" class="flashcard-answer" hidden></div>
+            <div class="flashcard-actions">
+              <button type="button" id="btn-flash-reveal" class="btn btn--secondary">Revelar resposta</button>
+              <div id="flashcard-rate" class="flashcard-rate" hidden>
+                <button type="button" class="btn btn--ghost" data-rate="knew">✓ Sabia</button>
+                <button type="button" class="btn btn--ghost" data-rate="unknown">✗ Não sabia</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="feedback" class="feedback" hidden></div>
+          <div class="quiz-actions">
+            <button type="button" id="btn-next" class="btn btn--primary" disabled>Próxima Questão</button>
+            <button type="button" id="btn-quit" class="btn btn--ghost btn--sm">Desistir</button>
+          </div>
+        </article>
+      </main>
+    </section>
+
+    <!-- TELA DE RESULTADO -->
+    <section id="screen-result" class="screen">
+      <div class="panel panel--result">
+        <div id="result-badge" class="result-badge">S</div>
+        <h2 id="result-title" class="result-title">Missão Concluída!</h2>
+        <p id="result-player" class="result-player"></p>
+
+        <div class="result-stats">
+          <div class="result-stat">
+            <span id="result-percent" class="result-stat__value result-stat__value--big">0%</span>
+            <span class="result-stat__label">Acertos nesta partida</span>
+          </div>
+          <div class="result-stat">
+            <span id="result-correct" class="result-stat__value">0</span>
+            <span class="result-stat__label">Corretas</span>
+          </div>
+          <div class="result-stat">
+            <span id="result-wrong" class="result-stat__value">0</span>
+            <span class="result-stat__label">Erradas</span>
+          </div>
+          <div class="result-stat">
+            <span id="result-time" class="result-stat__value">00:00</span>
+            <span class="result-stat__label">Tempo</span>
+          </div>
+        </div>
+
+        <div id="result-confidence" class="result-confidence" hidden></div>
+
+        <div class="result-bar-wrap">
+          <div class="result-bar">
+            <div id="result-bar-correct" class="result-bar__correct"></div>
+            <div id="result-bar-wrong" class="result-bar__wrong"></div>
+          </div>
+          <div class="result-bar-legend">
+            <span><i class="dot dot--green"></i> Acertos</span>
+            <span><i class="dot dot--red"></i> Erros</span>
+          </div>
+        </div>
+
+        <p id="result-message" class="result-message"></p>
+
+        <div class="result-actions">
+          <button type="button" id="btn-review-session" class="btn btn--secondary" hidden>📚 Repassar erros desta partida</button>
+          <button type="button" id="btn-play-again" class="btn btn--primary btn--glow">Jogar Novamente</button>
+          <button type="button" id="btn-result-dashboard" class="btn btn--ghost">Ver Dashboard</button>
+          <button type="button" id="btn-result-hub" class="btn btn--ghost">← Treinamentos</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="screen-dashboard" class="screen">
+      <div class="panel panel--dashboard">
+        <header class="dash-header">
+          <div>
+            <h2 class="dash-title">Dashboard de Desempenho</h2>
+            <p class="dash-sub">Histórico de todas as partidas · localStorage</p>
+          </div>
+          <button type="button" id="btn-back-home" class="btn btn--ghost btn--sm">← Voltar</button>
+        </header>
+
+        <div id="dash-summary" class="dash-summary"></div>
+        <div id="dash-unit-mastery" class="dash-unit-mastery"></div>
+
+        <div class="dash-filters">
+          <input type="text" id="filter-name" class="field-input field-input--sm" placeholder="Filtrar por nome...">
+          <select id="filter-mode" class="field-input field-input--sm">
+            <option value="">Todos os modos</option>
+            <option value="N1">N1</option>
+            <option value="N2">N2</option>
+            <option value="N2_NOB">N2 Sem B</option>
+            <option value="N2_CODE">N2 · Só Código</option>
+            <option value="PROVA_N2_CODE">Simulado N2 · Código</option>
+            <option value="PROVA">Simulado PROVA</option>
+            <option value="ALL">Completo</option>
+            <option value="CLOUD_ALL">Nuvem · Completo</option>
+            <option value="CLOUD_QUICK">Nuvem · Treino Rápido</option>
+            <option value="CLOUD_UNIT">Nuvem · Por Tema</option>
+            <option value="CLOUD_PROVA">Nuvem · Simulado</option>
+            <option value="N1">CPL · N1</option>
+            <option value="N2">CPL · N2</option>
+            <option value="ALL">CPL · Completo</option>
+            <option value="PROVA">CPL · Simulado</option>
+            <option value="N2_CODE">CPL · Só Código</option>
+            <option value="PROVA_N2_CODE">CPL · Simulado Código</option>
+          </select>
+        </div>
+
+        <div id="dash-sessions" class="dash-sessions"></div>
+        <p id="dash-empty" class="dash-empty" hidden>Nenhuma partida registrada ainda. Jogue para ver suas estatísticas!</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/cpl-questions.js?v=11"></script>
+  <script src="js/cpl-config.js?v=11"></script>
+  <script src="js/cloud-questions.js?v=11"></script>
+  <script src="js/cloud-config.js?v=11"></script>
+  <script src="js/questions.js?v=11"></script>
+  <script src="js/code-display.js?v=11"></script>
+  <script src="js/prova-config.js?v=11"></script>
+  <script src="js/study-data.js?v=11"></script>
+  <script src="js/memory-store.js?v=11"></script>
+  <script src="js/trainings-hub.js?v=11"></script>
+  <script src="js/study.js?v=11"></script>
+  <script src="js/app.js?v=11"></script>
+</body>
+</html>

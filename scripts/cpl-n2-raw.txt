@@ -1,0 +1,2778 @@
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 1 de 65
+Público
+QUESTIONÁRIO PARA PROVA N2
+Questões resolvidas e comentadas
+Questão 01
+O analisador sintático é o coração da fase de análise de um compilador. Ele recebe a sequência de tokens gerada pelo
+analisador léxico e verifica se essa sequência está em conformidade com as regras estruturais da linguagem, que são
+definidas por uma Gramática Livre de Contexto (GLC). Para realizar essa verificação, o analisador pode seguir
+diferentes estratégias de construção da árvore de derivação, sendo as duas principais abordagens conhecidas como
+Top-Down (descendente) e Bottom-Up (ascendente).
+No contexto das estratégias de análise sintática (parsing), a abordagem Top-Down caracteriza-se por construir a árvore
+de análise sintática a partir:
+A) Dos tokens da entrada (folhas) em direção ao símbolo inicial da gramática (raiz), realizando operações de
+empilhamento (shift) e redução (reduce).
+B) Do símbolo inicial da gramática (raiz) em direção aos tokens da entrada (folhas), substituindo repetidamente os não-
+terminais pelas suas produções correspondentes.
+C) Das regras semânticas associadas, que validam os tipos de dados das variáveis antes de construir a estrutura da
+árvore.
+D) De múltiplos nós intermediários de forma simultânea, sem a necessidade de um símbolo inicial ou de tokens
+terminais específicos.
+E) Do último token da entrada retrocedendo até o primeiro token, invertendo completamente a ordem de leitura do
+código-fonte.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? A estratégia Top-Down (descendente ou "de cima para baixo") inicia o
+processo de reconhecimento na raiz da árvore de derivação, que corresponde ao símbolo inicial da gramática
+(o não-terminal principal). A partir dele, o analisador tenta prever quais regras de produção devem ser aplicadas
+para expandir os nós não-terminais até que eles coincidam exatamente com a cadeia de tokens (folhas)
+fornecida pelo analisador léxico.
+• Por que as outras alternativas estão incorretas?
+o A: Esta alternativa descreve a abordagem Bottom-Up (ascendente ou "de baixo para cima"), que parte
+dos tokens de entrada e vai aplicando reduções até alcançar o símbolo inicial.
+o C: A validação de tipos de dados e regras semânticas ocorre na fase seguinte, que é a Análise
+Semântica, e não dita a forma como a árvore sintática é estruturada recursivamente.
+o D: O processo de análise sintática é estruturado e hierárquico; ele depende obrigatoriamente de um
+símbolo inicial definido pela gramática e dos tokens da entrada.
+o E: Os analisadores sintáticos padrão (como LL ou LR) processam a entrada da esquerda para a direita,
+token por token, e não de trás para frente.
+
+-- 1 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 2 de 65
+Público
+Questão 02
+Para automatizar a construção de analisadores sintáticos Top-Down (descendentes), os projetistas de compiladores
+frequentemente utilizam a técnica de análise preditiva por tabelas, tipicamente associada aos analisadores do tipo
+LL(1). O primeiro "L" indica que a entrada é lida da esquerda para a direita (Left-to-right), o segundo "L" indica que é
+utilizada uma derivação mais à esquerda (Leftmost derivation), e o número "1" indica que o analisador consulta apenas
+um token adiante (lookahead) para tomar a decisão de qual regra de produção aplicar. No entanto, para que uma
+gramática possa ser utilizada diretamente por um analisador LL(1), ela não pode conter certas estruturas que geram
+indeterminação.
+Uma limitação clássica que impede uma Gramática Livre de Contexto (GLC) de ser classificada ou utilizada diretamente
+como LL(1) é a presença de:
+A) Recursão à esquerda, pois o analisador entraria em um laço infinito ao tentar expandir o mesmo não-terminal sem
+consumir nenhum token da entrada.
+B) Recursão à direita, visto que ela impede o analisador de alcançar a condição de parada ao chegar no fim do arquivo
+(EOF).
+C) Símbolos terminais que aparecem em mais de uma regra de produção da gramática.
+D) Produções vazias (regras do tipo A → ε), que são proibidas em qualquer tipo de análise sintática descendente.
+E) Identificadores e constantes numéricas definidos fora do analisador léxico.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Analisadores LL(1) são preditivos e descendentes. Se a gramática
+possuir uma regra com recursão à esquerda direta ou indireta (como A → α), o analisador tentará expandir o
+não-terminal A aplicando a mesma regra indefinidamente na tentativa de encontrar o token correto, gerando
+um laço infinito (looping) e estourando a pilha de execução, pois nenhum token da entrada é consumido para
+fazer o processo avançar.
+• Por que as outras alternativas estão incorretas?
+o B: A recursão à direita (A → α) é perfeitamente aceitável e facilmente tratada por analisadores LL(1),
+sendo inclusive a técnica utilizada para eliminar a recursão à esquerda.
+o C: Terminais podem aparecer em múltiplas regras de produção; o que o LL(1) exige é que as escolhas
+de produção sejam disjuntas com base no token atual consultado (fatores comuns à esquerda devem
+ser eliminados).
+o D: Produções vazias (ε) são permitidas e tratadas em gramáticas LL(1) através do cálculo do conjunto
+de sincronização FOLLOW.
+o E: A definição de identificadores e constantes é de responsabilidade estrita da análise léxica; a análise
+sintática trabalha apenas com os tokens abstratos e não se invalida por isso.
+
+-- 2 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 3 de 65
+Público
+Questão 03
+Durante o desenvolvimento de um software, é muito comum que os programadores cometam equívocos ao digitar o
+código-fonte. O compilador deve ser capaz de interceptar esses desvios e relatar mensagens de erro claras e úteis
+para o desenvolvedor. Cada fase da análise (léxica, sintática e semântica) possui uma responsabilidade bem delimitada
+na detecção de falhas de acordo com a teoria de linguagens formais. A análise sintática atua especificamente na
+verificação da estrutura e da ordem dos elementos na sentença.
+Considerando o escopo de atuação do analisador sintático em um compilador para uma linguagem como C ou Java,
+assinale a opção que apresenta um exemplo de erro que é detectado exclusivamente nesta fase:
+A) O uso de um caractere inválido ou não reconhecido pelo alfabeto da linguagem, como o símbolo @ dentro de um
+nome de variável.
+B) A atribuição de um valor do tipo String a uma variável que foi declarada previamente como int.
+C) A tentativa de utilizar uma variável que não foi declarada em nenhum escopo do programa.
+D) A ausência de um fecha-parêntese ) correspondente em uma expressão de teste de uma estrutura condicional if (x
+> 0.
+E) A chamada de uma função passando três argumentos numéricos, quando a assinatura da função exige apenas um
+argumento.
+Gabarito: D
+Justificativa e Análise das Alternativas:
+• Por que a alternativa D é a correta? A falta de um parêntese de fechamento viola a regra estrutural (a
+gramática) da linguagem, que determina que a expressão de um comando if deve ser delimitada por um
+parêntese de abertura e um de fechamento. Como a análise sintática valida a ordem, o agrupamento e o
+aninhamento dos tokens, ela identificará o erro assim que encontrar o bloco de código seguinte sem que a
+estrutura do if tenha sido devidamente fechada.
+• Por que as outras alternativas estão incorretas?
+o A: Caracteres inválidos que não pertencem ao alfabeto da linguagem são detectados mais cedo, pela
+análise léxica.
+o B e E: A incompatibilidade de tipos em atribuições e a checagem da quantidade/tipo de argumentos
+em funções são problemas de validade lógica e contextual, que competem à análise semântica (regras
+de escopo e tipos), pois a estrutura sintática da atribuição ou da chamada de função está formalmente
+correta.
+o C: A verificação se uma variável foi declarada ou não exige o uso da tabela de símbolos e regras de
+escopo, tarefa executada também na análise semântica.
+
+-- 3 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 4 de 65
+Público
+Questão 04
+Quando o analisador sintático processa o código-fonte de um programa, sua função principal é validar a estrutura
+gramatical das instruções. Para demonstrar visualmente que uma sequência de tokens está correta de acordo com as
+regras da linguagem, o analisador constrói, interna ou explicitamente, uma estrutura de dados em formato de árvore,
+denominada Árvore de Análise Sintática (ou Árvore de Derivação). Nessa estrutura hierárquica, a organização dos nós
+segue regras muito claras baseadas na Gramática Livre de Contexto (GLC) da linguagem.
+Em uma Árvore de Análise Sintática bem-formada, os nós que representam as folhas (as extremidades finais na base
+da árvore) e o nó que representa a raiz (o topo da árvore) correspondem, respectivamente, a:
+A) Símbolos não-terminais (como estruturas de controle) e Símbolos de erro sintático.
+B) Palavras-chave reservadas e Comentários do código-fonte.
+C) Símbolos terminais (tokens lidos da entrada) e Símbolo inicial da gramática.
+D) Operadores lógicos e Tipos de dados das variáveis.
+E) Funções nativas do sistema e Diretivas de compilação.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? A árvore de derivação sintetiza o processo de construção gramatical. A
+raiz da árvore é sempre o ponto de partida de toda a linguagem, ou seja, o símbolo inicial da gramática (por
+exemplo, Programa ou Expressao). À medida que as regras são aplicadas, a árvore se ramifica. As folhas
+(nós finais que não possuem filhos) contêm obrigatoriamente os símbolos terminais, que são os tokens reais
+extraídos do código-fonte pelo analisador léxico (como identificadores, números, operadores e pontuação). A
+leitura dessas folhas da esquerda para a direita reconstrói o código original.
+• Por que as outras alternativas estão incorretas?
+o A: Símbolos não-terminais ficam nos nós intermediários (internos) da árvore, e não nas folhas. Erros
+sintáticos causam a interrupção da árvore e não fazem parte da sua estrutura regular.
+o B e E: Elementos como comentários são descartados na análise léxica, e conceitos como funções
+nativas ou diretivas são tratados de forma lógica, não definindo a estrutura anatômica (raiz/folha) de
+uma árvore sintática genérica.
+o D: Embora operadores possam estar nas folhas, os tipos de dados são tratados pela análise semântica
+e não definem as regras estruturais de raiz e folha da fase sintática.
+
+-- 4 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 5 de 65
+Público
+Questão 05
+Para construir um compilador eficiente, o processo de análise do código-fonte é dividido em fases bem delimitadas. A
+Análise Léxica e a Análise Sintática trabalham em estreita colaboração: a primeira lê o fluxo de caracteres do arquivo
+de texto e agrupa-os em unidades significativas chamadas tokens; a segunda recebe esses tokens e valida a
+organização deles com base em regras gramaticais. Compreender onde termina o papel de uma fase e onde começa
+o da outra é essencial para entender o fluxo de processamento de um compilador.
+Considere que um programador digitou a seguinte linha de código em um programa:
+if x > 10 então
+Sabendo que, nesta linguagem específica, a palavra correta para a estrutura condicional deveria ser then (em inglês)
+e não então (em português), e que a palavra então não foi definida como um identificador válido, como o compilador
+reagirá ao processar essa linha nas duas primeiras fases?
+A) A análise léxica rejeitará a linha inteira porque o caractere > é um operador e não pode ficar misturado com letras.
+B) A análise léxica gerará os tokens para if, x, > e 10, mas falhará ao tentar gerar um token para então, acusando um
+erro léxico antes mesmo de a análise sintática começar.
+C) A análise léxica gerará os tokens normalmente (identificando então como um texto/identificador isolado), mas a
+análise sintática acusará um erro, pois a estrutura gramatical do if esperava o token correspondente a then e recebeu
+algo inesperado.
+D) Ambas as fases processarão a linha com sucesso, deixando para a análise semântica a tarefa de descobrir que a
+palavra então está traduzida de forma incorreta.
+E) A análise sintática corrigirá automaticamente a palavra então para then, permitindo que o compilador gere o código
+de máquina sem emitir alertas.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? O analisador léxico não entende o "significado" ou o contexto das
+palavras; ele apenas verifica se os caracteres formam um padrão válido (como um número, um operador ou
+uma palavra/identificador). Para o analisador léxico, a palavra então é apenas uma sequência de letras válida
+(um identificador ou string). O erro real é de estrutura: a gramática da linguagem exige que, após a condição
+do if, apareça obrigatoriamente a palavra-chave reservada then. Como o analisador sintático receberá um
+identificador genérico (então) em vez do esperado then, ele apontará o erro de sintaxe (erro de estrutura).
+• Por que as outras alternativas estão incorretas?
+o A: O operador > é perfeitamente válido na análise léxica de quase todas as linguagens de programação
+como um operador de comparação.
+o B: A análise léxica não sabe que então está no lugar errado do if; ela apenas lê os caracteres. Se os
+caracteres forem permitidos na linguagem (letras), ela gera o token de identificador com sucesso.
+o D: A análise sintática não aceitará a linha, pois a ordem dos elementos viola a regra gramatical estrita
+do comando condicional da linguagem.
+o E: Analisadores sintáticos padrão emitem mensagens de erro e interrompem a compilação (ou tentam
+se recuperar para achar mais erros), mas não adivinham a intenção do programador para corrigir o
+código-fonte automaticamente.
+
+-- 5 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 6 de 65
+Público
+Questão 06
+No processo de compilação, a análise sintática (ou parsing) é a fase responsável por determinar se a sequência de
+tokens fornecida pela análise léxica segue a estrutura gramatical da linguagem de programação alvo. Essa estrutura é
+formalmente definida por meio de Gramáticas Livres de Contexto (GLCs). Um dos grandes desafios no projeto de
+gramáticas para linguagens de programação é a ambiguidade, que ocorre quando uma mesma cadeia de caracteres
+possui mais de uma árvore de derivação sintática distinta, podendo levar a interpretações semânticas errôneas pelo
+compilador.
+Considere a gramática G = (V, Σ, R, S), onde o conjunto de regras de produção R é definido por:
+S → S + S | S X S | id
+Onde id representa um identificador (terminal) e S é o símbolo inicial não-terminal.
+Considerando a gramática G apresentada e os conceitos de análise sintática e ambiguidade, avalie as asserções a
+seguir:
+• A cadeia de id + id x id evidencia que a gramática G é ambígua, pois permite a construção de duas árvores
+de análise sintática estruturalmente diferentes para essa mesma entrada.
+PORQUE
+• A gramática G não estabelece explicitamente regras de precedência e associatividade entre os operadores
+aritméticos de adição (+) e multiplicação (x), permitindo que o operador + seja avaliado com maior prioridade
+que o operador x em uma das derivações possíveis.
+A respeito dessas asserções, assinale a opção correta:
+A) As duas asserções são verdadeiras, e a segunda é uma justificativa correta da primeira.
+B) As duas asserções são verdadeiras, mas a segunda não é uma justificativa correta da primeira.
+C) A primeira asserção é uma proposição verdadeira, e a segunda é uma proposição falsa.
+D) A primeira asserção é uma proposição falsa, e a segunda é uma proposição verdadeira.
+E) Ambas as asserções são proposições falsas.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? A primeira asserção é verdadeira. A cadeia id + id x id possui duas
+derivações e duas árvores de análise distintas: uma onde a multiplicação é agrupada primeiro (interpretação
+padrão da matemática) e outra onde a adição é agrupada primeiro, o que caracteriza formalmente a
+ambiguidade da gramática. A segunda asserção também é verdadeira e explica perfeitamente a primeira. Na
+gramática puramente recursiva apresentada, os operadores estão no mesmo "nível" hierárquico de produção,
+o que significa que o compilador não possui informações sintáticas para priorizar a multiplicação sobre a adição,
+gerando a ambiguidade demonstrada.
+• Por que as outras alternativas estão incorretas?
+o B: Está incorreta porque a segunda asserção é a causa direta (justificativa) do comportamento descrito
+na primeira. Sem a falta de precedência na estrutura gramatical, não haveria ambiguidade para
+operadores com diferentes prioridades.
+o C e D: Estão incorretas porque ambas as proposições (asserção e razão) são perfeitamente válidas e
+verdadeiras dentro da teoria de linguagens formais e compiladores.
+o E: Está incorreta porque nenhuma das afirmações é falsa.
+
+-- 6 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 7 de 65
+Público
+Questão 07
+Na prática do desenvolvimento de compiladores, os engenheiros de software raramente escrevem todos os
+analisadores sintáticos manualmente do zero, especialmente para linguagens complexas. Em vez disso, utilizam
+ferramentas conhecidas como Geradores de Analisadores Sintáticos (ou Parser Generators). Essas ferramentas
+recebem como entrada a especificação formal da gramática da linguagem (geralmente em arquivos de texto com regras
+de produção) e geram automaticamente o código-fonte do analisador sintático na linguagem de programação desejada
+(como C, Java ou Python).
+No universo do desenvolvimento de compiladores, são exemplos amplamente conhecidos de ferramentas geradoras
+de analisadores sintáticos:
+A) Regex, Scanner e Linker.
+B) Yacc, Bison e ANTLR.
+C) GCC, Clang e MSVC.
+D) Git, Docker e Kubernetes.
+E) Kaspersky, Norton e McAfee.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? As ferramentas listadas são os principais geradores de parsers da história
+e da atualidade. O Yacc (Yet Another Compiler-Compiler) é um dos mais clássicos, amplamente associado ao
+ambiente Unix. O Bison é a versão moderna e de código aberto do Yacc, desenvolvida pelo projeto GNU. O
+ANTLR (ANother Tool for Language Recognition) é uma ferramenta contemporânea extremamente poderosa,
+muito utilizada no ecossistema Java e em outras linguagens, capaz de gerar analisadores do tipo LL(*).
+• Por que as outras alternativas estão incorretas?
+o A: Regex (Expressões Regulares) e Scanners são conceitos/ferramentas ligados à Análise Léxica, e
+o Linker (Ligador) atua na fase final para unir arquivos de código objeto.
+o C: GCC, Clang e MSVC são compiladores completos e prontos (suítes de compilação) para linguagens
+como C e C++, e não ferramentas para gerar novos analisadores.
+o D: São ferramentas de infraestrutura, controle de versão e DevOps (gerenciamento de contêineres),
+sem relação com a teoria de construção de compiladores.
+o E: Trata-se de softwares comerciais de segurança digital e antivírus.
+
+-- 7 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 8 de 65
+Público
+Questão 08
+Durante a fase de análise, o compilador precisa armazenar e consultar constantemente informações sobre os
+identificadores encontrados no código-fonte (como nomes de variáveis, funções, classes e constantes). A estrutura de
+dados responsável por centralizar essas informações é chamada de Tabela de Símbolos. Embora ela seja preenchida
+inicialmente na análise léxica e amplamente utilizada na análise semântica para checagem de tipos, o analisador
+sintático também interage com ela para auxiliar no reconhecimento do escopo e na organização da árvore sintática.
+Para que o analisador sintático consiga associar corretamente as ocorrências de um identificador (por exemplo, uma
+variável x) às suas respectivas regras gramaticais, o analisador léxico deve repassar para o analisador sintático:
+A) O endereço de memória física onde a variável será alocada durante a execução do programa.
+B) O código binário correspondente à instrução de máquina daquele identificador.
+C) Um token contendo a categoria gramatical (ex: IDENTIFICADOR) e um ponteiro/índice para a entrada
+correspondente na Tabela de Símbolos.
+D) O arquivo de texto original completo para que o analisador sintático busque a palavra manualmente.
+E) Uma lista contendo apenas os comentários que o programador inseriu ao lado da declaração da variável.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? O analisador léxico simplifica a vida do analisador sintático. Em vez de
+enviar o texto bruto repetidamente, ele converte o texto em um token abstrato (um rótulo como
+IDENTIFICADOR ou ID). Para não perder a informação de qual variável se trata, esse token carrega consigo
+um atributo, que é justamente a referência (ponteiro ou índice) para o registro detalhado daquela variável dentro
+da Tabela de Símbolos. Assim, o analisador sintático valida a estrutura usando o rótulo e mantém o vínculo
+com os dados reais do objeto.
+• Por que as outras alternativas estão incorretas?
+o A e B: A alocação de memória física e a geração de código binário (instruções de máquina) são
+atividades que ocorrem muito mais tarde, nas fases de síntese (Geração e Otimização de Código), e
+não na transição da análise léxica para a sintática.
+o D: Se o analisador sintático tivesse que ler o arquivo de texto bruto e buscar as palavras manualmente,
+a divisão em fases do compilador seria anulada, tornando o processo extremamente ineficiente.
+o E: Comentários são completamente ignorados e descartados pelo analisador léxico, pois não possuem
+relevância gramatical para a construção da árvore sintática do programa.
+
+-- 8 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 9 de 65
+Público
+Questão 09
+Em linguagens de programação modernas, é muito comum podermos reutilizar o mesmo nome para variáveis
+diferentes, desde que elas estejam em blocos ou funções distintas (mecanismo conhecido como escopo). Por exemplo,
+uma variável chamada total dentro da Funcao_A não se confunde com uma variável também chamada total dentro da
+Funcao_B. Para gerenciar essa característica sem misturar as informações, a Tabela de Símbolos não pode ser
+apenas uma lista linear simples; ela precisa ser capaz de refletir a hierarquia de blocos do código-fonte enquanto a
+estrutura do programa é validada.
+Para dar suporte correto ao conceito de múltiplos escopos (locais e globais) em um programa, a Tabela de Símbolos
+é frequentemente implementada ou organizada de forma a permitir que:
+A) Todos os dados antigos sejam apagados da tabela sempre que uma nova função for encontrada pelo analisador.
+B) Escopos diferentes sejam organizados em tabelas separadas (ou encadeadas em uma estrutura de pilha/árvore),
+de modo que a busca por um identificador ocorra do escopo mais interno (local) para o mais externo (global).
+C) O compilador proíba o programador de usar o mesmo nome de variável em qualquer parte do sistema, forçando
+cada nome a ser universalmente exclusivo.
+D) A tabela armazene apenas variáveis globais, descartando completamente as variáveis declaradas dentro de
+funções.
+E) As variáveis sejam organizadas em ordem alfabética reversa para acelerar a execução do código de máquina final.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? Para gerenciar escopos, o compilador utiliza tabelas de símbolos
+escopadas (frequentemente implementadas usando uma pilha de tabelas ou tabelas encadeadas). Quando o
+analisador entra em um novo bloco ou função, um novo nível de escopo é criado. Ao buscar por uma variável
+(para verificar se ela existe ou qual seu tipo), o compilador procura primeiro no escopo atual (mais interno). Se
+não encontrar, ele sobe para o escopo imediatamente superior, repetindo o processo até chegar ao escopo
+global. Isso garante o isolamento e o comportamento correto das variáveis locais.
+• Por que as outras alternativas estão incorretas?
+o A: Apagar os dados antigos destruiria as informações das variáveis globais ou de outras funções que
+o compilador precisará consultar mais tarde.
+o C: Restringir o programador de usar nomes repetidos em escopos diferentes violaria os padrões das
+linguagens modernas (como C, Java e Python), tornando a linguagem inflexível e artificial.
+o D: Variáveis locais são fundamentais para a lógica dos programas e gerenciamento de memória; o
+compilador precisa obrigatoriamente rastreá-las na tabela de símbolos durante a análise.
+o E: A ordenação alfabética (ou uso de tabelas de dispersão/hash) serve para otimizar o tempo de busca
+durante a compilação, mas a ordem alfabética reversa não possui propriedade mágica para acelerar a
+execução do binário, e o gerenciamento de escopo depende da estrutura hierárquica, não da
+ordenação das letras.
+
+-- 9 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 10 de 65
+Público
+Questão 10
+A Tabela de Símbolos funciona como um grande banco de dados interno do compilador durante todo o processo de
+tradução. Para cada identificador encontrado no código-fonte, não basta apenas registrar o seu nome (como media ou
+calcular_total); o compilador precisa associar a esse nome uma série de propriedades adicionais, chamadas de
+atributos. Esses atributos variam de acordo com a categoria do identificador e são cruciais para que o compilador
+possa, mais adiante, validar a lógica do programa e gerar o código final correto.
+Quando o compilador registra uma variável na Tabela de Símbolos, quais são os atributos mínimos essenciais que
+devem ser armazenados junto ao nome dela para permitir as validações das próximas fases (como a análise
+semântica)?
+A) A cor do texto da variável no editor de código e o número de linhas de comentários do arquivo.
+B) O tipo de dado (ex: int, float, char) e o escopo/bloco onde ela foi declarada.
+C) O nome do programador que criou a variável e a data da última modificação do arquivo.
+D) O algoritmo de ordenação que será usado para exibir as variáveis na tela do usuário.
+E) A quantidade de vezes que a tecla Espaço foi pressionada antes da declaração da variável.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? O tipo de dado é um atributo vital para que a análise semântica possa
+fazer a checagem de tipos (por exemplo, impedir que o programa some uma String com um número inteiro). O
+escopo é igualmente essencial para garantir que o compilador saiba onde aquela variável é visível e válida,
+evitando conflitos com variáveis de mesmo nome em outras funções. Sem essas duas informações básicas, o
+compilador não consegue avançar na análise do programa.
+• Por que as outras alternativas estão incorretas?
+o A, C e E: Elementos visuais (como cores no editor), metadados de autoria, datas de modificação ou a
+quantidade de espaços em branco (indentação) são detalhes de formatação e do ambiente de
+desenvolvimento. Eles não possuem relevância para a lógica interna e para a semântica da linguagem
+na hora da compilação.
+o D: O compilador não precisa exibir as variáveis na tela do usuário final, e as estruturas de busca da
+tabela (como tabelas Hash) são mecanismos de desempenho do próprio compilador, não um atributo
+da variável guardada.
+
+-- 10 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 11 de 65
+Público
+Questão 11
+Até o momento, vimos que a Tabela de Símbolos armazena atributos essenciais para variáveis, como tipo e escopo.
+No entanto, um programa não é feito apenas de variáveis; ele também possui funções (ou procedimentos). Quando o
+compilador encontra a declaração de uma função no código-fonte, ele precisa registrar esse nome na Tabela de
+Símbolos de uma maneira muito mais detalhada, pois a verificação de uma chamada de função exige a validação de
+toda a sua assinatura.
+Quando o compilador armazena uma função na Tabela de Símbolos, além do nome da função, quais informações
+adicionais devem constar como atributos para que o compilador verifique se ela está sendo chamada corretamente no
+código?
+A) O tipo de retorno da função, a quantidade de parâmetros que ela espera e o tipo de cada um desses parâmetros.
+B) O número de linhas de código que existem dentro do corpo da função e a quantidade de comentários.
+C) O nome do arquivo executável final e a quantidade de memória RAM disponível no computador do usuário.
+D) A velocidade em megahertz (MHz) com que o processador executará aquela função específica.
+E) O histórico de erros de sintaxe que o programador cometeu enquanto digitava o nome da função.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Para validar a chamada de uma função (por exemplo, calcular(x, y)), o
+compilador precisa checar se o programador passou a quantidade correta de argumentos e se os tipos desses
+argumentos batem com o que a função espera (os parâmetros). Além disso, o tipo de retorno é fundamental
+para saber se o valor que a função devolve pode ser guardado na variável que está recebendo o resultado (ex:
+int resultado = calcular(x, y);). Todas essas informações compõem a assinatura da função na Tabela de
+Símbolos.
+• Por que as outras alternativas estão incorretas?
+o B: O número de linhas ou a quantidade de comentários são informações estéticas e de documentação
+que não influenciam a assinatura ou a validação sintática/semântica da chamada da função.
+o C e D: O nome do executável final, a memória RAM ou a velocidade do processador em MHz são
+detalhes de infraestrutura e do hardware de execução. O compilador não tem como prever ou controlar
+esses fatores durante a fase de análise do código.
+o E: O compilador não guarda um histórico de erros do programador na tabela de símbolos; ele apenas
+analisa o estado atual do código-fonte apresentado.
+
+-- 11 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 12 de 65
+Público
+Questão 12
+A Tabela de Símbolos é uma estrutura viva e dinâmica. Ela não nasce pronta; é construída incrementalmente à medida
+que o compilador faz a varredura do código-fonte. Cada fase da análise interage com essa tabela de uma maneira
+diferente: algumas fases têm o papel principal de inserir novos dados (escrever), enquanto outras utilizam esses dados
+predominantemente para consultar e validar regras (ler).
+Considerando o fluxo padrão de um compilador, as fases que são predominantemente responsáveis por inserir (criar)
+os identificadores na Tabela de Símbolos e por consultar (checar os atributos) desses identificadores para fins de
+validação lógica são, respectivamente:
+A) A Otimização de Código e a Geração de Código de Máquina.
+B) A Análise Léxica/Sintática e a Análise Semântica.
+C) O Editor de Texto e o Sistema Operacional.
+D) O Gravador de CD/DVD e o Disco Rígido.
+E) A Análise Semântica e o Ligador (Linker).
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? A Análise Léxica (auxiliada pela Sintática) é a porta de entrada do
+código. É ela que descobre as palavras novas, identifica que se trata de uma declaração de variável ou função
+e as insere na Tabela de Símbolos com seus nomes e escopos. Já a Análise Semântica é a fase que faz a
+checagem lógica profunda. Ela consulta a tabela para verificar se as variáveis usadas nas expressões
+realmente existem, se os tipos são compatíveis e se as regras de escopo estão sendo respeitadas.
+• Por que as outras alternativas estão incorretas?
+o A: As fases de otimização e geração de código pertencem à etapa de síntese (fases finais). Elas usam
+as informações prontas da tabela para gerar as instruções binárias corretas, mas não são as
+responsáveis pela descoberta e validação inicial das variáveis.
+o C: O editor de texto (onde o usuário digita) e o sistema operacional (que gerencia o computador) são
+softwares externos e não fazem parte das fases internas de um compilador.
+o D: Trata-se de componentes de hardware e armazenamento físico, sem qualquer relação com a lógica
+de software de um compilador.
+o E: Inverte a ordem lógica do processo, e o Linker atua fora do compilador, juntando arquivos objetos
+diferentes, quando a tabela de símbolos principal já cumpriu seu papel na análise interna.
+
+-- 12 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 13 de 65
+Público
+Questão 13
+Após o analisador sintático garantir que o código-fonte segue todas as regras estruturais e gramaticais da linguagem
+(como o posicionamento correto de parênteses, chaves e ponto-e-vírgula), entra em ação a Análise Semântica. Esta
+fase é responsável por verificar se o código faz sentido lógico e contextual, ou seja, se as instruções possuem um
+"significado" válido de acordo com as regras da linguagem de programação. Uma das tarefas mais importantes e
+conhecidas da análise semântica é a Verificação de Tipos (Type Checking).
+Considerando o objetivo da Análise Semântica, assinale a opção que apresenta uma situação que seria detectada
+como um erro exclusivamente nesta fase:
+A) Uma linha de código terminando sem o caractere ponto-e-vírgula ;, quando a linguagem exige esse terminador.
+B) O uso de uma palavra que contém caracteres inválidos, como @ ou #, no meio do nome de uma variável.
+C) A tentativa de realizar uma operação de multiplicação entre uma variável do tipo String (texto) e uma variável do tipo
+Booleano (verdadeiro/falso).
+D) A falta do fechamento de uma chave } no final do bloco de uma função.
+E) A digitação da palavra-chave reservada if escrita incorretamente como iff.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? Sintaticamente, a estrutura de uma multiplicação (como variavelA *
+variavelB) está perfeita: temos um identificador, um operador e outro identificador. Porém, logicamente
+(semanticamente), não faz sentido multiplicar um texto por um valor lógico. É a análise semântica que consulta
+a Tabela de Símbolos, descobre os tipos das variáveis e aponta a incompatibilidade de tipos, pois a operação
+é inválida para essas categorias de dados.
+• Por que as outras alternativas estão incorretas?
+o A e D: A falta de ponto-e-vírgula ou o esquecimento de fechar uma chave são erros estruturais e
+gramaticais, sendo detectados na fase anterior, a Análise Sintática.
+o B: Caracteres que não pertencem ao alfabeto da linguagem geram falhas no reconhecimento de
+padrões de texto, o que é detectado na primeira fase, a Análise Léxica.
+o E: Escrever iff em vez de if faz com que o compilador interprete a palavra como um identificador
+genérico (um nome qualquer) e não como a palavra reservada do comando condicional, gerando um
+erro de estrutura que será pego na Análise Sintática.
+
+-- 13 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 14 de 65
+Público
+Questão 14
+Nem sempre a mistura de tipos de dados diferentes em uma expressão resulta em um erro semântico imediato. Muitas
+linguagens de programação permitem que o compilador faça uma conversão automática de um tipo mais simples para
+um tipo mais complexo para que a operação possa ser realizada com segurança. Por exemplo, ao somar um número
+inteiro (int) com um número de ponto flutuante (float), o compilador transforma o valor inteiro em real antes de efetuar
+a soma. Esse processo de conversão automática e implícita de tipos feito pela análise semântica é conhecido como
+Coerção (ou Coercion).
+Considerando o conceito de coerção de tipos na análise semântica, assinale a opção que apresenta um exemplo
+clássico desse mecanismo em uma linguagem como C ou Java:
+A) Transformar um bloco de comentários em código executável para acelerar o programa.
+B) Mudar o nome de uma variável de x para y automaticamente para evitar duplicidade no código.
+C) Interromper a compilação e forçar o usuário a apagar a linha de código que gerou o aviso (warning).
+D) Converter implicitamente o valor inteiro 5 para o valor real 5.0 ao atribuí-lo a uma variável do tipo float.
+E) Traduzir um comando while para um comando for de maneira invisível para otimizar o laço de repetição.
+Gabarito: D
+Justificativa e Análise das Alternativas:
+• Por que a alternativa D é a correta? A coerção é justamente a conversão implícita (automática) de tipos que
+o próprio compilador realiza para salvar a operação de um erro de compatibilidade. Quando atribuímos o inteiro
+5 a uma variável float, a análise semântica detecta a diferença de tipos, mas sabe que é seguro promover o
+inteiro para real (5.0), realizando a coerção sem exigir que o programador escreva um código de conversão
+manual (como um cast).
+• Por que as outras alternativas estão incorretas?
+o A: Comentários são textos explicativos ignorados logo na fase léxica e nunca são transformados em
+código executável.
+o B: O compilador nunca altera o nome das variáveis escolhidas pelo programador para resolver conflitos
+de escopo; ele emite um erro de redefinição.
+o C: A coerção existe justamente para evitar que a compilação seja interrompida, resolvendo a
+compatibilidade de forma amigável e segura segundo as regras da linguagem.
+o E: A tradução ou otimização de estruturas de laços de repetição (como mudar while para for) é uma
+tarefa de otimização de código, não possuindo relação com o sistema de tipos e coerção da análise
+semântica.
+
+-- 14 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 15 de 65
+Público
+Questão 15
+Além da verificação de tipos, a Análise Semântica é responsável por aplicar as regras de escopo e visibilidade da
+linguagem de programação. Uma regra semântica praticamente universal em linguagens compiladas estaticamente
+(como C, C++ e Java) é a exigência de declaração prévia. Isso significa que o compilador precisa saber o que um
+identificador representa (se é uma variável, uma função ou uma classe) antes que ele possa ser utilizado em qualquer
+expressão lógica ou matemática do programa.
+Considere um cenário em que um programador escreve a seguinte linha de código dentro de uma função:
+resultado = valor1 + 5;
+Do ponto de vista estritamente semântico, para que essa linha seja considerada válida e não gere um erro de
+compilação, o analisador semântico precisa confirmar, por meio de consultas à Tabela de Símbolos, que:
+A) A palavra resultado foi digitada inteiramente em letras maiúsculas em todas as outras linhas do programa.
+B) O operador + foi customizado pelo usuário para funcionar como uma operação de divisão de texto.
+C) O número 5 foi declarado como uma variável global de texto no início do arquivo fonte.
+D) A variável valor1 possui exatamente o mesmo nome do arquivo em que o código foi salvo.
+E) Ambos os identificadores, resultado e valor1, foram declaradas previamente em um escopo acessível e possuem
+tipos de dados compatíveis com a operação.
+Gabarito: E
+Justificativa e Análise das Alternativas:
+• Por que a alternativa E é a correta? Para que a expressão semântica faça sentido e seja válida, o compilador
+exige duas condições básicas: primeiro, que as variáveis resultado e valor1 existam (tenham sido declaradas
+previamente no escopo atual ou em um escopo superior); segundo, que os tipos de dados sejam compatíveis
+(por exemplo, se valor1 for um número inteiro, a soma com 5 é válida, e se resultado for um tipo numérico que
+possa receber esse valor, a atribuição está correta).
+• Por que as outras alternativas estão incorretas?
+o A: As linguagens de programação padrão possuem regras de case-sensitivity (diferenciação de
+maiúsculas e minúsculas), mas não exigem que variáveis sejam escritas obrigatoriamente em
+maiúsculas.
+o B: Mudar o comportamento padrão do operador + para divisão de texto causaria um erro semântico
+de incompatibilidade, e não uma validação de sucesso.
+o C: O número 5 é um literal constante numérico autodeclarado pela própria sintaxe da linguagem, não
+necessitando de declaração como variável na tabela de símbolos.
+o D: Não existe qualquer relação semântica ou regra gramatical que obrigue o nome de uma variável
+interna a ser igual ao nome do arquivo físico no disco.
+
+-- 15 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 16 de 65
+Público
+Questão 16
+A análise semântica realizada pelo compilador é chamada de Análise Semântica Estática, pois acontece inteiramente
+em tempo de compilação, ou seja, antes de o programa ser executado de fato. O compilador analisa o texto do código
+e tenta prever comportamentos lógicos baseando-se em regras fixas. No entanto, existem certos tipos de erros e
+comportamentos que o compilador não consegue prever ou validar apenas olhando para o código estático, pois eles
+dependem exclusivamente dos valores reais que serão digitados pelo usuário ou processados no momento em que o
+programa estiver rodando (tempo de execução).
+Considerando a limitação da análise semântica estática realizada pelo compilador, assinale a opção que apresenta um
+erro que só pode ser detectado em tempo de execução (análise dinâmica) e que o compilador não consegue impedir
+de forma garantida durante a compilação:
+A) Uma tentativa de atribuir um texto literal "Java" a uma variável declarada como int.
+B) O uso de uma variável com o nome incorreto que não foi declarada em nenhum lugar do programa.
+C) Uma chamada de função que passa dois argumentos numéricos para uma função que exige quatro parâmetros.
+D) Uma divisão por zero que ocorre porque o usuário digitou o valor 0 em uma variável de entrada durante a execução
+do programa.
+E) A falta de um ponto-e-vírgula ; ao final de uma instrução de atribuição.
+Gabarito: D
+Justificativa e Análise das Alternativas:
+• Por que a alternativa D é a correta? O compilador analisa o código sem executá-lo. Se o código contiver uma
+expressão como resultado = a / b;, sintática e semanticamente a linha está perfeita (duas variáveis válidas e
+uma operação permitida). O compilador não tem como prever qual valor o usuário final vai digitar para a variável
+b. Se o usuário digitar 0, o erro de divisão por zero estourará em tempo de execução (causando uma exceção
+ou crash), sendo um problema dinâmico que foge do alcance da análise estática do compilador.
+• Por que as outras alternativas estão incorretas?
+o A e C: Incompatibilidade de tipos em atribuições e divergência na quantidade de parâmetros de
+funções são de responsabilidade direta e exclusiva da análise semântica estática; o compilador checa
+a tabela de símbolos e barra a compilação imediatamente.
+o B: A falta de declaração de uma variável é um erro de escopo pego estaticamente pela análise
+semântica.
+o E: A ausência de ponto-e-vírgula é uma quebra de regra gramatical, identificada estaticamente pelo
+analisador sintático.
+
+-- 16 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 17 de 65
+Público
+Questão 17
+À medida que o compilador avança pelas fases de análise, a árvore sintática gerada na fase anterior precisa ser
+enriquecida com as informações lógicas validadas pela análise semântica. Esse processo é conhecido como "decorar"
+ou "anotar" a árvore. Uma Árvore Sintática Anotada contém, além da estrutura gramatical, atributos associados aos
+seus nós, como os tipos de dados de cada subexpressão. Isso permite que o compilador verifique a consistência
+semântica de baixo para cima, propagando os tipos até a raiz da árvore.
+Em uma Árvore Sintática Anotada, o processo de inferência de tipos garante que, se um nó de operação de adição (+)
+possui dois nós filhos anotados como int (inteiro), o nó do resultado dessa operação seja anotado como int. Essa
+validação e propagação de atributos entre os nós da árvore é uma atribuição direta da:
+A) Fase de ligação externa realizada pelo sistema operacional.
+B) Análise Léxica, que avalia o tamanho do texto de cada identificador.
+C) Análise Semântica, por meio das regras de avaliação de atributos na árvore de derivação.
+D) Geração de Código Objeto, que converte a árvore diretamente em arquivos executáveis.
+E) Análise Sintática Preditiva, que impede a inserção de números reais em expressões matemáticas.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? A computação e a checagem de atributos (como os tipos de dados) em
+uma árvore sintática decorada pertencem estritamente à Análise Semântica. É essa fase que avalia as regras
+semânticas associadas às produções gramaticais, garantindo que o tipo resultante de uma operação (como int
++ int) seja compatível com o restante da árvore e informando o sistema se houver alguma quebra de regra.
+• Por que as outras alternativas estão incorretas?
+o A: O sistema operacional e os ligadores externos atuam após a compilação completa do software, não
+interferindo na análise interna de tipos da árvore.
+o B: A análise léxica trabalha de forma linear convertendo caracteres em tokens, sem possuir qualquer
+noção de estrutura de árvore ou propagação de tipos.
+o D: A geração de código ocorre no final do processo (fase de síntese), utilizando os dados já validados
+pela análise semântica, mas não é a responsável por criar ou checar as anotações de tipo.
+o E: A análise sintática valida apenas o posicionamento e a ordem dos elementos (a gramática), sem
+verificar a compatibilidade lógica ou o "significado" dos tipos associados aos nós.
+
+-- 17 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 18 de 65
+Público
+Questão 18
+Durante a análise semântica, o compilador precisa garantir que o fluxo de controle de certas instruções faça sentido
+com o contexto onde elas foram inseridas. Um exemplo clássico disso ocorre com as palavras-chave de desvio, como
+o comando break (usado em linguagens como C, C++, Java e C#). Sintaticamente, o break é apenas um comando
+simples isolado. No entanto, semanticamente, o compilador precisa validar se a sua aparição respeita as regras de
+contexto da linguagem.
+Para que o uso do comando break seja considerado semanticamente válido pelo analisador, a verificação de contexto
+deve garantir que este comando esteja localizado obrigatoriamente dentro do escopo de:
+A) Uma diretiva de inclusão de biblioteca global (como #include ou import).
+B) Uma estrutura de laço de repetição (como while, for, do-while) ou de um comando de seleção múltipla (switch).
+C) Uma declaração de variável constante do tipo ponto flutuante (float).
+D) Um bloco de comentários de múltiplas linhas criado pelo programador.
+E) Uma função principal que não receba nenhum parâmetro ou argumento de entrada.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? O significado lógico (semântico) do comando break é interromper a
+execução de um bloco de repetição ou de um bloco de seleção múltipla (switch) e desviar o fluxo do programa
+para a próxima instrução seguinte. Se o programador inserir um break perdido no meio de uma função comum,
+fora de um laço ou de um switch, o analisador sintático aceitará a palavra, mas o analisador semântico acusará
+um erro de contexto, pois o comando não terá nenhuma estrutura para interromper.
+• Por que as outras alternativas estão incorretas?
+o A: Diretivas de inclusão servem para carregar arquivos de cabeçalho no início da compilação e não
+possuem relação com comandos de controle de fluxo de execução.
+o C: Variáveis e constantes apenas guardam valores na memória; comandos de desvio de fluxo como o
+break não operam dentro de declarações de dados isoladas.
+o D: Qualquer texto escrito dentro de um bloco de comentários é completamente ignorado pelo
+compilador logo na fase de análise léxica, não gerando validações sintáticas ou semânticas.
+o E: O break pode ser usado dentro de qualquer função (com ou sem parâmetros), desde que esteja
+aninhado dentro de um laço de repetição ou switch contido nessa função.
+
+-- 18 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 19 de 65
+Público
+Questão 19
+A Análise Semântica não se limita a checar tipos de dados e escopos de variáveis; ela também realiza checagens no
+fluxo de controle do código-fonte para garantir que as regras lógicas de execução da linguagem sejam respeitadas.
+Um exemplo clássico desse tipo de verificação ocorre em funções que prometem retornar um valor de um determinado
+tipo (como uma função declarada para retornar um valor inteiro: int calcular()). O compilador precisa varrer todos os
+caminhos possíveis dentro dessa função para garantir que o fluxo de execução termine de forma válida.
+Em uma linguagem como Java ou C#, se uma função for declarada com o tipo de retorno int, o analisador semântico
+emitirá uma mensagem de erro se identificar que:
+A) Existe pelo menos um caminho de execução estrutural (por exemplo, dentro de um bloco if/else) que chega ao fim
+da função sem passar por um comando return fornecendo um valor compatível.
+B) O programador utilizou a palavra-chave return mais de uma vez dentro do corpo da função, mesmo que em caminhos
+lógicos totalmente separados.
+C) O comando return está localizado exatamente na primeira linha da função, logo após a abertura das chaves.
+D) A função possui mais de dez linhas de código e utiliza variáveis locais de tipos diferentes.
+E) O valor retornado pela função é usado imediatamente em uma operação matemática na linha onde a função foi
+chamada.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Se uma função promete devolver um inteiro, todos os caminhos possíveis
+de execução devem obrigatoriamente terminar com um return válido. Se o programador colocar um return
+dentro do bloco if, mas esquecer de colocar no bloco else, o programa poderia travar ou retornar lixo de
+memória em tempo de execução se entrasse no else. A análise semântica previne isso estaticamente, exigindo
+que todos os fluxos sejam cobertos e acusando o famoso erro de "missing return statement" (falta de comando
+de retorno).
+• Por que as outras alternativas estão incorretas?
+o B: É perfeitamente válido ter múltiplos comandos return dentro de uma mesma função, desde que eles
+estejam isolados em estruturas condicionais (como um caminho para o if e outro para o else).
+o C: Não há nenhuma restrição semântica sobre em qual linha o return deve aparecer; se a lógica da
+função exigir um retorno imediato na primeira linha, o compilador aceitará normalmente.
+o D: O tamanho da função e a quantidade de variáveis locais de tipos distintos são decisões de projeto
+do programador e não violam nenhuma regra de semântica estrutural.
+o E: Utilizar o resultado de uma função que retorna um número diretamente em uma expressão
+matemática é o comportamento padrão e esperado na programação, sendo totalmente válido.
+
+-- 19 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 20 de 65
+Público
+Questão 20
+Uma das grandes vantagens dos analisadores semânticos modernos é a capacidade de realizar análises de fluxo de
+dados para ajudar a melhorar a qualidade do código-fonte, emitindo avisos (warnings) ou otimizando o uso de recursos.
+Um exemplo prático disso ocorre quando o analisador varre o escopo de uma função e detecta que uma variável foi
+devidamente declarada e até recebeu um valor inicial, mas nunca foi lida ou utilizada em nenhuma outra instrução
+subsequente do programa.
+Quando o analisador semântico identifica uma variável que foi declarada, mas nunca foi utilizada no código, o
+comportamento padrão da maioria dos compiladores modernos e o impacto dessa descoberta para o programa são:
+A) O compilador interrompe o processo imediatamente com um erro crítico, pois variáveis não utilizadas causam o
+travamento físico do processador.
+B) O compilador emite um aviso (warning) para alertar o desenvolvedor sobre o código redundante, e essa variável
+pode ser descartada pelas fases de síntese para economizar memória na execução.
+C) A análise semântica duplica automaticamente o tamanho dessa variável na memória para garantir que ela seja
+usada à força em algum momento.
+D) O analisador sintático é obrigado a reiniciar a leitura do arquivo do zero para tentar adivinhar onde o programador
+esqueceu de usar a variável.
+E) O programa gerado se recusa a rodar em sistemas operacionais de 64 bits, tornando-se compatível apenas com
+sistemas antigos de 8 bits.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? Ter uma variável declarada e não utilizada não viola uma regra que
+impeça a geração do programa (não é um erro fatal), por isso o compilador emite apenas um alerta (warning)
+de boa prática de programação. Além disso, como o analisador semântico detecta que aquela informação é
+"lixo" ou código morto, as próximas fases do compilador (como a Otimização de Código) podem simplesmente
+ignorar essa variável, evitando desperdício de espaço de memória RAM na execução do software final.
+• Por que as outras alternativas estão incorretas?
+o A: Esse cenário não é um erro fatal e não causa nenhum dano ou travamento físico ao hardware do
+computador.
+o C e E: O compilador nunca força o uso de variáveis duplicando seu tamanho, e esse tipo de aviso
+estático não dita a compatibilidade de arquitetura de bits (8, 32 ou 64 bits) do arquivo executável final.
+o D: O processo de compilação é sequencial e avança pelas fases; o compilador não volta para a análise
+sintática para tentar reescrever ou adivinhar as intenções do programador.
+
+-- 20 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 21 de 65
+Público
+Questão 21
+Na implementação prática de um analisador léxico, ler o código-fonte caractere por caractere diretamente do disco
+rígido a cada passo seria uma operação extremamente lenta e ineficiente. Para resolver isso, os compiladores utilizam
+técnicas de buffering, onde grandes blocos de texto são carregados de uma vez para a memória RAM. No modelo
+padrão de leitura de buffers, o analisador léxico gerencia a varredura desse bloco de texto utilizando uma estratégia
+baseada em dois ponteiros (ou apontadores) que se movem de forma coordenada para isolar e reconhecer cada token.
+Considerando a mecânica de funcionamento do modelo padrão de buffer com dois ponteiros, a função do Apontador
+de Início (lexemeBegin) e a função do Apontador de Busca (forward) são, respectivamente:
+A) Indicar onde o arquivo de código-fonte termina no disco e apontar para a linha onde o erro de sintaxe aconteceu.
+B) Armazenar o nome do programador que criou o código e contar quantas variáveis globais existem no sistema.
+C) Marcar o caractere inicial do token que está sendo extraído no momento e avançar caractere por caractere para
+escanear o texto até que um padrão válido (ou fim de token) seja reconhecido.
+D) Traduzir os caracteres lidos para código binário e salvar o arquivo em uma pasta compactada de backup.
+E) Ignorar completamente as palavras-chave reservadas da linguagem e focar apenas na leitura de números e
+comentários.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a cores? No algoritmo clássico de análise léxica com buffers, o Apontador de Início
+fixa a posição de onde começa o lexema atual. Enquanto isso, o Apontador de Busca atua como um "batedor",
+avançando caractere por caractere para alimentar o Autômato Finito ou a lógica de busca. Quando o analisador
+reconhece que um token terminou (por encontrar um espaço ou operador, por exemplo), o texto entre o
+Apontador de Início e o Apontador de Busca é extraído para gerar o token. Em seguida, o Apontador de Início
+é movido para a posição atual do Apontador de Busca para iniciar a próxima captura.
+• Por que as outras alternativas estão incorretas?
+o A: Os ponteiros operam dentro do array de memória do buffer e controlam a leitura dos caracteres da
+string atual, não possuindo a função de gerenciar metadados físicos do arquivo no disco rígido.
+o B e D: Contar variáveis, armazenar nomes de autores, fazer backups ou traduzir o código para binário
+são tarefas completamente alheias ao escopo de gerenciamento de ponteiros de caracteres em um
+buffer léxico.
+o E: Os ponteiros não filtram o conteúdo antes de ler; eles passam obrigatoriamente por todos os
+caracteres do buffer, permitindo que a lógica interna do analisador decida se aquilo é uma palavra
+reservada, um número ou um espaço em branco.
+
+-- 21 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 22 de 65
+Público
+Questão 22
+Durante o desenvolvimento do analisador léxico, frequentemente nos deparamos com situações em que o programa
+não consegue ter certeza de qual token está lendo sem olhar o que vem logo em seguida no buffer. Esse mecanismo
+é chamado de Lookahead (olhar adiante). Por exemplo, ao ler o caractere >, o analisador não pode gerar imediatamente
+o token de "maior que", pois o próximo caractere pode ser um =, formando o operador "maior ou igual" (>=). Caso o
+próximo caractere seja apenas uma letra ou espaço, o analisador descobre que o operador era realmente apenas >, e
+o ponteiro de busca precisa lidar com esse caractere lido a mais.
+No modelo de leitura com dois ponteiros, quando o analisador avança o Apontador de Busca (forward) para ler um
+caractere adiante e descobre que aquele caractere já faz parte do próximo token, qual ação o algoritmo deve tomar
+para garantir que nenhum caractere seja perdido ou processado fora de ordem?
+A) Apagar todo o conteúdo do buffer e forçar o usuário a reiniciar o computador para limpar a memória RAM.
+B) Ignorar o caractere lido a mais, deixando que o analisador sintático descubra sozinho qual era a letra que sumiu.
+C) Mover o Apontador de Início para o final do arquivo texto, interrompendo a análise de todo o código-fonte restante.
+D) Decrementar (recuar) o Apontador de Busca em uma posição, fazendo-o voltar para o final do lexema atual antes
+de salvar e emitir o token correto.
+E) Duplicar o caractere misterioso dentro de uma lista encadeada para que ele seja tratado apenas na fase de
+otimização de código.
+Gabarito: D
+Justificativa e Análise das Alternativas:
+• Por que a alternativa D é a correta? Como o algoritmo precisou avançar o Apontador de Busca um caractere
+além do necessário para descobrir que o operador havia terminado (técnica de lookahead), aquele caractere
+lido a mais pertence, na verdade, ao próximo elemento do texto. Portanto, após reconhecer e isolar o token
+atual, o ponteiro de busca deve ser recuado (decrementado em 1) para que, na próxima iteração do loop de
+leitura, esse mesmo caractere seja processado corretamente como o início do próximo token.
+• Por que as outras alternativas estão incorretas?
+o A e C: Interromper a execução, apagar o buffer do disco ou forçar o reinício do computador são falhas
+catastróficas de software. O recuo de ponteiro é um ajuste sutil de memória e perfeitamente gerenciável
+pelo próprio código do analisador.
+o B: Ignorar ou descartar o caractere causaria a perda de partes essenciais do código-fonte (como comer
+uma letra de uma variável ou um número), gerando erros bizarros nas fases seguintes.
+o E: O tratamento de caracteres lidos na análise léxica é local e resolvido imediatamente na manipulação
+dos ponteiros do buffer, não fazendo sentido enviar essa tarefa para as fases finais de síntese
+(otimização).
+
+-- 22 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 23 de 65
+Público
+Questão 23
+Embora a leitura caractere por caractere seja resolvida com o uso de um buffer na memória, arquivos de código-fonte
+grandes ainda podem estourar o espaço alocado para um único array de texto estático. Para resolver esse problema
+sem precisar alocar um espaço gigantesco de memória de forma desnecessária, os desenvolvedores de compiladores
+utilizam a técnica de Buffer Duplo (ou buffers gêmeos). Nessa abordagem, a memória alocada é dividida em duas
+metades de tamanho fixo (N caracteres cada), e o analisador léxico alterna o processamento entre elas.
+No esquema de funcionamento de um Buffer Duplo gerenciado por ponteiros, o que acontece imediatamente quando
+o Apontador de Busca (forward) atinge o final da primeira metade do buffer?
+A) O compilador trava e emite uma tela azul de erro no sistema operacional por falta de espaço físico.
+B) O programa inverte a ordem de leitura do texto, passando a ler o código de trás para frente.
+C) Os ponteiros param de se mover e a análise léxica é finalizada, assumindo que o programa acabou ali.
+D) O analisador léxico copia todos os tokens já descobertos de volta para o disco rígido e esvazia a lixeira do sistema.
+E) A segunda metade do buffer começa a ser lida pelo ponteiro de busca, enquanto o sistema inicia a recarga
+automática de novos caracteres do arquivo de disco na primeira metade (se necessário), mantendo o fluxo de leitura
+contínuo.
+Gabarito: E
+Justificativa e Análise das Alternativas:
+• Por que a alternativa E é a correta? A grande sacada do buffer duplo é a alternância de carregamento em
+plano de fundo (I/O em pipeline). Quando o ponteiro de busca chega ao fim de uma metade, ele cruza a fronteira
+de forma transparente para continuar lendo os caracteres na outra metade que já estava na memória. Enquanto
+o ponteiro processa essa segunda metade, o sistema operacional aproveita o tempo para ler o próximo bloco
+de texto do arquivo em disco e sobrescrever a primeira metade que já foi processada, garantindo que o
+compilador nunca precise parar a análise para esperar o disco ler novos dados.
+• Por que as outras alternativas estão incorretas?
+o A: O estouro da borda do buffer não é um erro físico ou travamento do sistema; é um evento esperado
+de software controlado pelo algoritmo de recarga.
+o B: A leitura do código mantém-se estritamente linear, da esquerda para a direita; mudar o sentido
+quebraria toda a lógica gramatical da linguagem.
+o C: Parar a análise no meio do buffer faria com que apenas o início do código-fonte do usuário fosse
+compilado, ignorando o restante do programa.
+o D: Copiar dados de volta ou mexer com ferramentas de sistema (como lixeira) são tarefas de
+gerenciamento de arquivos externas e sem ligação com a mecânica interna de varredura de strings do
+analisador léxico.
+
+-- 23 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 24 de 65
+Público
+Questão 24
+Na implementação prática de compiladores, a teoria clássica dita que o analisador léxico deve ser modelado por meio
+de Autômatos Finitos Determinísticos (AFD). No entanto, para simplificar a arquitetura do software e aproveitar os
+recursos nativos das linguagens de programação modernas, os desenvolvedores frequentemente adotam uma
+abordagem baseada em Buffers Primários em memória (usando coleções como ArrayList) combinados com o
+poder de processamento de Expressões Regulares (Regex). Essa estratégia permite mapear os padrões de texto
+dos tokens de forma direta e declarativa, sem a necessidade de construir manualmente uma máquina de estados
+complexa.
+Ao projetar um analisador léxico que carrega as linhas do código-fonte em um buffer do tipo ArrayList e utiliza
+Expressões Regulares (Regex) para identificar os tokens, a principal vantagem prática dessa abordagem em
+comparação com a implementação manual de um Autômato Finito (AFD) baseado em estruturas de controle
+(switch/case e laços) é:
+A) A facilidade de manutenção e escrita do código, visto que os padrões de tokens (como números e identificadores)
+são definidos textualmente por regras Regex, reduzindo drasticamente o tamanho do código-fonte do analisador.
+B) A garantia de que o programa consumirá menos memória RAM do que qualquer outra técnica de compilação
+existente no mercado.
+C) O fato de a Regex dispensar completamente a necessidade de o analisador léxico interagir com a Tabela de
+Símbolos.
+D) A capacidade de corrigir erros de sintaxe e lógica de forma 100% automática diretamente no arquivo do usuário
+antes de rodar o sistema.
+E) A eliminação completa da fase de análise sintática, permitindo que a Regex gere o código binário de máquina de
+maneira imediata.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Implementar um autômato puro na unha exige dezenas de linhas de
+código com múltiplos laços (while) e estruturas condicionais (switch/case) encadeadas para gerenciar cada
+mudança de estado (ex: ir do estado que lê letras para o que lê números). Ao adotar o processamento por
+Regex, toda essa complexidade de transição de estados fica embutida e encapsulada no próprio motor de
+Regex da linguagem (como o pacote java.util.regex). O desenvolvedor precisa apenas escrever a expressão
+padrão (ex: [0-9]+ para inteiros), tornando o código do analisador léxico muito mais limpo, legível e fácil de dar
+manutenção.
+• Por que as outras alternativas estão incorretas?
+o B: Carregar um arquivo inteiro ou em blocos grandes dentro de um ArrayList e instanciar objetos de
+casamento de padrões (Matcher/Pattern) costuma gastar um pouco mais de memória do que um
+autômato estático simples implementado em um array de caracteres fixo, embora o ganho em
+legibilidade compense.
+o C: Independentemente de como o token é descoberto (por autômato ou por Regex), o analisador léxico
+ainda precisa registrar e consultar os identificadores na Tabela de Símbolos.
+o D: A Regex apenas localiza padrões textuais; ela não tem inteligência semântica ou lógica para deduzir
+o que o programador queria escrever e corrigir o código-fonte por conta própria.
+o E: A análise léxica baseada em Regex cumpre apenas o papel da primeira fase (isolar tokens). A
+necessidade de validar a gramática (Análise Sintática) permanece inalterada e obrigatória no fluxo do
+compilador.
+
+-- 24 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 25 de 65
+Público
+Questão 25
+Quando escolhemos implementar um analisador léxico utilizando um buffer baseado em uma coleção do tipo ArrayList
+(que armazena as linhas ou os caracteres do código-fonte), o processo de varredura deixa de ser controlado por
+estados mecânicos e passa a ser guiado por um motor de Expressões Regulares (Regex). O algoritmo percorre o texto
+contido na coleção e tenta "casar" (match) a string atual com os padrões definidos para a linguagem de programação
+(como palavras-chave, operadores e constantes). Para que essa extração funcione corretamente, o motor de Regex
+precisa testar os padrões na ordem certa e a partir da posição exata onde o último token foi encontrado.
+Considerando a lógica de programação desse analisador léxico baseado em ArrayList e Regex, o que acontece
+imediatamente após o motor de Regex encontrar um casamento perfeito (ex: identificar que o texto 125 casa com o
+padrão de números ^[0-9]+)?
+A) O compilador interrompe a execução e exige que o usuário reescreva o número em formato binário.
+B) O lexema correspondente é extraído, um objeto Token é gerado e adicionado à lista de tokens, e o índice de leitura
+do buffer é avançado para o final desse texto casado, preparando a próxima busca.
+C) O texto é apagado permanentemente do ArrayList para impedir que a análise sintática consiga ler os dados do
+programa.
+D) O motor de Regex entra em um laço infinito, pois o uso de coleções em memória impede o avanço de ponteiros ou
+índices de texto.
+E) A string é enviada para o banco de dados do sistema operacional para ser traduzida para uma linguagem de alto
+nível.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? No fluxo do programa desenvolvido com ArrayList e Regex, o processo
+é sequencial e incremental. Assim que a Regex valida um padrão no início do texto atual, o trecho
+correspondente (o lexema) é isolado. Com ele, cria-se a estrutura do Token (armazenando sua classe e seu
+valor). Para que o analisador não fique preso lendo sempre a mesma palavra, o índice ou ponteiro que controla
+a posição atual da leitura dentro daquela linha do ArrayList é atualizado, saltando exatamente para o caractere
+logo após o token recém-extraído.
+• Por que as outras alternativas estão incorretas?
+o A: Números em formato decimal são perfeitamente válidos na programação e o compilador faz a
+conversão interna para binário de forma transparente, sem interromper o sistema.
+o C: Apagar os dados do ArrayList quebraria a integridade do código-fonte, impedindo consultas
+posteriores ou relatórios de erros baseados em linhas e colunas.
+o D: O avanço do índice de leitura em uma string dentro de um ArrayList é uma operação simples de
+manipulação de variáveis inteiras (index += comprimentoDoToken), não gerando laços infinitos se
+implementada corretamente.
+o E: Todo o processamento de compilação ocorre localmente dentro da própria aplicação do compilador,
+sem qualquer necessidade de envolver servidores de banco de dados ou ferramentas externas do
+sistema operacional para tradução de strings básicas.
+
+-- 25 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 26 de 65
+Público
+Questão 26
+Um dos maiores desafios ao implementar um analisador léxico baseado puramente em Expressões Regulares (Regex)
+e coleções em memória é lidar com os padrões que se sobrepõem. Por exemplo, a palavra-chave if casa perfeitamente
+com a Regex de palavras reservadas ^(if|while|else), mas também casa com a Regex genérica de
+identificadores/nomes de variáveis ^[a-zA-Z_]\w*. Como o motor de Regex avalia as regras de forma linear, se a
+estrutura do programa não definir uma ordem rígida de teste para as expressões, o compilador pode classificar
+elementos de forma totalmente errônea.
+Para resolver o problema da sobreposição de padrões em um analisador léxico baseado em Regex, o desenvolvedor
+deve estruturar o código do programa de modo que:
+A) A Regex de identificadores genéricos seja testada antes de qualquer outra regra, pois as variáveis são mais comuns
+que as palavras reservadas.
+B) O programa misture todas as expressões em uma única Regex gigante e deixe que o computador escolha o
+resultado de forma aleatória.
+C) As Regex de maior especificidade (como palavras-chave reservadas e operadores compostos como >=) sejam
+testadas antes das Regex de escopo geral (como identificadores genéricos e operadores simples como >).
+D) O analisador ignore a ordem dos testes e envie todas as strings ambíguas para serem resolvidas pelo usuário em
+tempo de execução.
+E) As expressões regulares sejam aplicadas apenas nos comentários do código, deixando as instruções do programa
+sem nenhuma verificação de padrão.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? No modelo prático com Regex, a regra de ouro é a prioridade por
+ordem de teste. As palavras reservadas (como if, while) e operadores compostos (como >=) são casos
+específicos. Se testarmos o identificador genérico primeiro, a palavra if será capturada como se fosse o nome
+de uma variável qualquer, quebrando a lógica do compilador. Testando as palavras reservadas primeiro, o
+analisador garante a captura correta delas e, se o texto não casar com nenhuma palavra fixa, ele cai com
+segurança na regra geral de identificadores.
+• Por que as outras alternativas estão incorretas?
+o A: Se a regra de identificadores vier primeiro, ela vai "engolir" todas as palavras reservadas do
+programa, classificando if, else e while como nomes de variáveis.
+o B: Unificar padrões sem uma lógica de captura ordenada ou depender de escolhas aleatórias impediria
+o funcionamento determinístico e correto do compilador.
+o D: O papel do compilador é resolver essas ambiguidades de forma estática e automatizada; transferir
+essa tomada de decisão para o usuário final durante a execução do programa tornaria o sistema
+inutilizável.
+o E: Os comentários são justamente os elementos que devem ser ignorados ou descartados pelo
+analisador léxico; o foco principal da Regex deve ser o código útil do programa.
+
+-- 26 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 27 de 65
+Público
+Questão 27
+Durante o desenvolvimento de um analisador léxico, uma das estruturas mais importantes é a lista de palavras-chave
+reservadas da linguagem (como if, while, else, return, int). Em vez de criar uma Expressão Regular (Regex) gigantesca
+contendo todas as palavras ou fazer múltiplos laços de repetição em um vetor simples — o que tornaria a busca lenta
+à medida que a linguagem cresce —, os desenvolvedores utilizam coleções baseadas em tabelas de dispersão, como
+o HashMap (em Java) ou Dictionary (em C#). Essas coleções permitem associar uma chave (o texto lido) a um valor
+(o tipo do token) com busca em tempo constante.
+Ao utilizar uma coleção do tipo HashMap para gerenciar as palavras reservadas em um analisador léxico, qual é a
+mecânica correta adotada pelo programa para identificar se um texto qualquer (ex: a palavra while) é uma palavra-
+chave ou apenas o nome de uma variável genérica?
+A) O programa limpa todo o conteúdo do HashMap a cada caractere lido e força o computador a reiniciar a contagem
+de linhas do arquivo.
+B) O analisador converte a palavra para o formato decimal e soma o código ASCII de cada letra para ver se o resultado
+é um número primo.
+C) A coleção faz uma varredura sequencial comparando a palavra com todos os arquivos salvos no disco rígido do
+usuário.
+D) O analisador faz uma busca direta no HashMap usando o texto como chave: se o método de consulta retornar um
+valor válido, significa que é uma palavra-chave reservada; caso retorne nulo, o texto é classificado como um
+identificador comum.
+E) O HashMap altera o texto original da palavra para uma sequência aleatória de símbolos antes de enviar o resultado
+para a análise sintática.
+Gabarito: D
+Justificativa e Análise das Alternativas:
+• Por que a alternativa D é a correta? A grande utilidade do HashMap ou de tabelas Hash no analisador léxico
+é a eficiência do método de consulta direta (como o containsKey() ou get()). Quando o analisador encontra
+uma palavra composta por letras, ele simplesmente joga essa palavra no mapa. Se o mapa possuir essa chave
+cadastrada, ele devolve o token correto (ex: TOKEN_WHILE). Se não encontrar nada (retornar nulo), o
+algoritmo sabe com certeza que aquela palavra não faz parte do vocabulário fixo da linguagem, classificando-
+a com segurança como um identificador genérico (nome de variável ou função).
+• Por que as outras alternativas estão incorretas?
+o A: Limpar a coleção a cada caractere apagaria o dicionário de palavras reservadas do compilador,
+inutilizando o analisador.
+o B: Embora tabelas Hash usem funções matemáticas internas para calcular índices (funções de
+dispersão), o programador não precisa fazer somas manuais em busca de números primos para validar
+a palavra no código.
+o C e E: O HashMap atua estritamente na memória RAM alocada para o compilador e não interage com
+o disco de forma genérica, assim como não deforma ou altera o texto lido para padrões aleatórios que
+destruiriam a semântica do código.
+
+-- 27 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 28 de 65
+Público
+Questão 28
+À medida que o analisador léxico executa a varredura do buffer de texto, cada lexema isolado e validado precisa ser
+transformado em um objeto da classe Token. Esse objeto armazena informações essenciais como o tipo do token (ex:
+OPERADOR, NUMERO, PALAVRA_RESERVADA), o valor textual (ex: "+", "10", "if") e a linha/coluna onde foi
+encontrado. No entanto, o analisador léxico não pode simplesmente descartar esses objetos após criá-los; ele precisa
+agrupá-los em uma coleção ordenada que preserve exatamente a sequência em que foram digitados, para que possam
+ser entregues à fase de análise sintática.
+Para armazenar a sequência linear de objetos Token gerados durante o processamento do código-fonte, os
+desenvolvedores de compiladores utilizam frequentemente coleções do tipo lista (como ArrayList<Token> ou
+LinkedList<Token>). A principal razão para a escolha desse tipo de coleção nesta etapa específica é que as listas
+garantem:
+A) Que todos os tokens duplicados (como múltiplos operadores +) sejam automaticamente apagados do programa para
+economizar espaço.
+B) Que os tokens sejam organizados automaticamente em ordem alfabética, misturando os comandos do programa
+para confundir o montador.
+C) O bloqueio do acesso de outras fases do compilador, impedindo que a análise sintática consiga ler os dados
+estruturados.
+D) Que os números inteiros sejam convertidos em textos criptografados antes de serem salvos na memória RAM.
+E) A preservação da ordem cronológica e sequencial de leitura dos tokens, permitindo que o analisador sintático
+processe as instruções exatamente na mesma estrutura em que o programador as escreveu.
+Gabarito: E
+Justificativa e Análise das Alternativas:
+• Por que a alternativa E é a correta? O código-fonte possui uma ordem lógica estrita (por exemplo, x = 5 +
+10;). Se mudarmos a ordem desses elementos, o programa perde o sentido. Estruturas de lista como ArrayList
+ou LinkedList são coleções lineares baseadas em indexação sequencial, o que significa que o primeiro token
+descoberto será o primeiro da lista (índice 0), o segundo será o próximo, e assim por diante. Essa característica
+de manter a ordenação exata de inserção é fundamental para que o analisador sintático receba a corrente de
+tokens correta para validar a gramática.
+• Por que as outras alternativas estão incorretas?
+o A: Tokens repetidos (como vários operadores, ponto-e-vírgulas ou nomes de variáveis) são normais e
+essenciais em um código-fonte. Apagá-los destruiria o programa do usuário.
+o B: Organizar os tokens em ordem alfabética destruiria a estrutura de escrita do programa (por exemplo,
+transformando if (x > 0) em ( > 0 if x )), tornando impossível a compilação.
+o C: O objetivo de armazenar os tokens em uma lista pública ou retornável é justamente servir de
+alimento para a próxima fase (análise sintática); bloqueá-la anularia o fluxo do compilador.
+o D: O analisador armazena os valores originais e suas categorias de forma limpa na memória, sem
+aplicar criptografias ou deformações que impeçam o entendimento das próximas fases de análise.
+
+-- 28 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 29 de 65
+Público
+Questão 29
+Um analisador léxico robusto não pode simplesmente interromper a execução do compilador no primeiro caractere
+inválido que encontrar. Uma boa prática de engenharia de software é fazer com que o analisador colete o maior número
+possível de anomalias textuais em uma única execução. Para gerenciar essas falhas (como caracteres que não
+pertencem ao alfabeto da linguagem ou constantes de texto que nunca foram fechadas), o programa utiliza uma coleção
+dedicada à captura de relatórios de erros, separada da lista de tokens válidos.
+Ao implementar uma lista de relatórios de erros usando uma coleção como ArrayList<ErroLexico>, qual é a principal
+utilidade prática dessa estrutura de dados para o usuário do compilador ao final da execução da fase léxica?
+A) Permitir que o compilador acumule todas as falhas encontradas ao longo do arquivo e exiba um relatório completo
+com as linhas e descrições dos erros, ajudando o programador a corrigir tudo de uma só vez.
+B) Apagar automaticamente os arquivos do sistema operacional que contiverem erros de digitação para punir o
+desenvolvedor desatento.
+C) Enviar mensagens de texto automáticas para o celular do programador toda vez que ele esquecer de fechar uma
+string.
+D) Forçar o computador a ignorar os erros lidos e gerar um programa executável perfeito, mesmo que o código-fonte
+esteja incompleto.
+E) Substituir os caracteres inválidos por nomes de Pokémons aleatórios na Tabela de Símbolos para descontrair o
+ambiente de desenvolvimento.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Interromper o compilador a cada pequeno erro descoberto tornaria a
+experiência de desenvolvimento extremamente frustrante. Ao armazenar os objetos de erro em uma coleção
+estruturada (como uma lista de erros léxicos), o programa consegue escanear o arquivo até o fim, registrando
+exatamente a linha, a coluna e qual caractere inválido disparou a falha. Ao término da fase léxica, se essa lista
+não estiver vazia, o compilador exibe todas as mensagens de alerta de uma vez na tela, permitindo que o
+desenvolvedor faça uma limpa nos problemas do código.
+• Por que as outras alternativas estão incorretas?
+o B e C: Deletar arquivos do sistema ou enviar notificações externas (como SMS) são ações invasivas
+e completamente fora do escopo de responsabilidade técnica de uma estrutura de dados interna de
+um compilador.
+o D: Se houver erros léxicos (caracteres inválidos que a linguagem não reconhece), o compilador não
+pode simplesmente fingir que nada aconteceu e gerar o executável, pois a integridade do código foi
+quebrada.
+o E: O compilador deve manter uma postura técnica e previsível. Modificar o código do usuário inserindo
+textos aleatórios desprovidos de significado técnico destruiria qualquer chance de compilação
+semântica posterior.
+
+-- 29 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 30 de 65
+Público
+Questão 30
+Observe o seguinte trecho de código extraído da classe LeitorDeArquivo.java, utilizada como base no desenvolvimento
+do nosso analisador léxico para a linguagem Pascal:
+public void importarArquivoParaLeitor(){
+this.leitor = null;
+try {
+this.leitor = new BufferedReader(new FileReader(this.caminhoDoArquivo));
+} catch (IOException e) {
+System.err.println("Erro ao ler o arquivo.");
+System.err.println(e);
+}
+}
+Do ponto de vista da arquitetura de compiladores, a escolha de encapsular um FileReader dentro de um
+BufferedReader não é apenas uma conveniência de programação, mas sim uma decisão de projeto alinhada com as
+boas práticas de eficiência na fase de análise léxica.
+Enunciado: Considerando o código acima e os conceitos de manipulação de buffers na análise léxica, assinale a
+alternativa que descreve corretamente o papel técnico do BufferedReader nesse mecanismo e o comportamento do
+bloco try-catch:
+A) O BufferedReader força o compilador a traduzir instantaneamente o código Pascal para Java, enquanto o catch
+impede que o usuário digite palavras com erros de sintaxe.
+B) O BufferedReader evita acessos repetitivos ao disco rígido ao carregar um bloco de caracteres para a memória RAM
+de uma vez, enquanto o catch garante um tratamento robusto caso o arquivo Pascal não seja encontrado ou esteja
+inacessível.
+C) A função do BufferedReader é criptografar o arquivo fonte para que o sistema operacional não descubra as variáveis
+criadas pelo programador, invalidando o bloco catch.
+D) O uso do BufferedReader serve exclusivamente para apagar os comentários do código-fonte Pascal antes mesmo
+de o arquivo ser aberto pelo FileReader.
+E) O BufferedReader lê todo o arquivo de trás para frente para acelerar o motor de Regex, e o bloco catch duplica o
+tamanho do arquivo se houver pouca memória RAM disponível.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? Como vimos na teoria de buffers, ler um caractere por vez direto do
+disco a cada requisição do analisador léxico tornaria o processo extremamente lento. A classe BufferedReader
+do Java implementa justamente essa estratégia clássica: ela lê um grande bloco físico do arquivo de texto de
+uma vez e o armazena em um buffer interno na memória RAM. Conforme o analisador léxico pede o próximo
+caractere, o Java entrega a partir da memória de forma ultrarrápida. Além disso, o bloco try-catch captura
+exceções de IOException, tratando com elegância um erro comum (como o aluno digitar o caminho do arquivo
+errado no console) sem derrubar ou travar o compilador abruptamente.
+• Por que as outras alternativas estão incorretas?
+o A e D: O BufferedReader é uma ferramenta genérica de fluxo de texto do Java. Ele não faz traduções
+de linguagens (Pascal para Java) e nem analisa o conteúdo do texto para remover comentários ou
+verificar sintaxe; isso será feito mais tarde pelas regras léxicas do programa.
+o C: Não há nenhum mecanismo de criptografia envolvido no fluxo de leitura padrão dessa classe. O
+arquivo é lido estritamente em texto puro.
+
+-- 30 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 31 de 65
+Público
+o E: A leitura efetuada pelo buffer é estritamente linear e sequencial (da esquerda para a direita). O
+tratamento de erros (catch) apenas emite mensagens de aviso no console de erro (System.err), não
+possuindo controle ou capacidade de gerenciar ou alterar a memória física do computador.
+
+-- 31 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 32 de 65
+Público
+Questão 31
+Ao analisar a arquitetura da classe LeitorDeArquivo.java, observamos o método carregarArquivoParaLeitor(), cuja
+função é interagir com o usuário via console para montar o caminho do arquivo de testes Pascal que será compilado:
+public void carregarArquivoParaLeitor(){
+// ... trecho omitido ...
+System.out.print("Digite o caminho do diretório: ");
+String diretorio = sc.next();
+System.out.print("Digite o nome do arquivo: ");
+String nomeArquivo = sc.next();
+this.caminhoDoArquivo = diretorio + "\\" + nomeArquivo;
+sc.close();
+}
+Em sistemas operacionais baseados em Unix/Linux, o caractere separador de diretórios padrão é a barra normal (/),
+enquanto em sistemas Windows utiliza-se a barra invertida (\). No código implementado, a linha que monta o caminho
+do arquivo utiliza uma dupla barra invertida ("\\").
+Considerando os conceitos de programação em Java aplicados ao desenvolvimento desse compilador, por que foi
+necessário utilizar duas barras invertidas ("\\") em vez de apenas uma ("\") na concatenação da string que define o
+caminho do arquivo?
+A) Porque em Java a barra invertida única é um caractere de escape usado para iniciar comandos especiais (como \n
+ou \t); portanto, para que o compilador Java interprete uma barra invertida literal no texto, ela precisa ser duplicada.
+B) Porque o compilador Pascal exige que todos os arquivos fontes sejam salvos obrigatoriamente em caminhos
+duplicados na memória RAM para evitar perda de dados.
+C) Porque a segunda barra funciona como um operador de soma binária que acelera a velocidade com que o
+BufferedReader consegue ler o arquivo do disco.
+D) Porque o uso de uma barra única apagaria o conteúdo da variável diretorio antes que ela pudesse ser juntada com
+o nomeArquivo.
+E) Porque a linguagem Java proíbe a concatenação de strings se o caminho do diretório contiver letras maiúsculas.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Na sintaxe do Java, a barra invertida (\) possui uma função especial: ela
+serve como caractere de escape (indica que o caractere seguinte terá um significado diferente, como \n para
+quebra de linha). Se tentássemos escrever apenas "\", o Java acharia que estaríamos tentando escapar as
+aspas de fechamento, gerando um erro de compilação no próprio código do nosso compilador. Para inserir
+uma barra invertida real no texto que será interpretado pelo Windows, precisamos escapar a própria barra,
+escrevendo "\\".
+• Por que as outras alternativas estão incorretas?
+o B: O compilador Pascal recebe apenas uma string com o caminho normal do sistema operacional; ele
+não exige nenhuma duplicação de diretórios na memória.
+o C: A barra é apenas um caractere de texto (String); ela não possui propriedades de operador aritmético
+ou de aceleração de hardware/leitura de disco.
+o D: Usar uma barra incorreta geraria um erro de compilação em Java por causa do fechamento das
+aspas, mas os caracteres de escape não possuem a propriedade de apagar dados de outras variáveis
+como diretorio.
+o E: O Java permite concatenar strings livremente, independente de existirem letras maiúsculas ou
+minúsculas no texto.
+
+-- 32 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 33 de 65
+Público
+Questão 32
+Um detalhe importante na classe LeitorDeArquivo.java diz respeito ao ciclo de vida e ao estado dos atributos da classe.
+Observe que o método importarArquivoParaLeitor() inicia definindo explicitamente o atributo this.leitor como null, antes
+de tentar instanciar os objetos de leitura dentro do bloco protetor try-catch:
+public void importarArquivoParaLeitor(){
+this.leitor = null;
+try {
+this.leitor = new BufferedReader(new FileReader(this.caminhoDoArquivo));
+} catch (IOException e) {
+System.err.println("Erro ao ler o arquivo.");
+System.err.println(e);
+}
+}
+Do ponto de vista da lógica do programa e do gerenciamento de estado do compilador, qual é o impacto prático de
+definir this.leitor = null na primeira linha deste método caso o bloco catch seja acionado (por exemplo, se o arquivo
+Pascal digitado não existir)?
+A) O método ignora o erro e força a criação de um buffer fantasma contendo um código Pascal genérico de exemplo.
+B) O programa entra em um loop infinito tentando recarregar o arquivo até que o usuário exclua a pasta do sistema.
+C) O atributo this.leitor mantém o arquivo que foi aberto na execução anterior, mascarando o erro atual.
+D) O sistema operacional do computador é notificado para bloquear novas leituras de disco por questões de segurança
+de dados.
+E) Garante que qualquer referência antiga ou leitor aberto anteriormente seja descartado, fazendo com que o objeto
+leitor fique terminantemente nulo, permitindo que as próximas fases do compilador saibam com segurança que o
+arquivo atual falhou ao ser carregado.
+Gabarito: E
+Justificativa e Análise das Alternativas:
+• Por que a alternativa E é a correta? Se o método for chamado mais de uma vez (por exemplo, se o usuário
+tentar testar vários arquivos Pascal um após o outro) e a abertura do arquivo atual falhar no FileReader, o fluxo
+saltará direto para o catch. Se não tivéssemos limpado o atributo com this.leitor = null logo no início, o leitor
+continuaria guardando a instância bem-sucedida do arquivo anterior. Ao zerar o atributo antes do teste,
+garantimos que, se houver um erro de leitura, o leitor ficará garantidamente nulo, permitindo que o restante do
+compilador verifique essa nulidade e impeça o início de uma análise léxica com dados corrompidos ou antigos.
+• Por que as outras alternativas estão incorretas?
+o A: O Java não inventa códigos fantasmas; se o arquivo não existir, o leitor simplesmente não é
+instanciado e permanece nulo.
+o B: O código do método é linear; não há nenhuma estrutura de repetição (while ou for) que force o
+programa a entrar em loop infinito no erro.
+o C: É o oposto: definir como null serve justamente para impedir que o arquivo da execução anterior
+permaneça ativo por engano.
+o D: O escopo da ação é estritamente local dentro da aplicação do compilador na JVM, não possuindo
+privilégios administrativos para alterar ou bloquear as permissões de leitura globais do sistema
+operacional.
+
+-- 33 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 34 de 65
+Público
+Questão 33
+Observe o método processarArquivoNoBufferPrimario(), pertencente à classe BufferPrimario.java do nosso projeto de
+compilador Pascal:
+public void processarArquivoNoBufferPrimario(){
+this.bufferPrimario = new ArrayList<>();
+try {
+String linha = "";
+while((linha = this.leitor.readLine()) != null){
+this.bufferPrimario.add(linha);
+}
+} catch (IOException e) {
+// ... tratamento de erro ...
+}
+// ... bloco finally ...
+}
+A estratégia adotada acima transfere todo o conteúdo do arquivo de texto para uma coleção dinâmica em memória
+RAM antes de iniciar o isolamento dos tokens.
+Analisando a estrutura do laço while presente no método acima, assinale a alternativa que descreve corretamente
+como o programa identifica que o arquivo de código-fonte Pascal chegou ao fim (Fim de Arquivo / EOF - End of File) e
+qual a consequência do método readLine() nesse processo:
+A) O método readLine() lê o arquivo linha por linha e retorna null quando não há mais conteúdo a ser lido; ao receber
+esse valor nulo, a condição do while torna-se falsa, encerrando o laço com todas as linhas armazenadas
+sequencialmente no ArrayList.
+B) O laço while roda infinitamente até estourar a memória do computador, pois a variável linha nunca é atualizada com
+os dados do leitor.
+C) O critério de parada acontece quando a variável linha recebe o texto "EOF", que o próprio programador é obrigado
+a digitar na última linha do seu script Pascal.
+D) O método readLine() joga um erro do tipo IOException de propósito para forçar o programa a sair do laço while pelo
+bloco catch quando o arquivo acaba.
+E) A condição != null serve para verificar se o arquivo possui vírus, limpando o buffer caso encontre caracteres em
+ordem alfabética reversa.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? A expressão (linha = this.leitor.readLine()) != null realiza duas ações em
+uma única linha: primeiro, ela chama readLine(), que extrai a próxima linha inteira do arquivo e a atribui à
+variável linha; segundo, ela compara o resultado dessa atribuição com null. De acordo com a especificação do
+Java, quando o arquivo chega ao fim e não há mais nada para ler, o método readLine() devolve null. Nesse
+momento, a comparação quebra a execução do loop, e o programa avança com o ArrayList populado
+perfeitamente com todas as linhas lidas cronologicamente.
+• Por que as outras alternativas estão incorretas?
+o B: A atribuição ocorre a cada iteração dentro da própria condição do while, atualizando a variável a
+cada linha e avançando em direção ao fim do arquivo.
+o C: O Java detecta o fim do arquivo físico por meio de marcadores de sistema controlados pelo sistema
+operacional, sem exigir que o programador insira tags textuais como "EOF".
+
+-- 34 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 35 de 65
+Público
+o D: Chegar ao fim de um arquivo é um fluxo normal e esperado na programação; o Java sinaliza isso
+com um retorno nulo, guardando o lançamento de IOException apenas para falhas reais de hardware
+ou arquivos corrompidos.
+o E: A comparação com nulo verifica exclusivamente a existência de dados vindos do fluxo de leitura,
+não possuindo capacidade ou lógica para escanear assinaturas de segurança ou ordenar texto.
+
+-- 35 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 36 de 65
+Público
+Questão 34
+Ao analisarmos o método processarArquivoNoBufferPrimario(), notamos a presença de uma estrutura completa de
+tratamento de exceções composta pelos blocos try, catch e finally. Veja o trecho final do método:
+public void processarArquivoNoBufferPrimario(){
+// ... trecho try/catch omitido ...
+} finally {
+if(this.leitor != null){
+try {
+this.leitor.close();
+} catch (IOException e) {
+System.err.println("Erro ao fechar o arquivo.");
+System.err.println(e);
+}
+}
+}
+}
+A inclusão do bloco finally para invocar o método close() é uma prática fundamental de engenharia de software ao
+lidarmos com fluxos de Entrada e Saída (I/O).
+Considerando a lógica de execução da linguagem Java, qual é a principal razão técnica para a existência do bloco
+finally neste método e o que aconteceria se o método leitor.close() fosse colocado apenas ao término do bloco try?
+A) O bloco finally serve para apagar o ArrayList caso o arquivo seja muito grande, liberando espaço para o sistema
+operacional.
+B) O bloco finally garante a execução do seu código independentemente de ter ocorrido um erro ou não; se o close()
+estivesse apenas no try e um erro acontecesse durante a leitura, o arquivo permaneceria aberto e travado no sistema
+operacional.
+C) O finally é executado apenas quando a memória RAM do computador atinge 100% de uso, servindo como um alarme
+de segurança.
+D) Colocar o close() dentro do finally força o motor de Regex a reiniciar a busca por tokens de trás para frente no buffer
+primário.
+E) O bloco finally impede que o método processarArquivoNoBufferPrimario() seja chamado novamente por outras
+classes do sistema.
+Gabarito: B
+Justificativa e Análise das Alternativas:
+• Por que a alternativa B é a correta? Na especificação do Java, o bloco finally possui uma garantia contratual:
+ele sempre será executado após a saída do try ou do catch, não importando se o código rodou com sucesso
+ou se estourou uma exceção. Arquivos abertos pelo sistema operacional são recursos finitos e pesados. Se
+colocássemos o this.leitor.close() apenas no final do try e ocorresse uma falha de leitura no meio do arquivo,
+o fluxo saltaria direto para o catch, ignorando o fechamento. O uso do finally mitiga esse risco, garantindo que
+o arquivo seja liberado com segurança sob qualquer circunstância.
+• Por que as outras alternativas estão incorretas?
+o A: O finally não manipula ou apaga os dados do ArrayList de forma automática; ele apenas executa as
+linhas explícitas escritas pelo programador (no caso, o fechamento do leitor).
+o C: O acionamento do finally depende estritamente do fluxo de execução dos blocos de código
+associados, não possuindo qualquer relação com o monitoramento de desempenho do hardware.
+o D: O fechamento do arquivo físico encerra a conexão com o disco e não interfere nas regras de busca
+e casamento de padrões que a Regex executará mais tarde sobre a coleção em memória.
+
+-- 36 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 37 de 65
+Público
+o E: O bloco finally gerencia apenas o encerramento seguro do escopo atual de execução daquele
+método específico, sem alterar os modificadores de acesso públicos ou privados da classe.
+
+-- 37 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 38 de 65
+Público
+Questão 35
+Durante o desenvolvimento de sistemas complexos como compiladores, é uma prática comum os programadores
+inserirem métodos auxiliares para inspecionar o estado interno das estruturas de dados. Observe o método
+imprimirConteudoDoBufferPrimario() presente na classe BufferPrimario.java:
+public void imprimirConteudoDoBufferPrimario(Boolean flag){
+if (flag){
+System.out.println("------------------------------------");
+System.out.println("### Conteúdo do Buffer Primário: ###");
+for (String texto : bufferPrimario) {
+System.out.println(texto);
+}
+}
+}
+A presença do parâmetro flag do tipo Boolean permite controlar a exibição dessas informações no console.
+Sob a perspectiva do desenvolvimento e depuração (debugging) de um analisador léxico, qual é o propósito de
+condicionar a impressão do ArrayList a uma variável flag e qual seria o impacto de deixar essa impressão ativa por
+padrão em todas as execuções do compilador?
+A) A flag serve para criptografar as linhas do arquivo Pascal, e deixar a impressão ativa apagaria o código-fonte do
+usuário de forma definitiva.
+B) O uso da flag obriga o processador a duplicar o tamanho das strings lidas, tornando o compilador mais lento quando
+o valor for falso.
+C) A flag funciona como um interruptor de depuração; mantê-la ativa por padrão em ambiente de produção geraria
+poluição visual desnecessária no console e reduziria a performance de tempo de execução devido ao alto custo das
+operações de saída em tela (System.out.println).
+D) O parâmetro impede que o analisador sintático consiga ler a lista de tokens se o valor enviado for verdadeiro.
+E) A variável flag converte automaticamente comandos Pascal antigos para os padrões modernos de arquiteturas de
+64 bits.
+Gabarito: C
+Justificativa e Análise das Alternativas:
+• Por que a alternativa C é a correta? Durante a fase de testes do nosso compilador, visualizar o conteúdo
+exato que foi jogado dentro do ArrayList é excelente para garantir que o arquivo foi lido sem corrupção de
+caracteres. Contudo, operações de escrita no console (E/S de tela) são notoriamente lentas e pesadas para o
+sistema operacional. Ao utilizar uma variável de controle (flag), o desenvolvedor pode ativar a visualização
+apenas quando estiver rastreando um bug específico e desativá-la completamente na execução padrão,
+garantindo que o compilador rode com o máximo de desempenho e sem poluir o terminal do usuário.
+• Por que as outras alternativas estão incorretas?
+o A e E: O método realiza apenas um laço de repetição (for-each) para ler e exibir strings puras na tela.
+Ele não tem nenhuma propriedade de criptografia, alteração de código ou conversão de arquitetura de
+bits.
+o B: Quando a flag é falsa, o bloco if é simplesmente ignorado pelo fluxo do programa, o que poupa o
+processador de realizar qualquer esforço de renderização de texto, tornando a execução mais rápida,
+e não mais lenta.
+
+-- 38 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 39 de 65
+Público
+o D: Esse método interage apenas com a saída padrão do console e com a leitura do bufferPrimario. Ele
+não possui qualquer controle ou impacto sobre as coleções de tokens ou sobre o funcionamento do
+analisador sintático.
+
+-- 39 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 40 de 65
+Público
+Questão 36
+Analise o método processarBufferSecundario() presente na classe BufferSecundario.java, que realiza a tokenização
+do código-fonte Pascal armazenado no buffer primário:
+public void processarBufferSecundario(){
+String capture =
+PadroesLexicos.COMMENT + "|" +
+PadroesLexicos.NUMBER + "|" +
+PadroesLexicos.LITERAL + "|" +
+PadroesLexicos.WORDS + "|" +
+PadroesLexicos.CHARACTER;
+this.bufferSecundario = new ArrayList<>();
+ArrayList<String> lexemasProcessados = new ArrayList<>();
+Pattern patt = Pattern.compile(capture);
+int linha = 1;
+for (String texto : bufferPrimario) {
+Matcher mat = patt.matcher(texto);
+Token valor = null;
+while(mat.find()){
+String lexema = mat.group();
+int posicao = mat.start();
+if ((lexema.startsWith("//")) || (lexema.startsWith("(*"))){
+continue;
+}
+if (lexemasProcessados.contains(lexema) == false){
+lexemasProcessados.add(lexema);
+// ... bloco de classificação e inserção de tokens ...
+}
+}
+linha++;
+}
+}
+A arquitetura acima adota um mecanismo de busca global baseado na concatenação de padrões via operador de
+alternância (|) da Regex, combinado com uma lista de controle chamada lexemasProcessados.
+Uma análise técnica avançada sobre o comportamento desse algoritmo revela um efeito colateral (limitação) gerado
+especificamente pela verificação if (lexemasProcessados.contains(lexema) == false). Assinale a alternativa que
+descreve corretamente o impacto dessa condicional no fluxo final da corrente de tokens armazenada em
+bufferSecundario:
+A) O algoritmo entrará em deadlock se o programador declarar duas variáveis com tipos de dados diferentes na mesma
+linha do arquivo Pascal.
+B) A lista impede o estouro de memória, mas força o motor de Regex a reiniciar a contagem do índice da linha de volta
+para 1 a cada repetição descoberta.
+C) O compilador passará a ignorar comentários duplicados, fazendo com que o código de máquina gerado sofra
+alterações semânticas em tempo de execução.
+D) A corrente de tokens coletada no bufferSecundario perderá a repetição cronológica de lexemas idênticos; se uma
+variável (ex: x) for utilizada dez vezes ao longo do código Pascal, ela será transformada em um objeto Token e inserida
+na lista final apenas na primeira vez em que aparecer.
+E) A validação faz com que o método mat.group() jogue uma exceção do tipo PatternSyntaxException, interrompendo
+a análise léxica imediatamente na primeira linha.
+
+-- 40 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 41 de 65
+Público
+Gabarito: D
+Justificativa e Análise das Alternativas:
+• Por que a alternativa D é a correta? Como vimos na teoria de analisadores léxicos, a corrente de tokens
+precisa refletir a estrutura exata e sequencial do código-fonte (ex: se o usuário escreve x := x + 1;, a corrente
+de tokens precisa conter o token do primeiro x e o token do segundo x). Ao condicionar a criação e a inserção
+do Token ao teste lexemasProcessados.contains(lexema) == false, o código impede que um lexema que já
+apareceu antes seja processado novamente. Como resultado, o bufferSecundario conterá apenas uma lista de
+tokens "únicos", destruindo a sequência cronológica necessária para que a análise sintática consiga validar a
+gramática das instruções estruturadas posteriormente.
+• Por que as outras alternativas estão incorretas?
+o A: O uso de coleções locais em um laço linear simples em Java não possui propriedades de
+concorrência ou sincronização que possam gerar cenários de deadlock.
+o B: O controle da variável linha é puramente iterativo ao fim do laço for externo (linha++), não sendo
+influenciado ou reiniciado pelas condicionais internas do loop while.
+o C: Os comentários que começam com // ou (* acionam o comando continue antes mesmo de chegarem
+à validação da lista de processados. De qualquer forma, comentários não geram código de máquina e
+não alteram a semântica do executável.
+o E: O método mat.group() apenas recupera a string casada pelo motor interno de Regex do Java,
+operação que já foi validada com sucesso pelo método mat.find(). A lógica de coleções do usuário não
+corrompe a sintaxe interna do objeto compilado Pattern.
+
+-- 41 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 42 de 65
+Público
+Questão 37
+Analise a definição da string capture utilizada para compilar o padrão global de busca por Expressões Regulares no
+método processarBufferSecundario():
+String capture =
+PadroesLexicos.COMMENT + "|" +
+PadroesLexicos.NUMBER + "|" +
+PadroesLexicos.LITERAL + "|" +
+PadroesLexicos.WORDS + "|" +
+PadroesLexicos.CHARACTER;
+Na teoria de compiladores, os padrões léxicos de uma linguagem de programação frequentemente se sobrepõem. Por
+exemplo, uma palavra-chave reservada (como if ou while contidas em WORDS) pode satisfazer perfeitamente a
+expressão regular destinada a identificar um nome de variável genérico (CHARACTER ou IDENTIFIER). O motor de
+busca do Java (java.util.regex) avalia as alternativas separadas por barras verticais (|) da esquerda para a direita de
+forma gulosa (greedy) e sequencial.
+Considerando a arquitetura interna do motor de Regex do Java e a string de captura estruturada acima, qual seria a
+consequência técnica avançada se um desenvolvedor alterasse a ordem dessa concatenação, movendo o
+PadroesLexicos.CHARACTER (que valida identificadores/letras genéricas) para a primeira posição da string capture?
+A) O método Pattern.compile() falharia acusando um erro de sintaxe de Regex, impedindo a inicialização do buffer
+secundário.
+B) Os comentários iniciados por // seriam transformados em números inteiros na memória interna do compilador.
+C) O motor de Regex entraria em recursão infinita, travando a máquina virtual do Java (JVM) por falta de memória de
+pilha (StackOverflow).
+D) O analisador léxico passaria a classificar todas as strings literais entre aspas como se fossem palavras reservadas
+da tabela de símbolos.
+E) O padrão genérico de caracteres passaria a ter precedência sobre todos os outros; ao ler uma linha de código, o
+método mat.find() casaria palavras-chave e strings como caracteres isolados/identificadores, impedindo que o laço
+identificasse corretamente palavras reservadas ou comentários subsequentes que dependessem dessa
+correspondência inicial.
+Gabarito: E
+Justificativa e Análise das Alternativas:
+• Por que a alternativa E é a correta? Motores de Expressões Regulares baseados em alternância linear
+(A|B|C) avaliam os casamentos respeitando estritamente a ordem posicional fornecida. O padrão
+PadroesLexicos.CHARACTER, por ser genérico e projetado para capturar letras/identificadores individuais ou
+sequências básicas, "engoliria" o texto útil do código antes que o motor tivesse a oportunidade de testar se
+aquele texto combinava com padrões mais específicos, como comandos reservados (WORDS) ou strings
+estruturadas (LITERAL). Portanto, a ordenação dos padrões na string capture é um fator crítico de projeto para
+o determinismo do analisador léxico.
+• Por que as outras alternativas estão incorretas?
+o A: Mudar a ordem de concatenação altera a lógica de correspondência, mas não gera expressões
+sintaticamente inválidas para o método Pattern.compile().
+o B e D: O motor apenas isolaria os lexemas de forma incorreta baseando-se na nova ordem, mas não
+possui a propriedade de transformar comentários em números ou mapear aspas para palavras
+reservadas arbitrariamente se as regras internas de validação não o instruírem a isso.
+
+-- 42 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 43 de 65
+Público
+o C: O mecanismo do Matcher.find() do Java opera de forma iterativa ao longo da string do buffer,
+avançando o índice de busca a cada correspondência. Mudar a ordem dos fatores não gera laços
+recursivos infinitos no motor.
+
+-- 43 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 44 de 65
+Público
+Questão 38
+Analise a lógica interna de classificação de lexemas executada dentro do laço while do método
+processarBufferSecundario():
+if (TabelaSimboloLinguagem.contem(lexema)){
+TokenType tipo = TabelaSimboloLinguagem.buscar(lexema);
+valor = new Token(tipo, lexema, linha, posicao);
+}
+else if (this.IsCharacter(lexema)){
+valor = new Token(TokenType.CHARACTER, lexema, linha, posicao);
+}
+else if (this.IsIdentifier(lexema)){
+valor = new Token(TokenType.IDENTIFIER, lexema, linha, posicao);
+}
+// ... outros sub-métodos de validação ...
+Nessa estrutura, o analisador léxico consulta primeiro uma classe estática externa global (TabelaSimboloLinguagem)
+antes de recorrer aos seus métodos de validação locais baseados em Regex (como IsCharacter e IsIdentifier).
+Considerando os princípios de arquitetura de compiladores e engenharia de software, avalie o impacto técnico
+avançado desse acoplamento entre a fase de varredura do buffer e a tabela de palavras reservadas estática da
+linguagem:
+A) Essa ordem garante o correto reconhecimento de palavras-chave, pois se o lexema existir na tabela global (ex:
+"program"), ele será imediatamente classificado com seu tipo específico; contudo, introduz uma dependência estática
+rígida, o que significa que qualquer alteração na gramática da linguagem Pascal exigirá uma modificação direta na
+classe externa e impossibilitará o reuso desse analisador léxico para outra linguagem sem refatoração.
+B) A consulta inicial faz com que o método TabelaSimboloLinguagem.buscar(lexema) altere fisicamente o texto lido,
+inserindo espaços em branco que quebram o casamento com o método IsIdentifier(lexema).
+C) O compilador Java gerará um erro de tempo de execução (NullPointerException) obrigatório caso a tabela de
+símbolos global retorne um identificador que não comece com uma letra maiúscula.
+D) Essa estratégia elimina completamente a utilidade dos métodos IsLiteral() e IsNumber(), pois a tabela de símbolos
+estática já armazena antecipadamente todos os números inteiros e decimais possíveis da matemática.
+E) A validação impede o funcionamento do laço while, visto que coleções em Java não permitem a leitura de tipos
+TokenType fora de estruturas baseadas em matrizes tridimensionais.
+Gabarito: A
+Justificativa e Análise das Alternativas:
+• Por que a alternativa A é a correta? Na estrutura atual, dar prioridade à busca na TabelaSimboloLinguagem
+resolve elegantemente o problema das palavras reservadas (elas são interceptadas antes de serem tratadas
+como identificadores genéricos). No entanto, sob a ótica de design de software avançado, esse padrão expõe
+um forte acoplamento (tight coupling). O analisador léxico não é genérico; ele depende diretamente de uma
+classe estática contendo o vocabulário Pascal rígido. Se o desenvolvedor quisesse reaproveitar essa mesma
+infraestrutura de buffers e Regex para compilar outra linguagem (como C ou Python), o reaproveitamento seria
+inviável sem reescrever ou desacoplar essa ponte de comunicação.
+• Por que as outras alternativas estão incorretas?
+o B: Métodos de consulta (buscar ou contem) realizam apenas operações de leitura e correspondência
+na tabela, não possuindo efeitos colaterais de modificação ou inserção de espaços na string do lexema.
+o C: O Java manipula strings de forma agnóstica em relação à caixa das letras (case-sensitivity); a falta
+de maiúsculas pode influenciar a lógica da linguagem Pascal se ela for especificada assim, mas não
+dispara exceções de ponteiro nulo nativas da JVM.
+
+-- 44 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 45 de 65
+Público
+o D: Uma tabela de símbolos de linguagem armazena estruturas fixas (comandos) e identificadores
+descobertos. É impossível e conceitualmente incorreto prever e armazenar todos os números literais
+infinitos nela; as validações por Regex locais continuam sendo mandatórias para essa finalidade.
+o E: O tipo enumerado TokenType e as coleções como ArrayList operam de forma nativa e linear na
+memória da JVM, sem qualquer exigência técnica bizarra relacionada a matrizes tridimensionais.
+
+-- 45 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 46 de 65
+Público
+Questão 39
+Considere o método processarArquivoNoBufferPrimario() da classe BufferPrimario.java, cujo objetivo é ler as linhas do
+código-fonte Pascal a partir de um leitor de fluxo e armazená-las em uma lista em memória. No entanto, um trecho
+crucial do algoritmo de leitura foi removido e substituído por uma lacuna marcada como [LACUNA_LOGICA]:
+public void processarArquivoNoBufferPrimario(){
+this.bufferPrimario = new ArrayList<>();
+try {
+String linha = "";
+/* [LACUNA_LOGICA] */
+} catch (IOException e) {
+System.err.println("Erro ao carregar o arquivo.");
+System.err.println(e);
+} // ... bloco finally ocultado ...
+}
+Para que o método funcione corretamente, preenchendo o bufferPrimario linha por linha até o fim do arquivo sem gerar
+laços infinitos ou erros de compilação em Java, o trecho /* [LACUNA_LOGICA] */ deve ser preenchido exatamente
+por:
+A)
+while(this.leitor.readLine() != ""){
+this.bufferPrimario.add(linha);
+}
+B)
+while((linha = this.leitor.readLine()) != null){
+this.bufferPrimario.add(linha);
+}
+C)
+for(linha in this.leitor){
+this.bufferPrimario.add(this.leitor.toString());
+}
+D)
+if((linha == this.leitor.readLine()) != null){
+this.bufferPrimario.add(linha);
+}
+E)
+while(this.leitor.ready()){
+linha = "linha";
+this.bufferPrimario.add(linha);
+}
+Gabarito: B
+Justificativa e Explicação detalhada:
+• Por que a alternativa B é a correta? Esta alternativa traz a sintaxe exata adotada no projeto original. A
+expressão while((linha = this.leitor.readLine()) != null) realiza simultaneamente a atribuição da string lida à
+variável local e o teste de parada do laço. Quando o arquivo atinge o fim (EOF), o método readLine() retorna
+
+-- 46 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 47 de 65
+Público
+null, quebrando a condição do while. Dentro do bloco, a linha capturada é adicionada perfeitamente à coleção
+via this.bufferPrimario.add(linha).
+• Por que as outras alternativas estão incorretas?
+o A: Esta alternativa causa um erro de compilação em Java, pois tenta usar a variável linha dentro do
+laço sem que ela tenha sido atualizada por um comando de atribuição. Além disso, testar contra ""
+(string vazia) faria o programa ignorar o fim real do arquivo e travar em linhas em branco.
+o C: A estrutura de repetição for-in (ou for-each) mostrada não é aplicável diretamente sobre um objeto
+do tipo BufferedReader em Java, resultando em erro de compilação.
+o D: Utiliza o operador de comparação == no lugar do operador de atribuição =, quebrando a lógica do
+código, além de substituir a estrutura de laço while por um condicional if, o que faria o programa ler
+apenas uma única linha do arquivo em vez do arquivo inteiro.
+o E: Embora this.leitor.ready() seja um método válido, o corpo do laço fixa a string estática "linha" dentro
+da variável a cada repetição, enchendo o ArrayList com textos repetidos e redundantes, sem ler o
+conteúdo real do arquivo Pascal.
+
+-- 47 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 48 de 65
+Público
+Questão 40
+Analise o método carregarArquivoParaLeitor() da classe LeitorDeArquivo.java. A função deste método é interagir com
+o usuário via console para obter o diretório e o nome do arquivo Pascal que será processado, salvando o caminho
+completo no atributo correspondente. Um trecho contendo a lógica de concatenação do caminho e o encerramento
+seguro do fluxo do console foi removido e substituído pela etiqueta [LACUNA_SINTATICA]:
+public void carregarArquivoParaLeitor(){
+System.out.println("----------------------------------");
+System.out.println("### Carregar Arquivo de Testes ###");
+Scanner sc = new Scanner(System.in);
+System.out.print("Digite o caminho do diretório: ");
+String diretorio = sc.next();
+System.out.print("Digite o nome do arquivo: ");
+String nomeArquivo = sc.next();
+/* [LACUNA_SINTATICA] */
+}
+Para manter o comportamento idêntico ao do projeto original, garantindo que o caminho seja gerado corretamente para
+sistemas Windows utilizando o caractere de escape adequado e que os recursos do terminal sejam liberados, o trecho
+/* [LACUNA_SINTATICA] */ deve ser preenchido por:
+A)
+this.caminhoDoArquivo = diretorio + "/" + nomeArquivo;
+B)
+this.caminhoDoArquivo = diretorio + "\" + nomeArquivo;
+sc.free();
+C)
+this.caminhoDoArquivo = diretorio + "\\" + nomeArquivo;
+sc.close();
+D)
+caminhoDoArquivo = diretorio.concat(nomeArquivo);
+System.exit(0);
+E)
+this.caminhoDoArquivo = diretorio + sc.nextLine() + nomeArquivo;
+Gabarito: C
+Justificativa e Explicação detalhada:
+• Por que a alternativa C é a correta? Esta alternativa reflete com precisão as linhas de código do projeto
+original. Em Java, a barra invertida (\) serve como caractere de escape; por isso, para concatenar uma barra
+invertida literal entre o diretório e o nome do arquivo, é estritamente necessário duplicá-la ("\\"), caso contrário
+o código geraria um erro de compilação. Adicionalmente, o comando sc.close(); realiza o fechamento do objeto
+Scanner, liberando o fluxo de entrada associado ao sistema (System.in) e eliminando o risco de vazamento de
+memória.
+• Por que as outras alternativas estão incorretas?
+o A: Embora utilize uma concatenação sintaticamente válida, usa a barra normal ("/"), alterando a regra
+estipulada para a montagem de caminhos no padrão Windows implementado e esquecendo-se de
+fechar o objeto Scanner.
+
+-- 48 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 49 de 65
+Público
+o B: O uso de uma barra invertida isolada dentro de aspas ("\") faz com que o Java interprete as aspas
+de fechamento como um caractere escapado. Isso quebra a sintaxe do literal de String e gera um erro
+de compilação imediato no código Java. Além disso, o método free() não existe na classe Scanner.
+o D: O método concat juntaria os textos sem nenhum separador (ex: transformando C:\Pascal e teste.pas
+em C:\Pascalteste.pas), gerando um caminho inválido. O comando System.exit(0) abortaria e
+encerraria a execução de todo o compilador instantaneamente, impedindo que o arquivo fosse sequer
+lido ou processado.
+o E: Tentar ler uma nova linha do console com sc.nextLine() no meio da concatenação deixaria o
+programa travado à espera de uma terceira digitação do usuário, corrompendo a string do caminho
+final com dados imprevistos.
+
+-- 49 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 50 de 65
+Público
+Questão 41
+Analise o método processarBufferSecundario() pertencente à classe BufferSecundario.java. Este método é
+encarregado de ler sequencialmente cada linha armazenada no bufferPrimario, submetê-la ao padrão de Expressões
+Regulares compilado em patt e extrair os pedaços de texto que correspondem aos lexemas. Um trecho vital contendo
+o laço de varredura interna e a extração do fragmento casado foi omitido e substituído por [LACUNA_ALGORITMICA]:
+public void processarBufferSecundario(){
+// ... definições de strings de captura e inicialização de listas omitidas ...
+Pattern patt = Pattern.compile(capture);
+int linha = 1;
+for (String texto : bufferPrimario) {
+Matcher mat = patt.matcher(texto);
+Token valor = null;
+/* [LACUNA_ALGORITMICA] */
+if ((lexema.startsWith("//")) || (lexema.startsWith("(*"))){
+continue;
+}
+if (lexemasProcessados.contains(lexema) == false){
+lexemasProcessados.add(lexema);
+// ... bloco de classificação omitido ...
+this.bufferSecundario.add(valor);
+}
+}
+linha++;
+}
+}
+}
+Para restabelecer a integridade lógica deste analisador léxico avançado, permitindo que o motor de Regex do Java
+localize incrementalmente todos os casamentos válidos da linha e recupere o texto correspondente a cada lexema
+identificado, o trecho /* [LACUNA_ALGORITMICA] */ deve ser preenchido por:
+A)
+if(mat.matches()){
+String lexema = mat.toString();
+int posicao = mat.regionStart();
+B)
+for(int i=0; i < texto.length(); i++){
+String lexema = texto.substring(i);
+int posicao = i;
+C)
+while(mat.find() == false){
+String lexema = mat.group(0);
+int posicao = mat.end();
+D)
+while(mat.find()){
+String lexema = mat.group();
+int posicao = mat.start();
+
+-- 50 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 51 de 65
+Público
+E)
+while(patt.flags() > 0){
+String lexema = text.trim();
+int posicao = 0;
+Gabarito: D
+Justificativa e Explicação detalhada:
+• Por que a alternativa D é a correta? Esta alternativa traz os exatos comandos nativos da API de Expressões
+Regulares do Java (java.util.regex) implementados no projeto. O método mat.find() varre a string em busca do
+próximo trecho que case com o padrão, retornando um valor booleano e avançando o ponteiro interno a cada
+iteração do loop while. O método mat.group() extrai textualmente a substring exata que foi capturada pelo
+casamento, enquanto o método mat.start() devolve o índice inteiro correspondente ao caractere inicial do
+lexema na linha atual, o que é fundamental para registrar a posição do Token.
+• Por que as outras alternativas estão incorretas?
+o A: O método mat.matches() tenta casar a string inteira de uma vez só. Se a linha contiver um comando
+Pascal completo (ex: var x : integer;), o método falharia por não casar a linha inteira em um único bloco
+rígido. Ademais, mat.toString() retorna uma descrição textual do objeto Matcher, e não o lexema
+extraído.
+o B: Substitui o mecanismo declarativo da Regex por uma estrutura puramente posicional baseada em
+índices numéricos fixos, gerando erros de compilação uma vez que as variáveis internas (como
+lexema) não se integrariam com o escopo original das chaves subsequentes.
+o C: A condição mat.find() == false inverteria a lógica do analisador léxico, fazendo com que o laço
+rodasse apenas se nenhuma correspondência fosse encontrada na linha. Além disso, mat.end()
+captura o índice do caractere de fim do lexema, alterando a informação de posição real do Token.
+o E: O método patt.flags() retorna uma máscara de bits inteira configurada na compilação do Pattern
+(como busca insensível a maiúsculas). Testar se esse valor é maior que zero criaria um laço infinito,
+pois o valor das flags não muda ao longo da leitura.
+
+-- 51 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 52 de 65
+Público
+Questão 42
+Dentro do laço de varredura do método processarBufferSecundario(), o motor de Expressões Regulares localiza tudo
+o que casa com o padrão global, incluindo comentários contidos no código-fonte Pascal. Como comentários servem
+apenas para documentação e devem ser completamente ignorados pelas fases de síntese do compilador, o algoritmo
+precisa interceptar esses lexemas imediatamente e saltar para a próxima iteração do laço, descartando-os. Esse trecho
+de interceptação foi removido e substituído pela marcação [LACUNA_DESCARTE]:
+while(mat.find()){
+String lexema = mat.group();
+int posicao = mat.start();
+/* [LACUNA_DESCARTE] */
+if (lexemasProcessados.contains(lexema) == false){
+lexemasProcessados.add(lexema);
+// ... bloco de classificação e inserção de tokens omitido ...
+}
+}
+Para garantir que o analisador léxico ignore corretamente os comentários de linha padrão Pascal (//) e os comentários
+de bloco de estilo antigo ((*), impedindo-os de avançar para a fase de classificação sem quebrar o laço de busca pelos
+demais tokens da linha, o trecho /* [LACUNA_DESCARTE] */ deve ser preenchido por:
+A)
+if ((lexema.equals("//")) && (lexema.equals("(*"))){
+break;
+}
+B)
+if ((lexema.contains("//")) || (lexema.contains("(*"))){
+System.exit(0);
+}
+C)
+if ((lexema.endsWith("//")) || (lexema.endsWith("*)"))){
+return;
+}
+D)
+while ((lexema.startsWith("//")) && (lexema.startsWith("(*"))){
+this.bufferSecundario.add(null);
+}
+E)
+if ((lexema.startsWith("//")) || (lexema.startsWith("(*"))){
+continue;
+}
+Gabarito: E
+Justificativa e Explicação detalhada:
+• Por que a alternativa E é a correta? Esta alternativa reproduz exatamente a lógica de controle implementada
+no projeto original. O método startsWith("//") verifica se o lexema capturado inicia com os caracteres
+indicadores de comentário. O operador lógico OU (||) garante que a condição seja atendida se qualquer um
+
+-- 52 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 53 de 65
+Público
+dos dois padrões de comentário for detectado. O comando continue é o ponto crucial: ele interrompe o fluxo
+da iteração atual do laço while e força o programa a saltar imediatamente de volta para o topo do loop para
+testar o próximo casamento do Matcher, descartando o comentário sem processar o código abaixo.
+• Por que as outras alternativas estão incorretas?
+o A: Utiliza o método equals(), que exigiria que o comentário fosse estritamente igual a "//" ou "(*",
+falhando se o comentário contivesse qualquer texto (ex: // criar variavel). O operador && (E) torna a
+condição impossível, pois uma string não pode começar com dois textos diferentes ao mesmo tempo.
+O comando break abortaria o laço, ignorando todos os tokens válidos restantes na linha.
+o B: O comando System.exit(0) encerra de forma abrupta a execução de toda a Máquina Virtual Java
+(JVM), fechando o compilador no primeiro comentário que encontrar.
+o C: O método endsWith valida o encerramento da string, e não o início do bloco de comentário. O
+comando return abortaria a execução do método inteiro, impedindo a leitura de todas as linhas
+restantes do buffer primário.
+o D: Trocar a condicional if por um laço while aninhado com o operador && geraria uma inconsistência
+lógica e adicionaria valores nulos à corrente de tokens, corrompendo a lista que será enviada ao
+analisador sintático.
+
+-- 53 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 54 de 65
+Público
+Questão 43
+Considere a implementação da classe CifraCesar.java, desenvolvida em nossas aulas práticas de criptografia para
+ilustrar o conceito de cifras de substituição monoalfabética. O algoritmo percorre uma string, filtra apenas letras
+maiúsculas de 'A' a 'Z' e aplica um deslocamento fixo baseado em uma constante inteira. No entanto, a fórmula
+matemática de cifragem por aritmética modular foi removida do laço e substituída pela lacuna [FÓRMULA_CESAR]:
+package Engine;
+public class CifraCesar {
+private static final int CHAVE = 3;
+public String cifrar(String palavra) {
+StringBuilder resultado = new StringBuilder();
+String textoParaProcessar = palavra.toUpperCase();
+for (int i = 0; i < textoParaProcessar.length(); i++) {
+char caractereOriginal = textoParaProcessar.charAt(i);
+if (caractereOriginal >= 'A' && caractereOriginal <= 'Z') {
+/* [FÓRMULA_CESAR] */
+resultado.append(caractereCifrado);
+} else {
+resultado.append(caractereOriginal);
+}
+}
+return resultado.toString();
+}
+// ... restante dos métodos omitidos ...
+}
+Para que o método execute corretamente a Cifra de César com a chave fixa definida no projeto (CHAVE = 3),
+normalizando o caractere para o intervalo numérico de 0 a 25 e aplicando o módulo da circunferência do alfabeto, o
+trecho /* [FÓRMULA_CESAR] */ deve ser preenchido exatamente por:
+A)
+int posicaoOriginal = caractereOriginal - 'A';
+int novaPosicao = (posicaoOriginal + CHAVE) % 26;
+char caractereCifrado = (char) ('A' + novaPosicao);
+B)
+int posicaoOriginal = caractereOriginal + CHAVE;
+int novaPosicao = posicaoOriginal * 26;
+char caractereCifrado = (char) (novaPosicao);
+C)
+int posicaoOriginal = caractereOriginal - 26;
+int novaPosicao = (posicaoOriginal - CHAVE) % 'A';
+char caractereCifrado = (char) (novaPosicao);
+D)
+char caractereCifrado = textoParaProcessar.charAt(i + CHAVE);
+E)
+int novaPosicao = (caractereOriginal + 26) % CHAVE;
+char caractereCifrado = (char) (novaPosicao - 'Z');
+
+-- 54 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 55 de 65
+Público
+Gabarito: A
+Justificativa e Explicação detalhada:
+• Por que a alternativa A é a correta? Esta alternativa traz as linhas exatas do código original desenvolvido
+para a disciplina. Na Cifra de César, a fórmula padrão é C = (P + K) (mod 26). Como o valor do caractere na
+tabela ASCII começa em 65 (letra 'A'), precisamos primeiro subtrair 'A' para mapear o alfabeto no intervalo
+compreendido de 0 a 25. Em seguida, somamos a CHAVE e aplicamos o operador de módulo % 26 para
+garantir o comportamento circular da cifra. Por fim, reajustamos o número de volta para a escala ASCII
+somando 'A' antes de efetuar o cast para char.
+• Por que as outras alternativas estão incorretas?
+o B: Multiplicar a posição original por 26 gera números gigantescos fora do intervalo da tabela ASCII
+legível, estourando completamente o alfabeto e distorcendo qualquer tentativa de cifragem.
+o C: Subtrair 26 e tentar fazer uma operação de módulo usando um caractere literal (% 'A') desvirtua
+totalmente a lógica aritmética da cifra, resultando em caracteres corrompidos.
+o D: Tentar acessar o caractere no índice i + CHAVE causará uma exceção de índice fora dos limites
+(StringIndexOutOfBoundsException) nas últimas letras da string, além de não fazer substituição de
+caracteres, mas sim deslocamento de posições na string.
+o E: Aplicar o módulo com base na CHAVE (% CHAVE) limitará os resultados numéricos a valores entre
+0 e 2, gerando apenas as letras A, B ou C na saída. Subtrair 'Z' ao final resulta em valores numéricos
+negativos inválidos para caracteres normais.
+
+-- 55 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 56 de 65
+Público
+Questão 44
+Analise o método sobrecarregado decifrar(int chaveco, String palavra) pertencente à classe CifraCesar.java. A função
+deste método é reverter o processo de ocultação, deslocando os caracteres para trás com base em uma chave inteira
+recebida por parâmetro. No entanto, em linguagens como Java, o operador de resto da divisão (%) pode retornar um
+valor negativo se o operando da esquerda for negativo. Para mitigar esse problema matemático no cálculo do recuo
+das letras, o algoritmo adota uma compensação somando o tamanho do alfabeto antes de aplicar o módulo. Esse
+trecho foi omitido e substituído por [AJUSTE_MODULAR_INVERSO]:
+public String decifrar(int chaveco, String palavra) {
+StringBuilder resultado = new StringBuilder();
+String textoParaProcessar = palavra.toUpperCase();
+for (int i = 0; i < textoParaProcessar.length(); i++) {
+char caractereCifrado = textoParaProcessar.charAt(i);
+if (caractereCifrado >= 'A' && caractereCifrado <= 'Z') {
+// Aplicamos a fórmula inversa: (x - n) mod 26
+int posicaoCifrada = caractereCifrado - 'A';
+/* [AJUSTE_MODULAR_INVERSO] */
+char caractereOriginal = (char) ('A' + novaPosicao);
+resultado.append(caractereOriginal);
+} else {
+resultado.append(caractereCifrado);
+}
+}
+return resultado.toString();
+}
+Para que o algoritmo execute a decifragem de forma correta, tratando com segurança os resultados negativos gerados
+pelo recuo da chave na tabela ASCII e restabelecendo o caractere original no intervalo de 0 a 25, a lacuna /*
+[AJUSTE_MODULAR_INVERSO] */ deve ser preenchida exatamente por:
+A)
+int novaPosicao = (posicaoCifrada - chaveco) % 26;
+B)
+int novaPosicao = (posicaoCifrada - chaveco + 26) % 26;
+C)
+int novaPosicao = (posicaoCifrada + chaveco - 26) * 26;
+D)
+int novaPosicao = Math.abs(posicaoCifrada - 26) + chaveco;
+E)
+int novaPosicao = (posicaoCifrada - 'Z' + chaveco) % 26;
+Gabarito: B
+Justificativa e Explicação detalhada:
+• Por que a alternativa B é a correta? Esta alternativa reproduz perfeitamente a linha exata de código presente
+no projeto. Na decifragem da Cifra de César, subtrai-se a chave da posição atual: P = (C - K) (mod 26). Se o
+caractere cifrado for 'B' (posição 1) e a chave for 3, a operação clássica resultaria em 1 - 3 = -2. Em Java, -2
+% 26 resulta em -2, o que causaria um erro grave ao tentar mapear o caractere de volta para o alfabeto. Ao
+
+-- 56 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 57 de 65
+Público
+somar 26 antes de aplicar o módulo (-2 + 26 = 24), garantimos que o número se torne positivo (24) e que o
+operador % 26 retorne a posição circular correta (posição 24, que corresponde à letra 'Y').
+• Por que as outras alternativas estão incorretas?
+o A: Desconsidera a peculiaridade da linguagem Java com números negativos no operador %. Caso a
+subtração resulte em um número menor que zero, a variável novaPosicao guardará um valor negativo,
+gerando um caractere corrompido ou fora do alfabeto na linha seguinte.
+o C: Utiliza uma operação de soma com a chave (o que tornaria a cifrar novamente em vez de decifrar)
+e multiplica por 26 ao final, extrapolando os limites numéricos do tipo primitivo char.
+o D: O uso da função Math.abs (valor absoluto) removeria o sinal negativo, mas destruiria a lógica de
+deslocamento circular retrogrado da cifra. Além disso, somar o resultado final com a variável chaveco
+causaria um avanço indevido de posições.
+o E: Subtrair o caractere literal 'Z' introduz o valor numérico ASCII de 90 na equação de forma arbitrária,
+desregulando a escala normalizada de 0 a 25 e quebrando o algoritmo.
+
+-- 57 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 58 de 65
+Público
+Questão 45
+Diferente da Cifra de César, que desloca todas as letras de forma fixa, a Cifra de Vigenère utiliza uma chave textual
+para aplicar deslocamentos variáveis (polialfabéticos). À medida que cada caractere da palavra é processado, o
+ponteiro da chave deve avançar sequencialmente. Quando esse ponteiro atinge o tamanho máximo da chave, ele deve
+retornar ao início (posição 0) de forma circular.
+Analise o método cifrar(String palavra) da classe CifraVigenere.java desenvolvida para a nossa disciplina, onde a lógica
+de cálculo polialfabético e atualização do índice da chave foi removida e substituída por [LOGICA_VIGENERE]:
+package Engine;
+public class CifraVigenere {
+private static final String CHAVE = "UNIDERP";
+public String cifrar(String palavra) {
+StringBuilder resultado = new StringBuilder();
+String texto = palavra.toUpperCase();
+String chave = CHAVE.toUpperCase();
+int indiceChave = 0;
+for (int i = 0; i < texto.length(); i++) {
+char c = texto.charAt(i);
+if (c >= 'A' && c <= 'Z') {
+/* [LOGICA_VIGENERE] */
+} else {
+resultado.append(c);
+}
+}
+return resultado.toString();
+}
+// ... restante do código omitido ...
+}
+Para preencher a lacuna /* [LOGICA_VIGENERE] */ de forma a garantir o correto cálculo da cifra polialfabética e o
+avanço circular do ponteiro da chave sem estourar os limites da string chave, o trecho de código correspondente deve
+ser exatamente:
+A)
+int p = c + 'A';
+int k = chave.charAt(indiceChave) + 'A';
+int cifrado = (p + k) * 26;
+resultado.append((char) (cifrado));
+indiceChave++;
+B)
+int p = c - 'A';
+int k = chave.charAt(i) - 'A';
+int cifrado = (p + k) % 26;
+resultado.append((char) (cifrado + 'A'));
+indiceChave = (indiceChave + 1) / chave.length();
+
+-- 58 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 59 de 65
+Público
+C)
+int p = c - 'A';
+int k = chave.charAt(indiceChave) - 'A';
+int cifrado = (p + k) % 26;
+resultado.append((char) (cifrado + 'A'));
+// Avança o ponteiro da chave circularmente
+indiceChave = (indiceChave + 1) % chave.length();
+D)
+int p = c - 'Z';
+int k = chave.length();
+int cifrado = (p - k) % 26;
+resultado.append(cifrado);
+indiceChave = 0;
+E)
+int p = c - 'A';
+int k = chave.charAt(indiceChave);
+int cifrado = p + k;
+resultado.append((char) (cifrado));
+Gabarito: C
+Justificativa e Explicação detalhada:
+• Por que a alternativa C é a correta? Esta alternativa reconstrói perfeitamente o código original do projeto. Na
+Cifra de Vigenère, normaliza-se tanto o caractere do texto (p = c - 'A') quanto o caractere correspondente da
+chave (k = chave.charAt(indiceChave) - 'A') para o intervalo de 0 a 25. Aplica-se a soma modular (p + k) % 26
+e reajusta-se para a tabela ASCII somando 'A'. O detalhe mais refinado está na linha final: indiceChave =
+(indiceChave + 1) % chave.length();. O operador de módulo % garante que se a chave tiver 7 caracteres (caso
+de "UNIDERP"), ao chegar no índice 6, o próximo cálculo será (6 + 1) % 7 = 0, reiniciando o uso da chave de
+forma perfeitamente circular.
+• Por que as outras alternativas estão incorretas?
+o A: Somar 'A' em vez de subtrair desregula os índices numéricos. Além disso, incrementar o índice
+puramente com indiceChave++ fatalmente gerará uma exceção do tipo
+StringIndexOutOfBoundsException assim que o tamanho do texto ultrapassar o comprimento da chave
+(7 caracteres).
+o B: Utiliza chave.charAt(i) o que assumiria erroneamente que a chave tem o mesmo tamanho do texto
+lido. Na última linha, o operador de divisão (/) faria o indiceChave se tornar 0 de forma estática após a
+primeira rodada, travando o algoritmo.
+o D: Subtrair 'Z' e usar apenas o tamanho da chave (chave.length()) descaracteriza completamente a
+criptografia polialfabética de Vigenère, transformando-a em um deslocamento simples e fixo.
+o E: Não realiza a normalização do caractere da chave e ignora o operador de módulo % 26,
+extrapolando os limites das letras maiúsculas legíveis e esquecendo de avançar o ponteiro da chave.
+
+-- 59 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 60 de 65
+Público
+Questão 46
+Na Cifra de Vigenère, o processo de decifragem realiza a operação matemática inversa à da cifragem. Para recuperar
+o texto original, o algoritmo subtrai o valor numérico correspondente do caractere da chave a partir do caractere cifrado:
+P = (C - K) (mod 26). Assim como ocorre na Cifra de César, o desenvolvedor em Java deve antecipar que essa
+subtração pode gerar valores negativos e adicionar uma constante de compensação equivalente ao tamanho do
+alfabeto antes de aplicar o operador de resto da divisão (% 26).
+Analise o método sobrecarregado decifrar pertencente à classe CifraVigenere.java, onde a expressão matemática
+dessa reversão polialfabética foi omitida e substituída por [DECODER_VIGENERE]:
+public String decifrar(String chaveco, String palavra) {
+StringBuilder resultado = new StringBuilder();
+String texto = palavra.toUpperCase();
+String chave = chaveco.toUpperCase();
+int indiceChave = 0;
+for (int i = 0; i < texto.length(); i++) {
+char c = texto.charAt(i);
+if (c >= 'A' && c <= 'Z') {
+int p = c - 'A';
+int k = chave.charAt(indiceChave) - 'A';
+/* [DECODER_VIGENERE] */
+resultado.append((char) (decifrado + 'A'));
+indiceChave = (indiceChave + 1) % chave.length();
+} else {
+resultado.append(c);
+}
+}
+return resultado.toString();
+}
+Para que o método reverta com precisão o cálculo polialfabético da Cifra de Vigenère utilizando a chave recebida por
+parâmetro, neutralizando eventuais resultados negativos na JVM e adicionando o caractere resultante ao acumulador,
+a lacuna /* [DECODER_VIGENERE] */ deve ser preenchida exatamente por:
+A)
+int decifrado = (p + k) % 26;
+B)
+int decifrado = (p - k) % 26;
+C)
+int decifrado = Math.abs(p - k) % 26;
+D)
+int decifrado = (p - k + 26) % 26;
+E)
+int decifrado = (p - k) + 26 * 26;
+Gabarito: D
+Justificativa e Explicação detalhada:
+• Por que a alternativa D é a correta? Esta alternativa reconstrói perfeitamente o código lógico de reversão
+polialfabética contido na classe original. Na decifragem, calcula-se o recuo subtraindo a posição da letra da
+chave (k) da posição da letra cifrada (p). Em Java, se p for menor que k, a expressão p - k resultará em um
+
+-- 60 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 61 de 65
+Público
+número negativo. Somar 26 antes de aplicar o operador % 26 garante que o valor se mova para o espectro
+positivo, mantendo a correspondência idêntica e circular do alfabeto (0 a 25).
+• Por que as outras alternativas estão incorretas?
+o A: Esta fórmula realiza a operação de soma modular (p + k), o que equivale a cifrar o texto novamente
+em vez de decifrá-lo.
+o B: Embora use a subtração correta, desconsidera o comportamento do operador % em Java com
+operandos negativos. Se a subtração resultar em um valor menor que zero, a variável decifrado
+receberá um índice negativo, corrompendo a conversão do caractere na linha subsequente.
+o C: A função Math.abs converte números negativos em positivos removendo o sinal (ex: -3 vira 3), mas
+isso destrói o sentido circular regressivo exigido pela decifragem criptográfica.
+o E: Esta fórmula realiza a subtração e soma o quadrado de 26 (26 * 26 = 676), mas esquece
+completamente de aplicar o operador de módulo % 26 ao final, fazendo com que o número extrapole
+massivamente os limites numéricos do alfabeto.
+
+-- 61 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 62 de 65
+Público
+Questão 47
+A cifra RC4 é um algoritmo de criptografia de fluxo simétrico que baseia a sua segurança em dois blocos lógicos
+principais: o KSA (Key-Scheduling Algorithm), que gera uma permutação inicial do vetor de estados com base na chave,
+e o PRGA (Pseudo-Random Generation Algorithm), que extrai a subsequência pseudoaleatória de bytes (keystream)
+para aplicar a operação XOR.
+Analise o método privado inicializarKSA(byte[] chave) da classe CifraRC4.java desenvolvida para a nossa disciplina,
+onde o bloco responsável por misturar o vetor de estados S de forma determinística foi extraído e substituído pela
+lacuna [ALGORITMO_KSA]:
+package Engine;
+public class CifraRC4 {
+private static final String CHAVE = "UNIDERP2026";
+// ... método processar ocultado ...
+private int[] inicializarKSA(byte[] chave) {
+int[] s = new int[256];
+for (int i = 0; i < 256; i++) s[i] = i;
+int j = 0;
+/* [ALGORITMO_KSA] */
+return s;
+}
+}
+Para garantir o correto baralhamento do vetor de estados S de acordo com as especificações matemáticas oficiais do
+RC4, aplicando a aritmética modular com base em 256 e realizando a troca (swap) dos elementos sem perder
+referências, o trecho /* [ALGORITMO_KSA] */ deve ser preenchido exatamente por:
+A)
+for (int i = 0; i < 256; i++) {
+j = (j + s[i] + (chave[i % chave.length] & 0xFF)) % 256;
+int temp = s[i];
+s[i] = s[j];
+s[j] = temp;
+}
+B)
+for (int i = 0; i < chave.length; i++) {
+j = (j + s[i] + chave[i]) / 256;
+s[i] = s[j];
+}
+C)
+while (j < 256) {
+j = (j + i + chave[j]) % 256;
+int temp = s[j];
+s[j] = s[i];
+s[i] = temp;
+}
+
+-- 62 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 63 de 65
+Público
+D)
+for (int i = 0; i < 256; i++) {
+j = (j + s[i]) * (chave[i] & 0xFF);
+s[i] = s[j];
+s[j] = s[i];
+}
+E)
+for (int i = 256; i > 0; i--) {
+j = (j - s[i] - chave[i]) % 256;
+int temp = s[i];
+s[i] = temp;
+}
+Gabarito: A
+Justificativa e Explicação detalhada:
+• Por que a alternativa A é a correta? Esta alternativa reconstrói de forma idêntica o método matemático KSA
+do RC4 contido no código original. O laço precisa rodar exatamente 256 vezes para misturar todo o array S. A
+equação atualiza o índice j somando o seu valor anterior, o valor de S[i] e o byte correspondente da chave de
+forma circular (chave[i % chave.length]). O operador & 0xFF é um detalhe avançado em Java utilizado para
+converter bytes com sinal (signed) para inteiros sem sinal (unsigned), prevenindo bugs matemáticos. Por fim,
+realiza-se o algoritmo clássico de Swap usando a variável auxiliar temp.
+• Por que as outras alternativas estão incorretas?
+o B: O laço limita-se ao tamanho da chave (chave.length), deixando a maior parte do vetor de estados
+S (256 posições) sem qualquer tipo de baralhamento. Além disso, utiliza a divisão (/) no lugar do
+módulo e não faz a troca de valores corretamente (sobrescreve S[i] sem guardar o seu valor original).
+o C: O uso de while(j < 256) quebra a lógica do RC4, pois a variável j oscila de forma imprevisível devido
+ao operador de módulo, podendo gerar loops infinitos. O código também falha ao tentar referenciar a
+variável i, que não foi declarada neste escopo.
+o D: Multiplica a soma pelo byte da chave, o que quebra a fórmula original de permutação e remove o
+operador de módulo % 256, fazendo o índice explodir. A tentativa de swap direta (s[i] = s[j]; s[j] = s[i];)
+sem uma variável temporária apenas duplica o valor de S[j] em S[i], destruindo os dados originais.
+o E: Faz o laço em sentido inverso e inicia o índice i em 256. Como os arrays em Java vão de 0 a 255,
+a primeira iteração disparará imediatamente uma exceção do tipo ArrayIndexOutOfBoundsException,
+travando a aplicação.
+
+-- 63 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 64 de 65
+Público
+Questão 48
+Após o vetor de estados S ser devidamente inicializado e misturado pelo algoritmo KSA com base na chave, o RC4
+entra na sua fase de geração e cifragem propriamente dita, conhecida como PRGA (Pseudo-Random Generation
+Algorithm). A grande elegância matemática do RC4 é que, por se basear na operação simétrica XOR, o exato mesmo
+método e lógica de código servem tanto para cifrar o texto em claro quanto para decifrar o texto cifrado.
+Analise o método público processar(byte[] dados) pertencente à classe CifraRC4.java do nosso projeto, onde a
+mecânica interna de geração do byte de chave (valorK) e a aplicação do XOR foram removidas do laço principal e
+substituídas pela lacuna [MECANICA_PRGA_XOR]:
+package Engine;
+public class CifraRC4 {
+private static final String CHAVE = "UNIDERP2026";
+public byte[] processar(byte[] dados) {
+int[] s = inicializarKSA(CHAVE.getBytes());
+byte[] saida = new byte[dados.length];
+int i = 0, j = 0;
+for (int k = 0; k < dados.length; k++) {
+/* [MECANICA_PRGA_XOR] */
+}
+return saida;
+}
+// ... restante dos métodos omitidos ...
+}
+Para que o método processe incrementalmente o array de bytes de entrada, atualizando os ponteiros i e j de forma
+modular, realizando a troca de posições no vetor S, extraindo o byte gerador e aplicando corretamente a operação
+XOR sobre o byte de dados correspondente, a lacuna /* [MECANICA_PRGA_XOR] */ deve ser preenchida exatamente
+por:
+A)
+i = i + 1;
+j = j + s[i];
+int temp = s[i]; s[i] = s[j]; s[j] = temp;
+saida[k] = (byte) (dados[k] + s[i + j]);
+B)
+i = (i + 1) % 256;
+j = (j + s[i]) % 256;
+// Swap
+int temp = s[i];
+s[i] = s[j];
+s[j] = temp;
+int t = (s[i] + s[j]) % 256;
+int valorK = s[t];
+// Operação XOR
+saida[k] = (byte) (dados[k] ^ valorK);
+
+-- 64 of 65 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 65 de 65
+Público
+C)
+i = (i + 1) % dados.length;
+j = (j + s[k]) % dados.length;
+s[i] = s[j];
+int valorK = s[i] + s[j];
+saida[k] = (byte) (dados[k] & valorK);
+D)
+i = (i + 1) * 256;
+j = (j + s[i]) * 256;
+int temp = s[i]; s[i] = s[j]; s[j] = temp;
+saida[k] = (byte) (dados[k] | s[temp]);
+E)
+i = 0;
+j = 0;
+int t = s[i] + s[j];
+saida[k] = (byte) (dados[k] ^ s[t]);
+Gabarito: B
+Justificativa e Explicação detalhada:
+• Por que a alternativa B é a correta? Esta alternativa reconstrói com total exatidão e riqueza de detalhes
+sintáticos a mecânica PRGA do RC4 presente no projeto original. A cada iteração do laço, o índice i avança
+uma posição e o j acumula o valor de S[i], ambos sob o módulo % 256. Realiza-se o Swap dos elementos S[i]
+e S[j] para manter o vetor continuamente mutável. A soma dos valores trocados define um índice apontador t
+= (s[i] + s[j]) % 256, usado para colher o byte gerador da sequência secreta (int valorK = s[t]). Por fim, aplica-
+se o operador ^ (que representa o XOR binário em Java) combinando o byte de entrada com o byte gerador.
+• Por que as outras alternativas estão incorretas?
+o A: Não utiliza o operador de módulo % 256 nos incrementos de i e j, o que fatalmente gerará um
+estouro de índice de array (ArrayIndexOutOfBoundsException) após as primeiras iterações. Além
+disso, tenta somar os bytes com o operador + em vez de aplicar o XOR simétrico, quebrando a
+criptografia.
+o C: Utiliza incorretamente o tamanho do array de entrada (dados.length) como base para o módulo
+matemático do vetor de estados, o que causaria erros se o texto digitado pelo usuário tivesse um
+tamanho diferente de 256. Ademais, utiliza o operador binário & (AND) no lugar do XOR e falha no
+algoritmo de swap.
+o D: Multiplica os índices por 256 no lugar de aplicar o resto da divisão, fazendo os ponteiros estourarem
+imediatamente a capacidade do array na primeira linha. Também substitui o XOR pelo operador binário
+| (OR), corrompendo o fluxo lógico da cifra.
+o E: Zera os índices i e j de forma estática no início de cada ciclo do loop for. Isso faz com que o algoritmo
+fique eternamente preso calculando e aplicando a criptografia baseada apenas no elemento da posição
+0, anulando a propriedade de cifra de fluxo pseudoaleatória em constante mutação do RC4.
+
+-- 65 of 65 --
+

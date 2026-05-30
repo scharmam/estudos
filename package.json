@@ -1,0 +1,22 @@
+{
+  "name": "cgpi-quiz",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build:questions": "node scripts/build-questions.mjs",
+    "build:cloud": "node scripts/build-cloud-questions.mjs",
+    "build:cpl": "node scripts/build-cpl-questions.mjs",
+    "build:all": "npm run build:questions && npm run build:cloud && npm run build:cpl",
+    "audit:answers": "node scripts/audit-all-answers.mjs",
+    "deploy": "firebase deploy --only hosting",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "pdf-parse": "^2.4.5"
+  }
+}

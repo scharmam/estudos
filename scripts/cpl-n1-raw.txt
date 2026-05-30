@@ -1,0 +1,875 @@
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 1 de 30
+Público
+QUESTIONÁRIO PARA PROVA N1
+Questões resolvidas e comentadas
+Questão 1
+O desenvolvimento dos primeiros compiladores está intrinsecamente ligado à evolução das
+linguagens de programação de alto nível, que visavam facilitar a escrita de software em
+comparação com a linguagem de montagem (Assembly). Sobre o marco histórico inicial dessa área,
+qual linguagem é amplamente reconhecida por ter tido o primeiro compilador completo e funcional,
+desenvolvido por John Backus na década de 1950?
+A) COBOL
+B) LISP
+C) FORTRAN
+D) ALGOL 60
+E) Ada
+Gabarito:
+C) FORTRAN
+Explicação: O FORTRAN (Formula Translation), desenvolvido pela IBM sob a liderança de John
+Backus entre 1954 e 1957, é considerado o primeiro compilador de sucesso para uma linguagem
+de alto nível. O projeto foi revolucionário porque provou que um compilador poderia gerar código
+de máquina quase tão eficiente quanto o escrito manualmente por programadores experientes em
+Assembly, superando o ceticismo da época.
+
+-- 1 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 2 de 30
+Público
+Questão 2
+No início da computação, a programação era feita diretamente em código de máquina ou Assembly,
+o que tornava o desenvolvimento dependente da arquitetura do hardware. Com o surgimento das
+linguagens de "Terceira Geração" (3GL), como o ALGOL, houve um esforço para tornar as
+linguagens mais independentes de máquina. Qual inovação técnica no design de compiladores foi
+amplamente impulsionada pela necessidade de descrever a sintaxe dessas novas linguagens de
+forma rigorosa e sistemática?
+A) A criação dos diagramas de fluxo de dados.
+B) O desenvolvimento da Notação BNF (Backus-Naur Form).
+C) A invenção da arquitetura de Von Neumann.
+D) O uso de fitas magnéticas para armazenamento de símbolos.
+E) A implementação exclusiva de interpretadores em vez de compiladores.
+Gabarito:
+B) O desenvolvimento da Notação BNF (Backus-Naur Form).
+Explicação: A Notação BNF foi introduzida por John Backus (e refinada por Peter Naur) para
+descrever a sintaxe da linguagem ALGOL 60. Essa técnica permitiu uma definição formal e
+matemática das gramáticas das linguagens, facilitando imensamente a construção de analisadores
+sintáticos (parsers) automáticos e robustos, sendo utilizada até hoje na definição de quase todas
+as linguagens modernas.
+
+-- 2 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 3 de 30
+Público
+Questão 3
+Durante a década de 1950, Grace Hopper e sua equipe desenvolveram o sistema A-0, que é
+frequentemente citado na história da computação. Embora operasse de forma diferente dos
+compiladores modernos de otimização, qual foi a principal contribuição conceitual desse sistema
+para a área de tradução de linguagens?
+A) A invenção da técnica de interpretação linha a linha em tempo real.
+B) A criação da primeira linguagem de programação orientada a objetos.
+C) O conceito de usar sub-rotinas pré-compiladas que poderiam ser combinadas para formar um
+programa completo.
+D) A implementação da primeira interface gráfica para depuração de código de máquina.
+E) O desenvolvimento do primeiro sistema operacional capaz de multitarefa.
+Gabarito:
+C) O conceito de usar sub-rotinas pré-compiladas que poderiam ser combinadas para formar um
+programa completo.
+Explicação: O sistema A-0 (Arithmetic Language version 0) funcionava mais como um "carregador"
+ou "ligador" (linker) primitivo. Ele permitia que programadores usassem códigos mnemônicos para
+chamar bibliotecas de sub-rotinas matemáticas já existentes, "compilando" (reunindo) essas partes
+em um programa executável. Foi um passo fundamental para distanciar o programador do
+hardware e introduzir a ideia de reutilização de código.
+
+-- 3 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 4 de 30
+Público
+Questão 04
+No contexto da estrutura das linguagens de programação, os elementos são geralmente
+classificados em diferentes níveis de abstração. O nível que define as regras de formação de frases
+válidas (como a estrutura de um comando if ou a declaração de uma função), determinando como
+os tokens devem ser agrupados, é chamado de:
+A) Sintaxe.
+B) Semântica Estática.
+C) Semântica Dinâmica.
+D) Léxico.
+E) Pragmática.
+Gabarito:
+A) Sintaxe.
+Explicação: A sintaxe é o conjunto de regras que define a forma e a estrutura das construções
+permitidas em uma linguagem (a "gramática"). Enquanto o léxico lida com as palavras individuais
+(tokens), a sintaxe determina se a combinação dessas palavras forma uma instrução válida para o
+compilador.
+
+-- 4 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 5 de 30
+Público
+Questão 05
+Um programador escreve a seguinte linha de código em uma linguagem fictícia: int x = "vinte";. O
+compilador identifica que, embora a construção do comando esteja gramaticalmente correta (segue
+a ordem tipo-identificador-atribuição-valor), há uma incompatibilidade de tipos, pois uma variável
+inteira não pode receber uma string. Em qual nível de análise da estrutura da linguagem essa falha
+é detectada?
+A) Análise Léxica.
+B) Análise Sintática.
+C) Semântica Estática.
+D) Pragmática.
+E) Geração de Código Intermediário.
+Gabarito:
+C) Semântica Estática.
+Explicação: A semântica lida com o "significado" e a validade lógica das construções. A verificação
+de tipos (type checking) em tempo de compilação é chamada de semântica estática. O analisador
+sintático confirma que a frase está bem formada, mas o analisador semântico é quem verifica se
+os tipos de dados envolvidos fazem sentido para a operação pretendida.
+
+-- 5 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 6 de 30
+Público
+Questão 06
+Dentro do estudo da estrutura das linguagens de programação, existe uma dimensão que se
+preocupa com a relação entre os símbolos da linguagem, seus significados e o contexto de uso
+pelos programadores e pelo sistema (como eficiência, legibilidade e intenção). Essa dimensão, que
+lida com o "uso prático" e a interpretação humana ou do ambiente de execução, é denominada:
+A) Ortogonalidade.
+B) Pragmática.
+C) Gramática Regular.
+D) Análise de Escopo.
+E) Vinculação Tardia (Late Binding).
+Gabarito:
+B) Pragmática.
+Explicação: Enquanto a sintaxe define a forma e a semântica o significado, a pragmática estuda
+como a linguagem é efetivamente utilizada na prática. Ela envolve aspectos como a facilidade de
+escrita, a performance esperada de certas construções no hardware e como o programador
+expressa suas intenções através das ferramentas disponíveis na linguagem.
+
+-- 6 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 7 de 30
+Público
+Questão 07
+Os paradigmas de programação definem a forma como o programador estrutura sua solução e
+como o computador a executa. Um paradigma específico se baseia no conceito de "efeitos
+colaterais" e na alteração de estados por meio de comandos sequenciais que modificam valores
+na memória. Qual é o nome desse paradigma, que é a base de linguagens como C e Pascal?
+A) Paradigma Funcional.
+B) Paradigma Declarativo.
+C) Paradigma Imperativo.
+D) Paradigma Lógico.
+E) Paradigma Orientado a Eventos.
+Gabarito:
+C) Paradigma Imperativo.
+Explicação: O paradigma imperativo foca no "como" a tarefa deve ser realizada, utilizando
+comandos que alteram o estado do programa (variáveis na memória) de forma sequencial. É o
+modelo mais próximo da arquitetura de Von Neumann, onde o compilador traduz instruções que
+manipulam diretamente os registros e a memória da máquina.
+
+-- 7 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 8 de 30
+Público
+Questão 08
+Diferente do paradigma imperativo, que foca no passo a passo de "como" realizar uma tarefa, existe
+um paradigma onde o programador descreve "o que" deve ser alcançado (o resultado desejado ou
+as propriedades lógicas), deixando para o sistema (compilador ou interpretador) a responsabilidade
+de determinar os passos de execução. Esse paradigma é conhecido como:
+A) Paradigma Estruturado.
+B) Paradigma Declarativo.
+C) Paradigma Procedural.
+D) Paradigma Orientado a Objetos.
+E) Paradigma de Baixo Nível.
+Gabarito:
+B) Paradigma Declarativo.
+Explicação: No paradigma declarativo (que engloba o funcional e o lógico), o foco está na
+especificação do problema e das relações entre os dados, em vez de uma sequência de comandos
+que alteram estados. Linguagens como SQL, Prolog e Haskell são exemplos onde o "o quê" é mais
+importante do que o fluxo de controle detalhado.
+
+-- 8 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 9 de 30
+Público
+Questão 09
+Um dos paradigmas mais utilizados na engenharia de software moderna baseia-se no agrupamento
+de dados e dos comportamentos que os manipulam em unidades coesas. Esse modelo utiliza
+conceitos como herança, polimorfismo e encapsulamento para facilitar a reutilização de código e a
+manutenção de sistemas complexos. Qual é este paradigma?
+A) Paradigma de Script.
+B) Paradigma Orientado a Objetos.
+C) Paradigma de Fluxo de Dados.
+D) Paradigma de Marcação.
+E) Paradigma de Baixo Nível.
+Gabarito:
+B) Paradigma Orientado a Objetos.
+Explicação: O paradigma Orientado a Objetos (POO) estrutura o programa como uma coleção de
+objetos que interagem entre si. Para um compilador de uma linguagem POO (como Java ou C++),
+isso implica em gerenciar tabelas de métodos virtuais, hierarquias de classes e o tempo de vida de
+instâncias na memória (geralmente no heap).
+
+-- 9 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 10 de 30
+Público
+Questão 10
+Um compilador é um programa de sistema que traduz um código escrito em uma linguagem de alto
+nível (linguagem fonte) para uma linguagem de baixo nível (linguagem alvo), como código de
+máquina ou assembly. Qual é a característica fundamental que define o processo de compilação
+pura, diferenciando-o da interpretação?
+A) A execução do programa ocorre simultaneamente à tradução de cada linha de código.
+B) O compilador gera um arquivo executável independente, que pode ser rodado sem a
+necessidade do código fonte original.
+C) O processo de compilação dispensa a necessidade de análise sintática e léxica do código.
+D) Compiladores são utilizados exclusivamente para linguagens de marcação, como HTML e XML.
+E) A tradução é realizada apenas no momento em que o usuário final interage com a interface do
+programa.
+Gabarito:
+B) O compilador gera um arquivo executável independente, que pode ser rodado sem a
+necessidade do código fonte original.
+Explicação: Diferente do interpretador, que traduz e executa o código "on-the-fly" (em tempo de
+execução), o compilador realiza a tradução completa de uma só vez, gerando um objeto ou arquivo
+binário. Uma vez gerado esse executável, ele pode ser distribuído e rodado em máquinas
+compatíveis sem que o código original ou o próprio compilador precisem estar presentes.
+
+-- 10 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 11 de 30
+Público
+Questão 11
+Durante o processo de tradução, alguns compiladores realizam todo o trabalho de análise e
+geração de código em uma única leitura do código-fonte, enquanto outros dividem o trabalho em
+várias etapas, percorrendo representações do programa múltiplas vezes. Como é denominado o
+modelo de compilador que processa o código de uma só vez, do início ao fim, para gerar o código
+alvo?
+A) Compilador Multi-pass (múltiplos passos).
+B) Compilador Cruzado (Cross-compiler).
+C) Compilador One-pass (passo único).
+D) Decompilador.
+E) JIT (Just-In-Time).
+Gabarito:
+C) Compilador One-pass (passo único).
+Explicação: Um compilador one-pass é projetado para ler o programa fonte e gerar o código
+equivalente em uma única passagem. Embora sejam extremamente rápidos, esses compiladores
+geralmente têm limitações na capacidade de otimização e na resolução de referências "para frente"
+(como usar uma variável antes de sua declaração), comparados aos compiladores de múltiplos
+passos que analisam o código mais profundamente.
+
+-- 11 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 12 de 30
+Público
+Questão 12
+No desenvolvimento de software, é comum que o computador onde o código é escrito e compilado
+(máquina hospedeira) possua uma arquitetura diferente do computador onde o programa será
+efetivamente executado (máquina alvo). Um compilador que é executado num sistema (ex:
+Windows/Intel), mas gera código executável para um sistema diferente (ex: Android/ARM), é
+conhecido como:
+A) Decompilador.
+B) Compilador Cruzado (Cross-compiler).
+C) Pré-processador.
+) Interpretador Híbrido.
+E) Compilador JIT (Just-in-Time).
+Gabarito:
+B) Compilador Cruzado (Cross-compiler).
+Explicação: Um cross-compiler é uma ferramenta fundamental para o desenvolvimento em
+plataformas que não possuem recursos de hardware suficientes para rodar um compilador próprio
+(como microcontroladores) ou para criar sistemas operativos para novas arquiteturas. Ele permite
+que o desenvolvedor utilize o poder de processamento de uma estação de trabalho para gerar
+binários para o hardware alvo.
+
+-- 12 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 13 de 30
+Público
+Questão 13
+Embora tanto compiladores quanto interpretadores tenham o objetivo de permitir a execução de
+programas escritos em linguagens de alto nível, eles utilizam estratégias distintas. Uma vantagem
+característica do modelo de interpretação em relação à compilação pura é:
+A) Maior velocidade de execução do programa final, pois o código de máquina é gerado
+previamente.
+B) Facilidade na depuração (debugging) e maior portabilidade do código-fonte entre diferentes
+plataformas.
+C) Menor consumo de memória RAM durante a execução do programa.
+D) Garantia de que todos os erros de lógica serão detectados antes de o programa iniciar a
+execução.
+E) Produção de um arquivo binário (.exe ou similar) que protege o código-fonte original.
+Gabarito:
+B) Facilidade na depuração (debugging) e maior portabilidade do código-fonte entre diferentes
+plataformas.
+Explicação: Como o interpretador traduz o código instrução por instrução em tempo real, ele pode
+interromper a execução exatamente no ponto onde ocorreu um erro, facilitando a identificação de
+falhas. Além disso, o mesmo código-fonte pode rodar em qualquer sistema que possua o
+interpretador instalado, sem a necessidade de gerar um binário específico para cada arquitetura de
+processador.
+
+-- 13 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 14 de 30
+Público
+Questão 14
+Linguagens como Java e C# utilizam um modelo de tradução intermediário para equilibrar
+desempenho e portabilidade. Nesse modelo, o código-fonte é primeiro traduzido para uma
+linguagem de baixo nível independente de máquina (como o Bytecode ou CIL), que é então
+executada por uma máquina virtual. Qual componente de software é responsável por traduzir esse
+código intermediário em código de máquina nativo durante a execução, visando aumentar a
+performance?
+A) Compilador Cruzado (Cross-compiler).
+B) Pré-processador.
+C) Compilador JIT (Just-In-Time).
+D) Montador (Assembler).
+E) Descompilador.
+Gabarito:
+C) Compilador JIT (Just-In-Time).
+Explicação: O compilador JIT faz parte da máquina virtual. Em vez de interpretar o bytecode
+instrução por instrução (o que seria lento), o JIT compila partes do código (geralmente as mais
+executadas, chamadas de "hot spots") diretamente para o código de máquina do processador real
+no momento da execução. Isso permite que o programa rode com uma velocidade próxima à de
+um código nativo, mantendo a portabilidade.
+
+-- 14 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 15 de 30
+Público
+Questão 15
+Embora os compiladores produzam programas que executam de forma mais eficiente, o uso de um
+compilador puro pode introduzir uma barreira no fluxo de trabalho do programador, especialmente
+em projetos de grande escala. Qual das alternativas abaixo descreve uma desvantagem típica do
+modelo de compilação quando comparado à interpretação direta?
+A) O código resultante é sempre mais lento do que o código interpretado.
+B) O erro de sintaxe só é descoberto quando o usuário final tenta rodar o programa.
+C) O ciclo "editar-compilar-testar" pode se tornar demorado, pois qualquer alteração no código
+exige uma nova tradução completa ou parcial.
+D) O compilador ocupa toda a memória RAM disponível, impedindo a execução do programa
+traduzido.
+E) A compilação torna o código-fonte visível e editável por qualquer pessoa que possua o arquivo
+executável.
+Gabarito:
+C) O ciclo "editar-compilar-testar" pode se tornar demorado, pois qualquer alteração no código
+exige uma nova tradução completa ou parcial.
+Explicação: Em sistemas interpretados, o programador pode alterar uma linha de código e testar o
+resultado instantaneamente. Em sistemas compilados, existe a etapa intermediária da compilação
+que, dependendo do tamanho do projeto, pode levar de segundos a horas. Isso torna o processo
+de desenvolvimento e correção de pequenos bugs menos ágil do que em linguagens puramente
+interpretadas.
+
+-- 15 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 16 de 30
+Público
+Questão 16
+A tecnologia de compiladores fornece ferramentas poderosas para o processamento de linguagens
+e a transformação de código. Além da tradução de linguagens de alto nível para código de máquina,
+qual das alternativas abaixo representa uma aplicação comum das técnicas de análise léxica e
+sintática (front-end de um compilador) em outras áreas da informática?
+A) Fragmentação de discos rígidos em sistemas de arquivos legados.
+B) Implementação de formatadores de texto (Pretty Printers) e analisadores estáticos de segurança
+(Linters).
+C) Roteamento de pacotes físicos em redes locais sem fio (Wi-Fi).
+D) Compressão de imagens no formato JPEG para redução de espaço em disco.
+E) Gerenciamento de energia em sistemas operacionais para dispositivos móveis.
+Gabarito:
+B) Implementação de formatadores de texto (Pretty Printers) e analisadores estáticos de segurança
+(Linters).
+Explicação: Técnicas de compiladores são amplamente usadas em ferramentas de apoio ao
+desenvolvimento. Um Linter utiliza a análise sintática e semântica para encontrar erros potenciais
+ou violações de estilo sem executar o código. Já os Pretty Printers (como o Prettier) analisam a
+estrutura da linguagem para reformatar o código automaticamente, garantindo padronização visual.
+
+-- 16 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 17 de 30
+Público
+Questão 17
+As técnicas de tradução e análise sintática desenvolvidas para compiladores de linguagens como
+C e Java também são aplicadas em Ferramentas de Automação de Design Eletrônico (EDA).
+Quando um engenheiro utiliza linguagens como VHDL ou Verilog para descrever o comportamento
+de um circuito digital, qual processo, análogo à compilação, é responsável por transformar essa
+descrição textual em uma rede de portas lógicas (netlist) para um chip ou FPGA?
+A) Desfragmentação de hardware.
+B) Síntese de Lógica (Logic Synthesis).
+C) Encapsulamento de Dados (Data Encapsulation).
+D) Modulação de Frequência.
+E) Renderização de Layout.
+Gabarito:
+B) Síntese de Lógica (Logic Synthesis).
+Explicação: A Síntese de Lógica funciona como o "back-end" de um compilador para hardware. Ela
+recebe o código-fonte (em Linguagem de Descrição de Hardware - HDL), realiza análises léxicas,
+sintáticas e semânticas, e então mapeia as instruções lógicas para componentes físicos (portas
+AND, OR, flip-flops) disponíveis na tecnologia alvo (como um chip de silício ou uma matriz de portas
+programáveis - FPGA).
+
+-- 17 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 18 de 30
+Público
+Questão 18
+Sistemas de Gerenciamento de Banco de Dados (SGBD), como PostgreSQL ou Oracle, utilizam
+amplamente a tecnologia de compiladores para processar consultas escritas em SQL (Structured
+Query Language). Quando um usuário envia um comando SELECT, o banco de dados não executa
+o texto diretamente. Em vez disso, ele passa por uma fase onde a consulta é analisada e
+transformada em um "Plano de Execução" otimizado. Como se chama o componente do SGBD que
+realiza essa tradução e otimização, funcionando de forma análoga ao back-end de um compilador?
+A) Driver de Conexão.
+B) Gerenciador de Buffer.
+C) Otimizador de Consultas (Query Optimizer).
+D) Sistema de Arquivos (File System).
+E) Coletor de Lixo (Garbage Collector).
+Gabarito:
+C) Otimizador de Consultas (Query Optimizer).
+Explicação: Assim como um compilador otimiza o código para que ele rode mais rápido no
+processador, o Otimizador de Consultas de um banco de dados analisa a estrutura da consulta
+SQL (análise sintática e semântica) e escolhe o caminho mais eficiente para acessar os dados
+(usando índices, junções específicas, etc.). Ele transforma uma linguagem declarativa ("o que eu
+quero") em um plano procedural de baixo nível ("como acessar os arquivos no disco").
+
+-- 18 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 19 de 30
+Público
+Questão 19
+A arquitetura moderna de um compilador é geralmente dividida em duas grandes partes: o Front-
+end (fase de análise) e o Back-end (fase de síntese). Qual é a principal função do Front-end e como
+ele se comunica com o Back-end?
+A) O Front-end gera o código de máquina final e o envia diretamente para o processador, sem
+intermédio do Back-end.
+B) O Front-end analisa o código-fonte para verificar erros e cria uma Representação Intermediária
+(IR), que serve de entrada para o Back-end.
+C) O Front-end é responsável apenas pela otimização de registros de memória, ignorando a sintaxe
+da linguagem.
+D) O Front-end traduz o código de máquina de volta para a linguagem de alto nível para conferência
+do programador.
+E) O Front-end gerencia a interface gráfica (GUI) do compilador, enquanto o Back-end faz a
+tradução de texto.
+Gabarito:
+B) O Front-end analisa o código-fonte para verificar erros e cria uma Representação Intermediária
+(IR), que serve de entrada para o Back-end.
+Explicação: O Front-end foca na compreensão do código-fonte (análise léxica, sintática e
+semântica). Uma vez validado, ele gera uma Representação Intermediária (como código de três
+endereços ou árvores sintáticas abstratas). Essa separação permite que o mesmo Back-end seja
+reaproveitado para diferentes linguagens, desde que elas gerem a mesma IR.
+
+-- 19 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 20 de 30
+Público
+Questão 20
+O processo de compilação é tradicionalmente dividido em uma sequência de fases, cada uma
+transformando uma representação do programa em outra. Considerando o fluxo de dados em um
+compilador de múltiplas fases, qual é a ordem correta das etapas iniciais (Front-end) até a geração
+de código?
+A) Geração de Código → Análise Sintática → Análise Léxica → Otimização.
+B) Análise Léxica → Análise Sintática → Análise Semântica → Geração de Código Intermediário.
+C) Análise Semântica → Análise Léxica → Geração de Código → Análise Sintática.
+D) Análise Sintática → Geração de Código Intermediário → Análise Léxica → Tabela de Símbolos.
+E) Otimização de Código → Análise Semântica → Análise Léxica → Geração de Código Alvo.
+Gabarito:
+B) Análise Léxica → Análise Sintática → Análise Semântica → Geração de Código Intermediário.
+Explicação: O fluxo lógico de um compilador começa com a Análise Léxica (agrupamento de
+caracteres em tokens), seguida pela Análise Sintática (agrupamento de tokens em estruturas
+gramaticais), depois a Análise Semântica (verificação de tipos e consistência lógica) e, finalmente,
+a Geração de Código Intermediário, que serve de ponte para o Back-end (otimização e geração de
+código alvo).
+
+-- 20 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 21 de 30
+Público
+Questão 21
+Durante as fases de análise (Front-end) e síntese (Back-end), o compilador precisa armazenar e
+consultar informações sobre os identificadores (nomes de variáveis, funções, classes) encontrados
+no código-fonte. Qual é o nome da estrutura de dados centralizada que armazena atributos como
+tipo, escopo e endereço de memória de cada identificador?
+A) Árvore de Derivação (Parse Tree).
+B) Tabela de Símbolos (Symbol Table).
+C) Buffer de Entrada.
+D) Autômato Finito de Estados.
+E) Pilha de Execução (Runtime Stack).
+Gabarito:
+B) Tabela de Símbolos (Symbol Table).
+Explicação: A Tabela de Símbolos é essencial para a consistência do programa. O analisador léxico
+insere os nomes nela, o sintático organiza a estrutura, o semântico verifica se os tipos estão
+corretos (ex: se você está somando um int com um string) e o gerador de código a utiliza para saber
+onde alocar cada variável na memória. Sem ela, o compilador "esqueceria" as definições de uma
+linha para a outra.
+
+-- 21 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 22 de 30
+Público
+Questão 22
+Uma das grandes vantagens da divisão de um compilador em Front-end e Back-end é a
+modularidade. Imagine que uma empresa deseja criar um compilador para uma nova linguagem de
+programação chamada "LógicaX", mas quer que ela funcione tanto em processadores Intel (x86)
+quanto em processadores ARM. Seguindo o modelo de fases, qual seria a estratégia mais
+eficiente?
+A) Reescrever o compilador inteiro do zero para cada processador diferente.
+B) Criar dois Front-ends diferentes e utilizar um único Back-end para ambos os processadores.
+C) Criar um único Front-end para a linguagem "LógicaX" e dois Back-ends distintos (um para x86
+e outro para ARM).
+D) Eliminar o Back-end e fazer com que o Front-end gere o código binário diretamente para todos
+os hardwares.
+E) Utilizar apenas o analisador léxico da linguagem e deixar que o sistema operacional faça a
+tradução final.
+Gabarito:
+C) Criar um único Front-end para a linguagem "LógicaX" e dois Back-ends distintos (um para x86
+e outro para ARM).
+Explicação: O Front-end é dependente da linguagem fonte (regras da "LógicaX"). Uma vez que ele
+entende o código e gera uma Representação Intermediária (IR), essa IR pode ser entregue a
+diferentes Back-ends. Cada Back-end é "especialista" em uma arquitetura de hardware específica,
+sendo responsável por traduzir a IR para as instruções de máquina daquele processador.
+
+-- 22 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 23 de 30
+Público
+Questão 23
+No fluxo de trabalho entre o Front-end e o Back-end, existe uma fase de transição crucial que não
+pertence estritamente à análise da linguagem fonte nem à geração final de código de máquina.
+Essa fase trabalha sobre a Representação Intermediária para tornar o programa mais eficiente
+(menor ou mais rápido). Como se chama essa etapa?
+A) Análise Léxica.
+B) Otimização de Código.
+C) Verificação de Tipos.
+D) Pré-processamento de Macros.
+E) Ligação de Bibliotecas (Linking).
+Gabarito:
+B) Otimização de Código.
+Explicação: A Otimização de Código geralmente ocorre entre o Front-end e o Back-end. Ela analisa
+a Representação Intermediária para remover redundâncias (como cálculos desnecessários dentro
+de loops) e melhorar a performance, antes que o Back-end transforme tudo em instruções
+específicas de um processador real.
+
+-- 23 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 24 de 30
+Público
+Questão 24
+O Back-end de um compilador tem a responsabilidade de traduzir a Representação Intermediária
+(IR) para o código de máquina alvo. Uma das tarefas mais complexas e essenciais nesta fase é
+decidir quais variáveis do programa ocuparão os limitados espaços de armazenamento rápido
+dentro da CPU, para minimizar acessos lentos à memória RAM. Como se chama essa tarefa
+específica do Back-end?
+A) Análise de Escopo.
+B) Alocação de Registradores (Register Allocation).
+C) Varredura Léxica (Scanning).
+D) Avaliação de Curto-circuito.
+E) Reuso de Código-fonte.
+Gabarito:
+B) Alocação de Registradores (Register Allocation).
+Explicação: Os registradores são as memórias mais rápidas de um computador, mas existem em
+quantidade muito limitada (como 16 ou 32 na arquitetura x86). O Back-end deve usar algoritmos
+complexos (como a coloração de grafos) para decidir quais dados devem ser mantidos nos
+registradores em cada momento, garantindo que o programa final tenha o melhor desempenho
+possível.
+
+-- 24 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 25 de 30
+Público
+Questão 25
+No processo de análise léxica, o analisador (scanner) lê o fluxo de caracteres do código-fonte e
+agrupa sequências de caracteres que possuem um significado lógico. Nesse contexto, como se
+chama a sequência específica de caracteres (como main, + ou 123) que coincide com a descrição
+de uma unidade léxica?
+A) Token.
+B) Padrão (Pattern).
+C) Lexema.
+D) Expressão Regular.
+E) Atributo.
+Gabarito:
+C) Lexema.
+Explicação: O lexema é a instância concreta, ou seja, a sequência de caracteres "bruta" encontrada
+no código. Por exemplo, enquanto "Número Inteiro" é a categoria (Token) e a regra de formação é
+o Padrão, o texto 42 extraído do código é o lexema.
+
+-- 25 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 26 de 30
+Público
+Questão 26
+No desenvolvimento de um analisador léxico, as Expressões Regulares são utilizadas para definir
+formalmente os padrões de cada token. Suponha que você precise definir um padrão para
+identificadores em uma linguagem que exige que eles comecem obrigatoriamente com uma letra
+(a-z), podendo ser seguidos por qualquer quantidade de letras ou dígitos (0-9). Qual expressão
+regular representa corretamente esse padrão?
+A) [0-9]([a-z]|[0-9])*
+B) [a-z][a-z0-9]*
+C) [a-z]*[0-9]*
+D) ([a-z]|[0-9])+
+E) [a-z][0-9]
+Gabarito:
+B) [a-z][a-z0-9]*
+Explicação: Nesta expressão, [a-z] garante que o primeiro caractere seja uma letra. O símbolo *
+(Fecho de Kleene) indica que o grupo subsequente [a-z0-9] (letras ou números) pode ocorrer zero
+ou mais vezes. Isso satisfaz a regra de começar com letra e aceitar qualquer combinação
+alfanumérica depois.
+
+-- 26 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 27 de 30
+Público
+Questão 27
+No desenvolvimento de um analisador léxico para uma linguagem que suporta números reais
+(ponto flutuante), o padrão definido deve aceitar números que possuam uma parte inteira (um ou
+mais dígitos), seguidos obrigatoriamente por um ponto decimal e, então, obrigatoriamente por um
+ou mais dígitos na parte fracionária (ex: 10.5, 0.1). Qual das expressões regulares abaixo
+representa estritamente esse padrão, sem permitir números sem parte fracionária?
+A) [0-9]*\.[0-9]*
+B) [0-9]+\.[0-9]*
+C) [0-9]+\.[0-9]+
+D) [0-9]+(.[0-9]+)?
+E) [0-9].[0-9]
+Gabarito:
+C) [0-9]+\.[0-9]+
+Explicação: O símbolo + indica que deve haver "um ou mais" ocorrências do elemento anterior.
+Portanto, [0-9]+ antes do ponto garante a parte inteira e [0-9]+ depois do ponto garante que a parte
+fracionária não seja vazia. A barra invertida em \. é usada para que o ponto seja interpretado
+literalmente, e não como um caractere curinga da sintaxe de regex.
+
+-- 27 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 28 de 30
+Público
+Questão 28
+Considere a seguinte linha de código em uma linguagem de programação baseada em C:
+soma = total + 42;
+Durante a fase de análise léxica, o scanner identifica diversas unidades. Sobre a relação entre
+Tokens e Lexemas presentes nesta instrução, assinale a alternativa correta:
+A) soma e total são tokens diferentes, pois possuem caracteres distintos.
+B) O caractere = é um lexema que pertence à categoria (token) de operadores de atribuição.
+C) O número 42 é um token, enquanto a regra que define números inteiros é o seu lexema.
+D) O ponto e vírgula (;) é um lexema, mas não gera um token por ser um caractere de pontuação.
+E) Todos os itens da linha (soma, =, total, +, 42, ;) pertencem ao mesmo token, chamado
+"Instrução".
+Gabarito:
+B) O caractere = é um lexema que pertence à categoria (token) de operadores de atribuição.
+Explicação: O lexema é o texto literal encontrado no código (neste caso, o símbolo =). O token é a
+classificação abstrata que o compilador atribui a esse texto (ex: OP_ATRIB). No caso de soma e
+total, ambos são lexemas diferentes que pertencem ao mesmo token (IDENTIFICADOR).
+
+-- 28 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 29 de 30
+Público
+Questão 29
+Muitas linguagens de programação utilizam "Palavras Reservadas" que possuem significados
+especiais para o compilador (ex: if, while, return). Do ponto de vista da análise léxica, essas
+palavras costumam seguir o mesmo Padrão (expressão regular) que define os Identificadores.
+Como o analisador léxico geralmente resolve a ambiguidade quando encontra o lexema if no
+código-fonte?
+A) Ele classifica o lexema como um Identificador e deixa que a análise semântica resolva o erro
+depois.
+B) Ele consulta uma tabela de palavras reservadas (ou palavras-chave) antes de classificar o
+lexema como um Identificador comum.
+C) Ele solicita que o programador utilize um prefixo especial (como @if) para distinguir palavras
+reservadas de variáveis.
+D) Ele ignora o lexema e pula para o próximo conjunto de caracteres, pois palavras reservadas não
+geram tokens.
+E) Ele trata o lexema como uma String literal, pois ele está contido dentro do arquivo de texto do
+código-fonte.
+Gabarito:
+B) Ele consulta uma tabela de palavras reservadas (ou palavras-chave) antes de classificar o
+lexema como um Identificador comum.
+Explicação: Como a expressão regular para nomes de variáveis geralmente engloba as palavras-
+chave da linguagem, o analisador léxico primeiro identifica o lexema. Antes de emitir o token ID,
+ele verifica se esse lexema consta em uma tabela interna de palavras reservadas. Se constar, ele
+emite um token específico (como IF ou WHILE); caso contrário, ele o classifica como um
+Identificador comum.
+
+-- 29 of 30 --
+
+UNIVERSIDADE ANHANGUERA-UNIDERP
+UNIDADE MATRIZ
+Avenida Ceará nº 333 – Bairro Miguel Couto
+Campo Grande - MS, CEP 79003-010, Telefone: (67) 3348-8000
+COMPILADORES
+QUESTIONÁRIO
+Página 30 de 30
+Público
+Questão 30
+Quando o analisador léxico identifica um lexema que corresponde ao token ID (Identificador), como
+o nome de uma variável limite_superior, ele não apenas envia o código do token para o analisador
+sintático, mas também associa a ele um atributo. Qual é a função primordial desse atributo no
+contexto da Tabela de Símbolos?
+A) Armazenar o endereço físico da memória RAM onde a variável será alocada no futuro.
+B) Guardar uma cópia criptografada do código-fonte para fins de segurança.
+C) Fornecer um ponteiro ou índice para a entrada correspondente na Tabela de Símbolos,
+permitindo que fases posteriores acessem o nome e o tipo do identificador.
+D) Indicar se o identificador é uma palavra reservada da linguagem ou um comando do sistema
+operacional.
+E) Contar quantos caracteres o lexema possui para otimizar o espaço em disco do arquivo
+executável.
+Gabarito:
+C) Fornecer um ponteiro ou índice para a entrada correspondente na Tabela de Símbolos,
+permitindo que fases posteriores acessem o nome e o tipo do identificador.
+Explicação: O analisador sintático e o semântico precisam de mais do que apenas saber que "um
+identificador apareceu". Eles precisam saber qual identificador é. O analisador léxico, ao encontrar
+o lexema, insere-o na Tabela de Símbolos (se ainda não estiver lá) e passa para o restante do
+compilador um par <TOKEN, PONTEIRO_TABELA>, garantindo que a identidade daquela variável
+seja preservada em todo o processo de tradução.
+
+-- 30 of 30 --
+
