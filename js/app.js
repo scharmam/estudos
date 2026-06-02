@@ -4,6 +4,7 @@
 const STORAGE_KEY = 'cgpi_quest_sessions';
 const CLOUD_STORAGE_KEY = 'cloud_quest_sessions';
 const CPL_STORAGE_KEY = 'cpl_quest_sessions';
+const POO2_STORAGE_KEY = 'poo2_quest_sessions';
 const LETTERS = ['a', 'b', 'c', 'd', 'e'];
 const MAX_WRONG_BEFORE_MEMO = 5;
 
@@ -54,6 +55,7 @@ const screens = {
   welcome: document.getElementById('screen-welcome'),
   cloudWelcome: document.getElementById('screen-cloud-welcome'),
   cplWelcome: document.getElementById('screen-cpl-welcome'),
+  poo2Welcome: document.getElementById('screen-poo2-welcome'),
   study: document.getElementById('screen-study'),
   quiz: document.getElementById('screen-quiz'),
   result: document.getElementById('screen-result'),
@@ -64,11 +66,14 @@ const els = {
   startForm: document.getElementById('start-form'),
   cloudStartForm: document.getElementById('cloud-start-form'),
   cplStartForm: document.getElementById('cpl-start-form'),
+  poo2StartForm: document.getElementById('poo2-start-form'),
   playerName: document.getElementById('player-name'),
   cloudPlayerName: document.getElementById('cloud-player-name'),
   cplPlayerName: document.getElementById('cpl-player-name'),
+  poo2PlayerName: document.getElementById('poo2-player-name'),
   filterUnit: document.getElementById('filter-unit'),
   filterUnitCloud: document.getElementById('filter-unit-cloud'),
+  filterUnitPoo2: document.getElementById('filter-unit-poo2'),
   filterUnitLabel: document.getElementById('filter-unit-label'),
   welcomeOptionsWrap: document.getElementById('welcome-options-wrap'),
   cloudWelcomeOptionsWrap: document.getElementById('cloud-welcome-options-wrap'),
@@ -79,6 +84,9 @@ const els = {
   cplWelcomeOptionsWrap: document.getElementById('cpl-welcome-options-wrap'),
   cplProvaModeHint: document.getElementById('cpl-prova-mode-hint'),
   cplWelcomeMastery: document.getElementById('cpl-welcome-mastery'),
+  poo2WelcomeOptionsWrap: document.getElementById('poo2-welcome-options-wrap'),
+  poo2ProvaModeHint: document.getElementById('poo2-prova-mode-hint'),
+  poo2WelcomeMastery: document.getElementById('poo2-welcome-mastery'),
   btnStudyHub: document.getElementById('btn-study-hub'),
   btnDashboard: document.getElementById('btn-dashboard'),
   btnBackHome: document.getElementById('btn-back-home'),
@@ -153,6 +161,7 @@ window.setActiveTraining = (id) => {
 function getSessionsStorageKey(trainingId = state.trainingId) {
   if (trainingId === 'cloud') return CLOUD_STORAGE_KEY;
   if (trainingId === 'cpl') return CPL_STORAGE_KEY;
+  if (trainingId === 'poo2') return POO2_STORAGE_KEY;
   return STORAGE_KEY;
 }
 
@@ -162,6 +171,9 @@ function getActiveQuestions() {
   }
   if (state.trainingId === 'cpl') {
     return typeof CPL_QUESTIONS !== 'undefined' ? CPL_QUESTIONS : [];
+  }
+  if (state.trainingId === 'poo2') {
+    return typeof POO2_QUESTIONS !== 'undefined' ? POO2_QUESTIONS : [];
   }
   return typeof QUESTIONS !== 'undefined' ? QUESTIONS : [];
 }
@@ -198,6 +210,7 @@ function formatTime(ms) {
 
 function modeLabel(mode) {
   if (isCloudMode(mode)) return cloudModeLabel(mode);
+  if (isPoo2Mode(mode)) return poo2ModeLabel(mode);
   return {
     N1: 'Prova N1',
     N2: 'Prova N2',
@@ -226,7 +239,7 @@ function isN2CodeProvaMode(mode) {
 }
 
 function isSimuladoMode(mode) {
-  return isProvaMode(mode) || isN2CodeProvaMode(mode) || isCloudSimuladoMode(mode);
+  return isProvaMode(mode) || isN2CodeProvaMode(mode) || isCloudSimuladoMode(mode) || isPoo2SimuladoMode(mode);
 }
 
 function isCloudTraining() {
@@ -237,14 +250,20 @@ function isCplTraining() {
   return state.trainingId === 'cpl';
 }
 
+function isPoo2Training() {
+  return state.trainingId === 'poo2';
+}
+
 function trainingHudPrefix() {
   if (isCloudTraining()) return 'Nuvem · ';
   if (isCplTraining()) return 'CPL · ';
+  if (isPoo2Training()) return 'POO2 · ';
   return '';
 }
 
 function modeIgnoresUnitFilter(mode) {
   if (isCloudMode(mode)) return cloudModeIgnoresUnitFilter(mode);
+  if (isPoo2Mode(mode)) return poo2ModeIgnoresUnitFilter(mode);
   return isSimuladoMode(mode) || mode === 'N2' || isN2NoBMode(mode) || isN2CodeMode(mode);
 }
 
@@ -254,6 +273,10 @@ function buildQuestionPool(mode, unitFilter) {
 
   if (isCloudMode(mode)) {
     return buildCloudQuestionPool(mode, effectiveUnit || unitFilter);
+  }
+
+  if (isPoo2Mode(mode)) {
+    return buildPoo2QuestionPool(mode, effectiveUnit || unitFilter);
   }
 
   if (isN2CodeMode(mode)) {
@@ -341,7 +364,10 @@ function resetSessionState() {
 function startGame(player, options = {}) {
   const {
     trainingId = state.trainingId || 'cgpi',
-    mode = trainingId === 'cloud' ? 'CLOUD_ALL' : trainingId === 'cpl' ? 'N1' : 'N1',
+    mode = trainingId === 'cloud' ? 'CLOUD_ALL'
+      : trainingId === 'cpl' ? 'N1'
+      : trainingId === 'poo2' ? 'POO2_ALL'
+      : 'N1',
     doShuffle = true,
     unitFilter = '',
     memorizationEnabled = true,
@@ -359,7 +385,7 @@ function startGame(player, options = {}) {
   state.playType = isSimuladoMode(mode) ? 'prova' : playType;
   state.memorizationEnabled = memorizationEnabled && state.playType === 'normal' && !isSimuladoMode(mode);
   state.spacedRepEnabled = spacedRepEnabled && state.playType === 'normal' && !isSimuladoMode(mode)
-    && !isCloudTraining() && !isCplTraining();
+    && !isCloudTraining() && !isCplTraining() && !isPoo2Training();
   state.confidenceEnabled = confidenceEnabled && state.playType === 'normal';
   state.scoringEnabled = scoringEnabled;
 
@@ -372,6 +398,13 @@ function startGame(player, options = {}) {
       pool = buildCloudProvaExam(bank);
     } catch (err) {
       alert(err.message || 'Não foi possível montar o simulado de Nuvem.');
+      return;
+    }
+  } else if (isPoo2ProvaMode(mode)) {
+    try {
+      pool = buildPoo2ProvaExam(bank);
+    } catch (err) {
+      alert(err.message || 'Não foi possível montar o simulado POO2.');
       return;
     }
   } else if (isProvaMode(mode)) {
@@ -797,7 +830,7 @@ function nextQuestion() {
 }
 
 function showTrainingHome() {
-  const map = { cgpi: 'welcome', cloud: 'cloudWelcome', cpl: 'cplWelcome' };
+  const map = { cgpi: 'welcome', cloud: 'cloudWelcome', cpl: 'cplWelcome', poo2: 'poo2Welcome' };
   showScreen(map[state.trainingId] || 'welcome');
 }
 
@@ -930,7 +963,7 @@ function renderDashboard(trainingFilter = null) {
   const filterTraining = trainingFilter ?? state.dashboardTraining ?? null;
   let sessions = filterTraining
     ? loadSessions(filterTraining)
-    : [...loadSessions('cgpi'), ...loadSessions('cloud'), ...loadSessions('cpl')];
+    : [...loadSessions('cgpi'), ...loadSessions('cloud'), ...loadSessions('cpl'), ...loadSessions('poo2')];
   const filterName = els.filterName.value.trim().toLowerCase();
   const filterMode = els.filterMode.value;
 
@@ -1069,6 +1102,59 @@ function updateCplWelcomeMastery() {
   MemoryStore.setTraining('cpl');
   renderUnitMasteryHtml(name, els.cplWelcomeMastery);
   MemoryStore.setTraining(state.trainingId);
+}
+
+function updatePoo2WelcomeForMode(mode) {
+  const simulado = isPoo2ProvaMode(mode);
+  const showUnit = mode === 'POO2_UNIT';
+  if (els.poo2ProvaModeHint) {
+    els.poo2ProvaModeHint.hidden = !simulado;
+    if (simulado) {
+      els.poo2ProvaModeHint.textContent =
+        `${POO2_PROVA_CONFIG.count} questões aleatórias com cobertura dos módulos do material POO II.`;
+    }
+  }
+  if (els.poo2WelcomeOptionsWrap) els.poo2WelcomeOptionsWrap.hidden = simulado;
+  const unitLabel = document.getElementById('filter-unit-poo2-label');
+  if (unitLabel) unitLabel.hidden = !showUnit;
+  if (els.filterUnitPoo2) {
+    els.filterUnitPoo2.hidden = !showUnit;
+    if (!showUnit) els.filterUnitPoo2.value = '';
+  }
+}
+
+function bindPoo2ModeChange() {
+  document.querySelectorAll('input[name="poo2-mode"]').forEach(radio => {
+    radio.addEventListener('change', () => updatePoo2WelcomeForMode(radio.value));
+  });
+  const checked = document.querySelector('input[name="poo2-mode"]:checked');
+  if (checked) updatePoo2WelcomeForMode(checked.value);
+}
+
+function populatePoo2UnitFilter() {
+  if (!els.filterUnitPoo2 || typeof getPoo2UniqueUnits !== 'function') return;
+  if (!Array.isArray(POO2_QUESTIONS)) return;
+  getPoo2UniqueUnits(POO2_QUESTIONS).forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u;
+    opt.textContent = u;
+    els.filterUnitPoo2.appendChild(opt);
+  });
+}
+
+function updatePoo2WelcomeMastery() {
+  if (!els.poo2PlayerName || !els.poo2WelcomeMastery) return;
+  const name = els.poo2PlayerName.value.trim();
+  if (!name) { els.poo2WelcomeMastery.hidden = true; return; }
+  MemoryStore.setTraining('poo2');
+  renderUnitMasteryHtml(name, els.poo2WelcomeMastery);
+  MemoryStore.setTraining(state.trainingId);
+}
+
+function updatePoo2CodeCount() {
+  const el = document.getElementById('poo2-code-count');
+  if (!el || typeof buildPoo2CodeQuestionPool !== 'function' || !Array.isArray(POO2_QUESTIONS)) return;
+  el.textContent = `${buildPoo2CodeQuestionPool(POO2_QUESTIONS).length} questões · trechos do material`;
 }
 
 function updateWelcomeForMode(mode) {
@@ -1213,6 +1299,30 @@ if (els.cplStartForm) {
   });
 }
 
+if (els.poo2StartForm) {
+  els.poo2StartForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = els.poo2PlayerName.value.trim();
+    if (!name) { els.poo2PlayerName.focus(); return; }
+    const mode = document.querySelector('input[name="poo2-mode"]:checked')?.value || 'POO2_ALL';
+    const unitFilter = els.filterUnitPoo2?.value || '';
+    if (mode === 'POO2_UNIT' && !unitFilter) {
+      alert('Selecione um módulo para o modo Por Módulo.');
+      els.filterUnitPoo2?.focus();
+      return;
+    }
+    startGame(name, {
+      trainingId: 'poo2',
+      mode,
+      doShuffle: document.getElementById('poo2-shuffle-questions')?.checked ?? true,
+      unitFilter,
+      memorizationEnabled: document.getElementById('poo2-memorization-mode')?.checked ?? true,
+      spacedRepEnabled: false,
+      confidenceEnabled: document.getElementById('poo2-confidence-mode')?.checked ?? false,
+    });
+  });
+}
+
 els.confidenceRow.addEventListener('click', e => {
   const btn = e.target.closest('[data-confidence]');
   if (btn) setConfidence(btn.dataset.confidence);
@@ -1283,6 +1393,14 @@ if (btnCplDashboard) {
     renderDashboard('cpl');
   });
 }
+const btnPoo2Dashboard = document.getElementById('btn-poo2-dashboard');
+if (btnPoo2Dashboard) {
+  btnPoo2Dashboard.addEventListener('click', () => {
+    state.dashboardTraining = 'poo2';
+    MemoryStore.setTraining('poo2');
+    renderDashboard('poo2');
+  });
+}
 els.btnStudyHub.addEventListener('click', () => {
   StudyHub.open(els.playerName.value.trim());
 });
@@ -1290,6 +1408,7 @@ els.btnStudyHub.addEventListener('click', () => {
 els.playerName.addEventListener('input', updateWelcomeMastery);
 if (els.cloudPlayerName) els.cloudPlayerName.addEventListener('input', updateCloudWelcomeMastery);
 if (els.cplPlayerName) els.cplPlayerName.addEventListener('input', updateCplWelcomeMastery);
+if (els.poo2PlayerName) els.poo2PlayerName.addEventListener('input', updatePoo2WelcomeMastery);
 els.filterName.addEventListener('input', () => renderDashboard(state.dashboardTraining));
 els.filterMode.addEventListener('change', () => renderDashboard(state.dashboardTraining));
 
@@ -1308,12 +1427,15 @@ document.addEventListener('keydown', e => {
 
 populateUnitFilter();
 populateCloudUnitFilter();
+populatePoo2UnitFilter();
 updateN2NoBCount();
 updateN2CodeCount();
 updateCplN2CodeCount();
+updatePoo2CodeCount();
 bindModeChange();
 bindCloudModeChange();
 bindCplModeChange();
+bindPoo2ModeChange();
 TrainingsHub.open();
 els.progressRing.style.strokeDasharray = RING_C;
 els.progressRing.style.strokeDashoffset = RING_C;

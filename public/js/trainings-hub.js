@@ -35,6 +35,17 @@ const TRAININGS_REGISTRY = [
     theme: 'cpl',
     meta: ['78 questões', '6 modos', 'Cifra Java'],
   },
+  {
+    id: 'poo2',
+    name: 'POO2 Quest',
+    discipline: 'Programação Orientada a Objetos II',
+    description: 'Java concorrente · Git, JUnit, threads, sincronização e resiliência',
+    icon: '☕',
+    status: 'active',
+    screen: 'poo2Welcome',
+    theme: 'poo2',
+    meta: ['60 questões', '5 modos', 'Material UNIDERP'],
+  },
 ];
 
 const TrainingsHub = (() => {
@@ -98,6 +109,7 @@ const TrainingsHub = (() => {
       welcome: 'screen-welcome',
       cloudWelcome: 'screen-cloud-welcome',
       cplWelcome: 'screen-cpl-welcome',
+      poo2Welcome: 'screen-poo2-welcome',
       trainingSoon: 'screen-training-soon',
     };
     if (typeof window.showAppScreen === 'function') {
@@ -156,6 +168,7 @@ const TrainingsHub = (() => {
   document.getElementById('btn-back-hub')?.addEventListener('click', () => open());
   document.getElementById('btn-back-hub-cloud')?.addEventListener('click', () => open());
   document.getElementById('btn-back-hub-cpl')?.addEventListener('click', () => open());
+  document.getElementById('btn-back-hub-poo2')?.addEventListener('click', () => open());
   document.getElementById('btn-result-hub')?.addEventListener('click', () => open());
 
   return {

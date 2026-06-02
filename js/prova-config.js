@@ -23,6 +23,9 @@ function questionHasCode(q) {
   if (typeof CPL_N2_CODE_QUESTION_IDS !== 'undefined' && CPL_N2_CODE_QUESTION_IDS.includes(q.id)) {
     return true;
   }
+  if (typeof POO2_CODE_QUESTION_IDS !== 'undefined' && POO2_CODE_QUESTION_IDS.includes(q.id)) {
+    return true;
+  }
   return false;
 }
 

@@ -26,6 +26,13 @@ const MemoryStore = (() => {
       LAST_WRONG: 'cpl_last_session_wrong',
       DAILY: 'cpl_daily_challenge',
     },
+    poo2: {
+      NOTEBOOK: 'poo2_error_notebook',
+      STREAK: 'poo2_review_streak',
+      UNITS: 'poo2_unit_stats',
+      LAST_WRONG: 'poo2_last_session_wrong',
+      DAILY: 'poo2_daily_challenge',
+    },
   };
 
   function keys() {

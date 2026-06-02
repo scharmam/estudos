@@ -7,7 +7,8 @@
     "build:questions": "node scripts/build-questions.mjs",
     "build:cloud": "node scripts/build-cloud-questions.mjs",
     "build:cpl": "node scripts/build-cpl-questions.mjs",
-    "build:all": "npm run build:questions && npm run build:cloud && npm run build:cpl",
+    "build:poo2": "node scripts/build-poo2-questions.mjs",
+    "build:all": "npm run build:questions && npm run build:cloud && npm run build:cpl && npm run build:poo2",
     "audit:answers": "node scripts/audit-all-answers.mjs",
     "deploy": "firebase deploy --only hosting",
     "test": "echo \"Error: no test specified\" && exit 1"

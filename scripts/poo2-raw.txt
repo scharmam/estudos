@@ -1,0 +1,288 @@
+GUIA DE ENGENHARIA DE SOFTWARE EM JAVA
+DA ORGANIZAÇÃO À ALTA PERFORMANCE CONCORRENTE
+Instituição: UNIDERP • Professor: Saulo José Souza Vieira
+Disciplina: Programação Orientada a Objetos II • Caderno de Atividades do Aluno
+Módulo 1: O Mapa da Mina – Gestão, Qualidade e Documentação
+A HISTÓRIA: A CRISE NA FÁBRICA DE BRINQUEDOS
+Imagine que você foi contratado para gerenciar a linha de produção da AlphaToys. No início, havia
+apenas um artesão fazendo carrinhos de madeira. Ele sabia onde guardava cada parafuso e como
+encaixar as rodas. Conforme a fábrica cresceu, dez novos artesãos foram contratados. Em menos de
+uma semana, o caos se instalou: um artesão pintava o carrinho antes de o outro lixar; quando um
+mudava o tamanho do eixo, as rodas feitas pelo colega paravam de caber; e ninguém sabia qual era a
+versão final do brinquedo. Para piorar, quando o artesão principal adoeceu, ninguém conseguiu
+entender suas anotações bagunçadas sobre como montar os novos robôs eletrônicos.
+Para salvar a fábrica, você introduziu quatro ferramentas de engenharia: O Livro de Registro Histórico
+(Git/GitHub), o Inspetor de Linha Automatizado (JUnit 5), o Molde de Gesso (Mockito) e o Manual Oficial
+do Engenheiro (Javadoc).
+1.1 Git e GitHub
+• O que é? O Git é um sistema de controle de versão distribuído que gerencia o histórico de alterações do
+código-fonte. O GitHub é uma plataforma baseada na nuvem que hospeda esses repositórios e facilita o
+trabalho colaborativo.
+• Para que serve? Serve para que múltiplos desenvolvedores trabalhem no mesmo projeto sem
+sobrescrever o código uns dos outros, permitindo rastrear quem fez cada modificação, reverter erros e isolar
+o desenvolvimento de novas funcionalidades.
+• Quando usa? Usa-se desde o primeiro dia de qualquer projeto de software. No dia a dia, aplica-se ao
+iniciar um repositório (git init), preparar arquivos (git add), registrar pacotes lógicos de alteração (git
+commit) e enviar o trabalho para a equipe (git push).
+1.2 Testes Unitários com JUnit 5
+• O que é? É o framework padrão da linguagem Java voltado para a criação e execução de testes
+automatizados na menor unidade isolada de um código, que são os métodos.
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	1
+
+-- 1 of 9 --
+
+• Para que serve? Serve para garantir que a lógica interna de um método funcione exatamente como o
+esperado. Ele permite aplicar o ciclo TDD (Test-Driven Development), onde o desenvolvedor escreve o teste
+antes do código (Red), faz o código passar (Green) e depois o melhora (Refactor).
+• Quando usa? Usa-se durante toda a fase de codificação e manutenção. Sempre que uma regra de
+negócio for criada (ex: calcular o juro de uma conta), cria-se um método anotado com @Test e valida-se o
+resultado usando asserções como assertEquals.
+1.3 Simulados com Mockito
+• O que é? É um framework de simulação (mocking) especializado em criar objetos falsos ("mocks") que
+imitam o comportamento de dependências reais de um sistema.
+• Para que serve? Serve para isolar a classe que está sendo testada. Sec o seu método precisa salvar
+dados em um banco ou consumir uma API externa na internet, o Mockito simula essas estruturas para que o
+teste unitário dependa apenas da corretude do seu método, sem sofrer lentidão ou falhas de rede externa.
+• Quando usa? Usa-se nos testes unitários sempre que a classe alvo tiver dependências externas
+complexas ou lentas. Também serve para verificar se certos métodos dessas dependências foram
+chamados corretamente (verify).
+1.4 Documentação com Javadoc
+• O que é? É uma ferramenta padrão do JDK que lê comentários estruturados especiais do tipo /** ...
+*/ dentro do código-fonte e gera automaticamente páginas da web (HTML) com a documentação técnica.
+• Para que serve? Serve para comunicar explicitamente a intenção do desenvolvedor, explicando como as
+classes, métodos e APIs devem ser utilizados por outros profissionais, reduzindo drasticamente o tempo de
+integração e manutenção.
+• Quando usa? Usa-se ao construir assinaturas de classes e métodos públicos. Empregam-se tags
+padronizadas como @param (dados de entrada), @return (resultado gerado) e @throws (erros possíveis).
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	2
+
+-- 2 of 9 --
+
+Módulo 2: A Multiplicação dos Trabalhadores (Programação com
+Threads)
+A HISTÓRIA: A HAMBURGUERIA VELOZ
+A nossa fábrica de brinquedos deu tão certo que abrimos uma filial de fast-food: a JavaBurger. No
+primeiro dia, contratamos apenas um funcionário, o Pedro. O processo dele era estritamente sequencial:
+ele anotava o pedido do cliente, ia para a cozinha fritar a carne, esperava o pão esquentar, montava o
+hambúrguer, entregava ao cliente e só então chamava a próxima pessoa da fila. Resultado? Filas
+quilométricas e clientes furiosos com a demora.
+Para resolver o problema, mudamos a estratégia: decidiu-se simular múltiplos funcionários trabalhando
+em paralelo dentro do mesmo espaço da cozinha. Contratamos a Maria (atendimento), o João (fritar a
+carne) e o Carlos (embalar). Cada um deles representa uma Thread. Todos compartilham o mesmo
+espaço físico, a mesma geladeira e os mesmos armários (memória compartilhada). A velocidade
+aumentou absurdamente porque enquanto o João frita uma carne, a Maria já atende outro cliente.
+2.1 Threads e Concorrência
+• O que é? Uma Thread é a menor unidade de execução que pode ser agendada e processada por um
+sistema operacional. Em Java, elas viabilizam a execução concorrente de tarefas dentro de um único
+programa.
+• Para que serve? Serve para otimizar o desempenho do software através do aproveitamento de
+processadores multi-core e para manter sistemas responsivos (evitando que a interface gráfica trave
+enquanto uma busca pesada ocorre em background). Diferencia-se de um processo porque várias threads
+compartilham a mesma memória do programa principal, tornando sua criação muito mais leve.
+• Quando usa? Usa-se em servidores de aplicação web (para atender requisições simultâneas de
+usuários), em processamento em lote de grandes volumes de dados ou em interfaces visuais que realizam
+downloads e operações pesadas em segundo plano. Em Java, cria-se implementando a interface Runnable
+e disparando-a com o método start().
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	3
+
+-- 3 of 9 --
+
+Módulo 3: O Guarda de Trânsito (Elementos de Sincronização)
+A HISTÓRIA: O CAOS NA COZINHA COMPARTILHADA
+De volta à JavaBurger, com o sucesso das Threads trabalhando juntas, um novo problema crítico
+surgiu. Havia apenas uma gaveta de dinheiro no caixa e apenas um painel de controle para alterar o
+estoque de pães. Certa vez, a Maria e o Carlos tentaram atualizar o estoque de pães exatamente no
+mesmo segundo. O painel marcava 10 pães. Maria leu 10, vendeu 1 e se preparou para escrever 9. No
+mesmo milésimo de segundo, Carlos leu 10, usou 1 para um teste e se preparou para escrever 9.
+Ambos registraram 9 no sistema. Mas dois pães haviam sumido! O sistema deveria marcar 8. Essa
+colisão destrutiva é chamada de Condição de Corrida.
+Para parar a quebra de pratos, instalamos trancas eletrônicas na cozinha: A Chave do Banheiro
+(synchronized), o Painel Digital Blindado (AtomicInteger) e o Despertador da Limpeza (Timer).
+3.1 Métodos e Blocos Sincronizados
+• O que é? É um mecanismo de barreira baseado em exclusão mútua (Mutex) ativado pela palavra-chave
+synchronized. Ele obriga uma thread a adquirir o bloqueio (lock) de um objeto antes de executar um bloco
+de código.
+• Para que serve? Serve para impedir que duas ou mais threads acessem e alterem simultaneamente uma
+seção crítica de código que manipula recursos compartilhados, evitando estados inconsistentes e corrupção
+de dados (condições de corrida).
+• Quando usa? Usa-se em métodos de classes compartilhadas que alteram dados sensíveis (como saldos
+bancários ou contadores internos).
+3.2 Classes Atômicas
+• O que é? É um conjunto de classes utilitárias de alta performance (como AtomicInteger e
+AtomicLong) que realizam operações matemáticas e lógicas de forma segura para threads, sem recorrer a
+bloqueios tradicionais de código.
+• Para que serve? Serve para garantir atomicidade em incrementos, decrementos e atualizações de
+variáveis com altíssimo desempenho. Em vez de congelar outras threads com synchronized, elas utilizam
+instruções nativas do processador conhecidas como CAS (Compare-And-Swap), tornando o código livre de
+bloqueios (lock-free).
+• Quando usa? Usa-se no desenvolvimento de contadores globais de acesso, geração de IDs sequenciais
+em memória, estatísticas de tráfego de servidores ou flags de estado concorrentes.
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	4
+
+-- 4 of 9 --
+
+3.3 Timers e Agendamentos
+• O que é? A classe java.util.Timer funciona como uma thread de background dedicada a gerenciar a
+execução agendada de tarefas paralelas encapsuladas em objetos do tipo TimerTask.
+• Para que serve? Serve para automatizar rotinas que precisam acontecer com base no tempo, seja após
+um atraso específico ou de forma repetitiva em intervalos fixos cronometrados.
+• Quando usa? Usa-se para programar limpezas periódicas de memória (cache), verificações de status de
+conexão com redes, emissão de alertas ou rotinas automáticas de auditoria do sistema.
+Módulo 4: A Rede de Segurança (Resiliência e Exceções Concorrentes)
+A HISTÓRIA: O GARÇOM TRAUMATIZADO
+Imagine agora que a JavaBurger automatizou os pedidos por tablets. O sistema de envio de pedidos
+para a cozinha roda em uma thread secundária. Um belo dia, um cliente digita um caractere inválido no
+campo de quantidade e, ao processar o cálculo, a thread da cozinha sofre um erro grave de divisão por
+zero. Se o sistema não estivesse preparado, aquela thread morreria em silêncio. O cliente acharia que o
+pedido estava sendo feito, mas a cozinha nunca saberia dele. Pior: se essa exceção se propagasse
+descontroladamente, poderia derrubar o aplicativo inteiro.
+Como o gerente não pode prever todos os erros, instalou duas redes de segurança: O Supervisor de
+Plantão (UncaughtExceptionHandler) e o Protocolo de Sedex (Callable e Future).
+4.1 Exceções Assíncronas
+• O que é? São erros (exceções) que ocorrem dentro de threads secundárias em execução paralela. Como
+a thread executa de forma assíncrona, a pilha de chamadas padrão do Java não consegue enviar esse erro
+diretamente para um bloco try-catch que esteja rodando na thread principal.
+• Para que serve? Entender esse mecanismo serve para evitar falhas silenciosas no sistema (onde o
+programa continua rodando, mas partes vitais dele pararam de funcionar por causa de um erro interno
+oculto) e proteger a integridade dos dados.
+• Quando usa? Usa-se em qualquer arquitetura multithread para desenhos de softwares resilientes. Aplica-
+se blocos try-catch internos no método run() para capturas locais e isoladas.
+4.2 Manipulador Global (UncaughtExceptionHandler)
+• O que é? É uma interface funcional (Thread.UncaughtExceptionHandler) fornecida pelo Java que
+atua como um capturador central de erros de última instância para threads.
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	5
+
+-- 5 of 9 --
+
+• Para que serve? Serve para interceptar e tratar de forma centralizada qualquer exceção de tempo de
+execução (RuntimeException) que tenha escapado de dentro do método run() de uma thread sem ser
+pega por nenhum try-catch. Evita que a thread morra sem deixar vestígios.
+• Quando usa? Usa-se na configuração inicial de sistemas comerciais de background. Configura-se via
+Thread.setDefaultUncaughtExceptionHandler() para centralizar logs de erro em arquivos de
+auditoria, disparar alertas ou limpar recursos pendentes antes do encerramento.
+4.3 Callable e Future
+• O que é? Callable<V> é uma interface que representa uma tarefa assíncrona capaz de retornar um
+valor e lançar exceções verificadas. O Future<V> é o objeto que funciona como uma promessa de
+recebimento desse resultado futuro.
+• Para que serve? Servem para gerenciar e coordenar tarefas paralelas que precisam devolver dados à
+thread chamadora. Se a tarefa falhar internamente, a exceção é encapsulada automaticamente e guardada.
+• Quando usa? Usa-se ao submeter tarefas em pools de threads gerenciados por um ExecutorService.
+Ao invocar o método bloqueante future.get(), a thread principal recupera o valor produzido ou captura
+uma ExecutionException, permitindo tratar o erro ocorrido na linha paralela usando e.getCause().
+Tabela Comparativa dos Componentes Concorrentes
+COMPONENTE 	MECANISMO DE
+SINCRONIZAÇÃO
+IMPACTO DE
+PERFORMANCE
+USO RECOMENDADO
+synchronized 	Bloqueio baseado em
+travas (locks) de objeto.
+Alto impacto em
+concorrência pesada
+(bloqueia threads).
+Proteção de blocos
+complexos e seções
+críticas com mutabilidade.
+AtomicInteger 	Instruções de hardware
+diretas (CAS - Compare
+And Swap).
+Baixíssimo impacto (Livre
+de bloqueio / Lock-Free).
+Contadores de alta
+performance, estatísticas
+e flags sequenciais.
+Timer / TimerTask 	Execução baseada em
+uma thread dedicada em
+background.
+Baixo, mas tarefas longas
+atrasam a fila interna do
+Timer.
+Agendamentos cíclicos
+simples e rotinas de
+expiração por tempo.
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	6
+
+-- 6 of 9 --
+
+Questionário Acadêmico: 30 Questões Dissertativas
+Instruções: Responda de forma clara, técnica e estruturada às questões abaixo com base nos conceitos de
+Engenharia de Software e Programação Concorrente em Java apresentados neste guia.
+Bloco A: Gestão, Qualidade e Documentação (Questões 1 a 10)
+1. Explique a diferença conceitual e prática entre Commits Atômicos e Mensagens Claras no fluxo de
+versionamento com o Git.
+2. Discorra sobre a importância estratégica do uso de Branches no isolamento de novas funcionalidades em
+projetos desenvolvidos por equipes numerosas.
+3. O que define o conceito de "Documentação Viva" gerado a partir da aplicação correta de testes unitários
+automatizados com o JUnit 5?
+4. Explique detalhadamente o funcionamento do Ciclo TDD (Test-Driven Development), especificando o papel
+de cada uma de suas três fases.
+5. No ecossistema de testes em Java, diferencie o escopo de atuação do framework JUnit 5 em relação ao
+framework Mockito.
+6. O que é o mecanismo de Mocking e por que ele se torna indispensável ao testar unidades de código que
+possuem forte acoplamento com bancos de dados ou APIs de terceiros?
+7. De que maneira a automação de testes integrada a um fluxo de Integração Contínua (CI) contribui para a
+estabilidade de longo prazo de um software?
+8. Descreva a estrutura técnica do Javadoc e explique como o JDK transforma comentários inseridos no
+código-fonte em documentação em formato HTML.
+9. Qual é a finalidade prática das tags @param, @return e @throws na construção de uma documentação
+técnica profissional em Java?
+10. Com base nos conceitos de Engenharia de Software, analise a seguinte afirmação: "Investir tempo em
+testes e documentação hoje é, na verdade, uma estratégia de economia financeira e de tempo futuro no ciclo
+de vida do software." Justifique.
+Bloco B: Concorrência e Criação de Threads (Questões 11 a 17)
+11. Defina o que é uma Thread no contexto de sistemas operacionais e explique como a Máquina Virtual
+Java (JVM) gerencia a concorrência em sistemas modernos.
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	7
+
+-- 7 of 9 --
+
+12. Construa uma tabela comparativa detalhando as diferenças cruciais entre um Processo e uma Thread
+nos quesitos espaço de memória, custo de criação e isolamento de falhas.
+13. Apresente as duas formas principais de se criar uma Thread na linguagem Java nativa e explique por que
+a implementação da interface Runnable é amplamente preferida pela comunidade técnica em relação à
+extensão da classe Thread.
+14. Explique a relevância do método start() no ciclo de vida de uma Thread e descreva o erro arquitetural
+que ocorre quando um desenvolvedor chama diretamente o método run().
+15. Explique a transição de estados pela qual uma Thread passa em seu ciclo de vida em Java, detalhando
+as características dos estados New, Runnable, Blocked/Waiting e Terminated.
+16. Para que serve o método join() em uma Thread Java e em qual cenário de coordenação de tarefas
+paralelas ele se torna indispensável?
+17. O que são as novas Virtual Threads introduzidas recentemente no ecossistema Java e de que forma elas
+pretendem alterar o paradigma tradicional de programação concorrente pesada?
+Bloco C: Sincronização de Recursos Compartilhados (Questões 18 a 24)
+18. O que é uma Condição de Corrida (Race Condition) em ambientes multithread e quais podem ser as
+consequências práticas desse fenômeno em um sistema financeiro real?
+19. Explique o funcionamento da palavra-chave synchronized quando aplicada à assinatura de um
+método. Como ela utiliza o "monitor do objeto" para estabelecer a exclusão mútua?
+20. Por que as boas práticas de programação orientada a objetos recomendam reduzir o escopo da
+sincronização ao mínimo estritamente necessário em vez de sincronizar métodos inteiros?
+21. Explique o conceito de Deadlock (Impasses) em sistemas concorrentes, demonstrando textualmente uma
+situação prática onde ele ocorreria e como a ordenação na aquisição de travas pode mitigá-lo.
+22. Como funciona o mecanismo de sincronização sem bloqueio (Lock-Free) baseado na operação de
+hardware Compare-And-Swap (CAS) utilizada pelas classes atômicas Java?
+23. Qual é o papel da classe java.util.Timer no controle temporal de tarefas e qual é o principal risco
+técnico associado ao fato de ela gerenciar agendamentos através de uma única thread de background?
+24. Por que objetos imutáveis são considerados inerentemente seguros para threads (thread-safe) e de que
+maneira o uso de imutabilidade simplifica o design de sistemas complexos concorrentes?
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	8
+
+-- 8 of 9 --
+
+Bloco D: Resiliência e Tratamento de Exceções Concorrentes (Questões 25 a 30)
+25. Por que um bloco tradicional try-catch implementado na thread principal de uma aplicação é incapaz
+de capturar uma exceção lançada de forma assíncrona por uma thread secundária?
+26. Descreva o papel e o funcionamento técnico da interface Thread.UncaughtExceptionHandler.
+Como ela atua como a última linha de defesa em aplicações concorrentes?
+27. Explique a diferença de comportamento e de propagação de erros de uma tarefa concorrente configurada
+por meio da interface clássica Runnable em comparação com a interface moderna Callable.
+28. No contexto do framework de concorrência java.util.concurrent, explique a relação entre os objetos
+Future e ExecutionException durante o resgate de resultados assíncronos.
+29. O que gera uma InterruptedException em Java, por que ela é classificada como uma exceção
+verificada (checked exception) e qual é a conduta correta do desenvolvedor ao capturá-la em um bloco
+catch?
+30. Explique o que é a exceção de tempo de execução RejectedExecutionException e descreva um
+cenário prático em servidores corporativos que possa disparar esse erro.
+UNIDERP • Prof. Saulo Vieira • Programação Orientada a Objetos II (Versão dos Alunos) 	9
+
+-- 9 of 9 --
+

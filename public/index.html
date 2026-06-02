@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=12">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -311,6 +311,93 @@
       </div>
     </section>
 
+    <!-- POO II — JAVA CONCORRENTE -->
+    <section id="screen-poo2-welcome" class="screen">
+      <div class="panel panel--hero panel--poo2">
+        <button type="button" id="btn-back-hub-poo2" class="btn btn--ghost btn--sm hub-back">← Treinamentos</button>
+        <div class="logo-block">
+          <span class="logo-tag logo-tag--poo2">POO II · Java Concorrente</span>
+          <h1 class="logo-title">POO2<span class="logo-accent logo-accent--poo2">QUEST</span></h1>
+          <p class="logo-sub">60 questões · 5 módulos · material Prof. Saulo Vieira</p>
+        </div>
+
+        <form id="poo2-start-form" class="start-form">
+          <label class="field-label" for="poo2-player-name">Seu nome de jogador</label>
+          <input type="text" id="poo2-player-name" class="field-input" placeholder="Digite seu nome..." maxlength="24" autocomplete="name" required>
+
+          <label class="field-label">Modo de jogo</label>
+          <div class="mode-grid mode-grid--poo2">
+            <label class="mode-card mode-card--poo2">
+              <input type="radio" name="poo2-mode" value="POO2_ALL" checked>
+              <span class="mode-card__inner"><strong>Completo</strong><small>60 questões</small></span>
+            </label>
+            <label class="mode-card mode-card--poo2-unit">
+              <input type="radio" name="poo2-mode" value="POO2_UNIT">
+              <span class="mode-card__inner"><strong>Por Módulo</strong><small>12–13 questões por tema</small></span>
+            </label>
+            <label class="mode-card mode-card--poo2-quick mode-card--wide">
+              <input type="radio" name="poo2-mode" value="POO2_QUICK">
+              <span class="mode-card__inner"><strong>Treino Rápido</strong><small>15 questões aleatórias</small></span>
+            </label>
+            <label class="mode-card mode-card--poo2-code mode-card--wide">
+              <input type="radio" name="poo2-mode" value="POO2_CODE">
+              <span class="mode-card__inner">
+                <strong>Só Código Java</strong>
+                <small id="poo2-code-count">6 questões · trechos do material</small>
+              </span>
+            </label>
+            <label class="mode-card mode-card--poo2-prova mode-card--wide">
+              <input type="radio" name="poo2-mode" value="POO2_PROVA">
+              <span class="mode-card__inner">
+                <strong>Simulado PROVA</strong>
+                <small>15 questões · balanceadas por módulo</small>
+              </span>
+            </label>
+          </div>
+
+          <p id="poo2-prova-mode-hint" class="prova-mode-hint prova-mode-hint--poo2" hidden>
+            15 questões sorteadas com cobertura dos 5 módulos do material de estudo.
+          </p>
+
+          <div id="poo2-welcome-options-wrap">
+            <label class="field-label" for="filter-unit-poo2" id="filter-unit-poo2-label">Módulo / unidade</label>
+            <select id="filter-unit-poo2" class="field-input" hidden>
+              <option value="">Selecione um módulo...</option>
+            </select>
+
+            <label class="toggle-row">
+              <input type="checkbox" id="poo2-shuffle-questions" checked>
+              <span class="toggle-row__box"></span>
+              <span>Embaralhar questões</span>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" id="poo2-memorization-mode" checked>
+              <span class="toggle-row__box"></span>
+              <span>Modo memorização (5 erros → revisão)</span>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" id="poo2-confidence-mode">
+              <span class="toggle-row__box"></span>
+              <span>Nível de confiança (certeza vs chute)</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--glow btn--poo2">
+            <span>Iniciar Treino</span>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          </button>
+        </form>
+
+        <div id="poo2-welcome-mastery" class="welcome-mastery" hidden></div>
+
+        <div class="welcome-actions">
+          <button type="button" id="btn-poo2-dashboard" class="btn btn--ghost">Ver Dashboard</button>
+        </div>
+      </div>
+    </section>
+
     <!-- CENTRAL DE ESTUDO -->
     <section id="screen-study" class="screen">
       <div class="panel panel--study">
@@ -547,6 +634,11 @@
             <option value="PROVA">CPL · Simulado</option>
             <option value="N2_CODE">CPL · Só Código</option>
             <option value="PROVA_N2_CODE">CPL · Simulado Código</option>
+            <option value="POO2_ALL">POO2 · Completo</option>
+            <option value="POO2_UNIT">POO2 · Por Módulo</option>
+            <option value="POO2_QUICK">POO2 · Treino Rápido</option>
+            <option value="POO2_CODE">POO2 · Só Código</option>
+            <option value="POO2_PROVA">POO2 · Simulado</option>
           </select>
         </div>
 
@@ -556,17 +648,19 @@
     </section>
   </div>
 
-  <script src="js/cpl-questions.js?v=11"></script>
-  <script src="js/cpl-config.js?v=11"></script>
-  <script src="js/cloud-questions.js?v=11"></script>
-  <script src="js/cloud-config.js?v=11"></script>
-  <script src="js/questions.js?v=11"></script>
-  <script src="js/code-display.js?v=11"></script>
-  <script src="js/prova-config.js?v=11"></script>
-  <script src="js/study-data.js?v=11"></script>
-  <script src="js/memory-store.js?v=11"></script>
-  <script src="js/trainings-hub.js?v=11"></script>
-  <script src="js/study.js?v=11"></script>
-  <script src="js/app.js?v=11"></script>
+  <script src="js/poo2-questions.js?v=12"></script>
+  <script src="js/poo2-config.js?v=12"></script>
+  <script src="js/cpl-questions.js?v=12"></script>
+  <script src="js/cpl-config.js?v=12"></script>
+  <script src="js/cloud-questions.js?v=12"></script>
+  <script src="js/cloud-config.js?v=12"></script>
+  <script src="js/questions.js?v=12"></script>
+  <script src="js/code-display.js?v=12"></script>
+  <script src="js/prova-config.js?v=12"></script>
+  <script src="js/study-data.js?v=12"></script>
+  <script src="js/memory-store.js?v=12"></script>
+  <script src="js/trainings-hub.js?v=12"></script>
+  <script src="js/study.js?v=12"></script>
+  <script src="js/app.js?v=12"></script>
 </body>
 </html>
